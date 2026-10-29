@@ -1274,7 +1274,8 @@ function renderPlates() {
   var m = model(), h = '';
   if (d.settings.job) h += '<span class="plate"><span class="k">Job No.</span> <span class="v">' + esc(d.settings.job) + '</span></span> ';
   if (d.settings.start) h += '<span class="plate"><span class="k">Job start</span> <span class="v">' + esc(fmtDate(d.settings.start)) + '</span></span> ';
-  if (m.workdays !== null) h += '<span class="plate" title="Workdays since the job start, not counting weekends or the non-work days list"><span class="k">Workday</span> <span class="v big">' + m.workdays + '</span></span>';
+  if (m.workdays !== null && m.workdays > 0) h += '<span class="plate" title="Workdays since the job start, not counting weekends or the non-work days list"><span class="k">Workday</span> <span class="v big">' + m.workdays + '</span></span>';
+  else if (d.settings.start && d.settings.start > m.today) h += '<span class="plate"><span class="k">Not started yet</span></span>';
   el.innerHTML = h;
 }
 function renderSync() {
@@ -1332,7 +1333,7 @@ var cardMemo = {};
 function cardNums(e) {
   if (PREVIEW) return numsOf(pv.data(e.id), 0);
   var c = readCache(e.id), snapAt = Date.parse(e.updated || '') || 0;
-  if (c && (c.at || 0) > snapAt) {
+  if (c && (pendingFor(e.id).length || (c.at || 0) > snapAt)) {   // unsaved changes here: only this device's copy has them
     var mk = c.at + ':' + pendingFor(e.id).length;
     if (!cardMemo[e.id] || cardMemo[e.id].k !== mk) cardMemo[e.id] = { k: mk, v: numsOf(normData(c.data), c.at) };
     return cardMemo[e.id].v;
@@ -2885,7 +2886,11 @@ function setFormBusy(f, on, text) {
     p.innerHTML = '<span class="spin" aria-hidden="true"></span><span></span>';
     var errEl = $('#formErr', f); errEl.parentNode.insertBefore(p, errEl);
   }
-  if (p) { p.hidden = !on; $('span:last-child', p).textContent = text || 'Working'; }
+  if (p) {
+    p.hidden = !on;
+    $('span:last-child', p).textContent = text || 'Working';
+    if (on && p.scrollIntoView) p.scrollIntoView({ block: 'nearest' });
+  }
 }
 document.addEventListener('submit', function (e) {
   var f = e.target;
