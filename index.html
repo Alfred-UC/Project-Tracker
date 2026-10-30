@@ -113,9 +113,9 @@ a.btn { text-decoration: none; }
 .gear { display: none; width: 36px; height: 34px; border-radius: 999px; border: 1px solid var(--sign-2); background: transparent; color: var(--sign-ink); place-items: center; padding: 0; }
 .gear svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .gear[aria-current="page"] { background: var(--sign-2); }
-.crumb { display: inline-flex; align-items: center; gap: 4px; margin: -6px 0 8px -6px; padding: 4px 10px 4px 4px; border: 0; border-radius: 6px;
-  background: transparent; color: var(--sign-ink-2); font-size: 13.5px; font-weight: 600; font-stretch: 92%; }
-.crumb:hover { color: var(--sign-ink); background: var(--sign-2); }
+.crumb { display: inline-flex; align-items: center; gap: 4px; margin: -4px 0 12px; padding: 5px 13px 5px 7px; border: 1px solid var(--sign-2);
+  border-radius: 999px; background: rgba(255, 255, 255, .04); color: var(--sign-ink); font-size: 14px; font-weight: 600; font-stretch: 92%; }
+.crumb:hover { background: var(--sign-2); }
 .crumb svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 .tabs { display: flex; gap: 4px; margin-top: 18px; overflow-x: auto; scrollbar-width: none; }
 .tabs::-webkit-scrollbar { display: none; }
@@ -291,7 +291,7 @@ button.mrow { padding-inline: 8px; margin-inline: -8px; width: calc(100% + 16px)
 .empty { text-align: left; padding: 22px 4px; color: var(--ink-2); }
 .empty b { color: var(--ink); }
 
-/* ---------- line cards (materials by line, systems) ---------- */
+/* ---------- line cards (materials and equipment by line) ---------- */
 .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
 .tile { text-align: left; border: 1px solid var(--rule); background: var(--surface); border-radius: 9px; padding: 13px 14px; display: grid; gap: 7px; color: inherit; }
 button.tile:hover { border-color: var(--ink-3); }
@@ -299,6 +299,34 @@ button.tile:hover { border-color: var(--ink-3); }
 .tile .t { font-weight: 700; overflow-wrap: anywhere; }
 .tile .row { display: flex; justify-content: space-between; gap: 10px; font-size: 13.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .tile .row b { color: var(--ink); font-weight: 700; }
+
+/* ---------- progress notes ---------- */
+.fchips { display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0 4px; }
+.fchip { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink-2); border-radius: 999px;
+  padding: 5px 11px; font-size: 13.5px; font-weight: 600; white-space: nowrap; }
+.fchip .n { font-variant-numeric: tabular-nums; color: var(--ink-3); font-weight: 600; }
+.fchip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--surface); }
+.fchip[aria-pressed="true"] .n { color: var(--surface); opacity: .7; }
+.fchip[disabled] { opacity: .45; cursor: default; }
+.nrow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: start; border-bottom: 1px solid var(--rule); }
+.nrow:last-child { border-bottom: 0; }
+.nmain { display: grid; gap: 5px; text-align: left; border: 0; background: transparent; color: inherit; font: inherit; padding: 12px 8px; margin-inline: -8px;
+  border-radius: 6px; min-width: 0; }
+.nmain:hover { background: var(--surface-2); }
+.nact { padding-top: 10px; }
+.ntop { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; }
+.ndate { font-weight: 700; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+.ncat { display: inline-flex; align-items: center; border-radius: 4px; padding: 1px 7px; font-size: 12.5px; font-weight: 700; font-stretch: 88%; letter-spacing: .01em;
+  background: var(--surface-2); color: var(--ink-2); }
+.ncat.c-progress { background: var(--good-soft); color: var(--good); }
+.ncat.c-client { background: var(--accent-soft); color: var(--accent); }
+.ncat.c-change { background: var(--warn-soft); color: var(--warn); }
+.ncat.c-issue { background: var(--over-soft); color: var(--over); }
+.ncat.c-material { background: var(--track); color: var(--ink); }
+.nfrom { color: var(--ink-2); font-size: 13px; }
+.ntext { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.5; }
+.nmeta { color: var(--ink-3); font-size: 12.5px; }
+.nrow.open .ntext { font-weight: 500; }
 
 /* ---------- projects ---------- */
 .pgroup { display: grid; gap: 10px; }
@@ -437,7 +465,7 @@ details summary { cursor: pointer; font-weight: 700; }
   .sign h1 { font-size: 20px; font-stretch: 100%; }
   .tabs { display: none; }
   .gear:not([hidden]) { display: inline-grid; }
-  .tabbar { display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  .tabbar { display: grid; grid-template-columns: repeat(6, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
     background: var(--surface); border-top: 1px solid var(--rule); padding: 4px max(6px, env(safe-area-inset-right, 0px)) calc(4px + env(safe-area-inset-bottom, 0px)) max(6px, env(safe-area-inset-left, 0px)); }
   .tabbar button { border: 0; background: transparent; display: grid; justify-items: center; gap: 2px; padding: 6px 1px 4px; color: var(--ink-3);
     font-size: 11.5px; font-weight: 600; border-radius: 8px; min-width: 0; }
@@ -502,15 +530,15 @@ img { max-width: 100%; }
 (function () {
 'use strict';
 var CONFIG = {"mode":"sheet","title":"Project Tracker"};
-var SCHEMA = {"app":"project-tracker","version":"2.0.0","sections":["General Requirements","Scope","Change Orders"],"types":["Labor","Material","Equipment","General"],"sources":["Manual","Material Log","Equipment Log","Payroll"],"tables":{"budget":{"sheet":"Budget","cols":[{"key":"section","header":"Section","type":"text","width":160,"valid":{"list":"sections"}},{"key":"code","header":"Cost Code","type":"text","width":90},{"key":"item","header":"Item","type":"text","width":290},{"key":"type","header":"Type","type":"text","width":80,"valid":{"list":"types"}},{"key":"estimate","header":"Estimate","type":"money","width":120},{"key":"source","header":"Cost Source","type":"text","width":110,"valid":{"list":"sources"}},{"key":"cost","header":"Manual Cost","type":"money","width":120},{"key":"costCalc","header":"Cost","type":"money","width":120,"computed":"=IF({source}=\"Material Log\",IF({item}=\"\",0,SUMIF({materials.item:col},{item},{materials.total:col})),IF({source}=\"Equipment Log\",IF({item}=\"\",0,SUMIF({equipment.item:col},{item},{equipment.total:col})),IF({source}=\"Payroll\",IF({code}=\"\",0,SUMIF({payroll.code:col},{code},{payroll.cost:col})),N({cost}))))"},{"key":"balance","header":"Balance","type":"money","width":120,"computed":"=N({estimate})-N({costCalc})"},{"key":"notes","header":"Notes","type":"text","width":380},{"key":"sort","header":"Sort","type":"number","width":60},{"key":"id","header":"ID","type":"id","width":110}]},"materials":{"sheet":"Materials","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"desc","header":"Description","type":"text","width":320},{"key":"qty","header":"Quantity","type":"number","width":90},{"key":"uom","header":"UoM","type":"text","width":70},{"key":"rate","header":"Unit Rate","type":"rate","width":110},{"key":"total","header":"Total Cost","type":"money","width":120,"computed":"=N({qty})*N({rate})"},{"key":"item","header":"Budget Item","type":"text","width":270,"valid":{"ref":"budget.item"}},{"key":"notes","header":"Notes","type":"text","width":300},{"key":"id","header":"ID","type":"id","width":110}]},"equipment":{"sheet":"Equipment","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"offDate","header":"Off-Rent Date","type":"date","width":110},{"key":"desc","header":"Equipment","type":"text","width":260},{"key":"vendor","header":"Vendor","type":"text","width":160},{"key":"qty","header":"Quantity","type":"number","width":90},{"key":"unit","header":"Unit","type":"text","width":90,"valid":{"list":"units"}},{"key":"rate","header":"Unit Rate","type":"rate","width":110},{"key":"total","header":"Total Cost","type":"money","width":120,"computed":"=N({qty})*N({rate})"},{"key":"item","header":"Budget Item","type":"text","width":220,"valid":{"ref":"budget.item"}},{"key":"notes","header":"Notes","type":"text","width":300},{"key":"id","header":"ID","type":"id","width":110}]},"labor":{"sheet":"Labor Log","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"crew","header":"# Labor","type":"number","width":80},{"key":"rate","header":"Rate/Day","type":"money","width":100},{"key":"total","header":"Total","type":"money","width":110,"computed":"=N({crew})*N({rate})"},{"key":"system","header":"System","type":"text","width":190,"valid":{"ref":"systems.system"}},{"key":"notes","header":"Notes","type":"text","width":320},{"key":"id","header":"ID","type":"id","width":110}]},"systems":{"sheet":"Labor Budget","cols":[{"key":"system","header":"System","type":"text","width":200},{"key":"amount","header":"Amount","type":"money","width":120},{"key":"used","header":"Used","type":"money","width":120,"computed":"=SUMIF({labor.system:col},{system},{labor.total:col})"},{"key":"balance","header":"Balance","type":"money","width":120,"computed":"=N({amount})-N({used})"},{"key":"id","header":"ID","type":"id","width":110}]},"payroll":{"sheet":"Payroll","cols":[{"key":"period","header":"Pay Period","type":"date","width":100},{"key":"cost","header":"Direct Cost","type":"money","width":120},{"key":"code","header":"Cost Code","type":"text","width":100,"valid":{"ref":"budget.code"}},{"key":"desc","header":"Description","type":"text","width":200,"computed":"=IF({code}=\"\",\"\",IFERROR(INDEX({budget.item:col},MATCH({code},{budget.code:col},0)),\"\"))"},{"key":"notes","header":"Notes","type":"text","width":300},{"key":"id","header":"ID","type":"id","width":110}]},"days":{"sheet":"Non-Work Days","cols":[{"key":"date","header":"Date","type":"date","width":110},{"key":"notes","header":"Notes","type":"text","width":260},{"key":"id","header":"ID","type":"id","width":110}]}},"settings":{"sheet":"Settings","rows":[{"key":"name","label":"Project Name","type":"text","default":"New Project"},{"key":"job","label":"Job No.","type":"text","default":""},{"key":"address","label":"Address","type":"text","default":""},{"key":"start","label":"Project Start","type":"date","default":""},{"key":"contract","label":"Base Contract","type":"money","default":0},{"key":"hours","label":"Hours per Crew-Day","type":"number","default":8},{"key":"rate","label":"Default Rate/Day","type":"money","default":800}]},"summary":{"sheet":"Summary","layout":2,"rows":[{"r":1,"style":"title","cells":{"A":"=IFERROR({settings:Project Name},\"\")"}},{"r":2,"style":"sub","cells":{"A":"=IFERROR({settings:Address},\"\")"}},{"r":4,"style":"head","cells":{"A":"","B":"Estimate","C":"Cost","D":"Balance/ Savings","E":"Notes"}},{"r":5,"style":"bold","fmt":"money","cells":{"A":"OHP","B":"=B13-B11","C":"=C13-C11"}},{"r":6,"fmt":"money","cells":{"A":"Labor","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"Labor\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"Labor\")","D":"=B6-C6"}},{"r":7,"fmt":"money","cells":{"A":"Material","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"Material\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"Material\")","D":"=B7-C7"}},{"r":8,"fmt":"money","cells":{"A":"Equipment","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"Equipment\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"Equipment\")","D":"=B8-C8"}},{"r":9,"fmt":"money","cells":{"A":"General Requirements","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"General\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"General\")","D":"=B9-C9"}},{"r":11,"style":"bold","fmt":"money","cells":{"A":"TOTAL COST","B":"=SUMIFS({budget.estimate:col},{budget.section:col},\"<>Change Orders\")","C":"=SUMIFS({budget.costCalc:col},{budget.section:col},\"<>Change Orders\")","D":"=SUM({budget.balance:col})","E":"Savings / Loss in Buyout and Labor"}},{"r":12,"fmt":"money","cells":{"A":"Change Orders","B":"=SUMIFS({budget.estimate:col},{budget.section:col},\"Change Orders\")","C":"=SUMIFS({budget.costCalc:col},{budget.section:col},\"Change Orders\")"}},{"r":13,"style":"bold","fmt":"money","cells":{"A":"Total Contract Estimate","B":"=N(IFERROR({settings:Base Contract},0))+B12","C":"=SUM({budget.costCalc:col})"}},{"r":14,"style":"bold","fmt":"pct","cells":{"A":"Percent OHP","B":"=IF(B11=0,0,B5/B13)","C":"=IF(C13=0,0,C5/C13)"}},{"r":16,"fmt":"date","cells":{"A":"Project Start","B":"=IFERROR({settings:Project Start},\"\")"}},{"r":17,"fmt":"days","cells":{"A":"Project Current Duration","B":"=IF(B16=\"\",\"\",IFERROR(NETWORKDAYS.INTL(B16,TODAY(),1,{days.date:range}),\"\"))","C":"workdays, excl. weekends and the Non-Work Days tab"}},{"r":19,"style":"head","cells":{"A":"Crew labor (Labor Budget tab)","B":"Budget","C":"Used","D":"Balance"}},{"r":20,"fmt":"money","cells":{"A":"All systems","B":"=SUM({systems.amount:col})","C":"=SUM({systems.used:col})","D":"=SUM({systems.balance:col})"}},{"r":21,"fmt":"hours","cells":{"A":"Total Hours","B":"=SUM({labor.crew:col})*N(IFERROR({settings:Hours per Crew-Day},8))"}},{"r":23,"style":"head","cells":{"A":"Equipment (Equipment tab)","B":"Total"}},{"r":24,"fmt":"money","cells":{"A":"All equipment logged","B":"=SUM({equipment.total:col})"}},{"r":25,"fmt":"count","cells":{"A":"Rentals still on rent","B":"=COUNTIFS({equipment.unit:col},\"Day\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")+COUNTIFS({equipment.unit:col},\"Week\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")+COUNTIFS({equipment.unit:col},\"4 Weeks\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")+COUNTIFS({equipment.unit:col},\"Month\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")","C":"Day, week or month rentals with no off-rent date"}},{"r":27,"style":"note","cells":{"A":"This tab is calculated from the other tabs. Enter data in the app or on the data tabs - don't type over these formulas."}}]},"units":["Hour","Day","Week","4 Weeks","Month","Each","Lump Sum"],"rentalUnits":["Day","Week","4 Weeks","Month"],"statuses":["Active","On Hold","Closed"],"master":{"tables":{"projects":{"sheet":"Projects","cols":[{"key":"job","header":"Job No.","type":"text","width":90},{"key":"name","header":"Project","type":"text","width":280},{"key":"status","header":"Status","type":"text","width":90,"valid":{"list":"statuses"}},{"key":"link","header":"Sheet","type":"text","width":70,"computed":"=IF({id}=\"\",\"\",HYPERLINK(\"https://docs.google.com/spreadsheets/d/\"&{id}&\"/edit\",\"Open\"))"},{"key":"contract","header":"Contract","type":"money","width":120,"snap":"Total Contract Estimate!B"},{"key":"estCost","header":"Estimated Cost","type":"money","width":120,"snap":"TOTAL COST!B"},{"key":"cost","header":"Cost to Date","type":"money","width":120,"snap":"TOTAL COST!C"},{"key":"ohp","header":"Est. OHP","type":"money","width":120,"snap":"OHP!B"},{"key":"ohpPct","header":"OHP %","type":"pct","width":80,"snap":"Percent OHP!B"},{"key":"laborLeft","header":"Crew Labor Left","type":"money","width":120,"snap":"All systems!D"},{"key":"onRent","header":"On Rent","type":"count","width":80,"snap":"Rentals still on rent!B"},{"key":"updated","header":"Numbers As Of","type":"datetime","width":150},{"key":"notes","header":"Notes","type":"text","width":260},{"key":"id","header":"ID","type":"id","width":340}]}}}};
+var SCHEMA = {"app":"project-tracker","version":"2.1.0","sections":["General Requirements","Scope","Change Orders"],"types":["Labor","Material","Equipment","General"],"sources":["Manual","Material Log","Equipment Log","Payroll"],"tables":{"budget":{"sheet":"Budget","cols":[{"key":"section","header":"Section","type":"text","width":160,"valid":{"list":"sections"}},{"key":"code","header":"Cost Code","type":"text","width":90},{"key":"item","header":"Item","type":"text","width":290},{"key":"type","header":"Type","type":"text","width":80,"valid":{"list":"types"}},{"key":"estimate","header":"Estimate","type":"money","width":120},{"key":"source","header":"Cost Source","type":"text","width":110,"valid":{"list":"sources"}},{"key":"cost","header":"Manual Cost","type":"money","width":120},{"key":"costCalc","header":"Cost","type":"money","width":120,"computed":"=IF({source}=\"Material Log\",IF({item}=\"\",0,SUMIF({materials.item:col},{item},{materials.total:col})),IF({source}=\"Equipment Log\",IF({item}=\"\",0,SUMIF({equipment.item:col},{item},{equipment.total:col})),IF({source}=\"Payroll\",IF({code}=\"\",0,SUMIF({payroll.code:col},{code},{payroll.cost:col})),N({cost}))))"},{"key":"balance","header":"Balance","type":"money","width":120,"computed":"=N({estimate})-N({costCalc})"},{"key":"notes","header":"Notes","type":"text","width":380},{"key":"sort","header":"Sort","type":"number","width":60},{"key":"id","header":"ID","type":"id","width":110}]},"materials":{"sheet":"Materials","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"desc","header":"Description","type":"text","width":320},{"key":"qty","header":"Quantity","type":"number","width":90},{"key":"uom","header":"UoM","type":"text","width":70},{"key":"rate","header":"Unit Rate","type":"rate","width":110},{"key":"total","header":"Total Cost","type":"money","width":120,"computed":"=N({qty})*N({rate})"},{"key":"item","header":"Budget Item","type":"text","width":270,"valid":{"ref":"budget.item"}},{"key":"notes","header":"Notes","type":"text","width":300},{"key":"id","header":"ID","type":"id","width":110}]},"equipment":{"sheet":"Equipment","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"offDate","header":"Off-Rent Date","type":"date","width":110},{"key":"desc","header":"Equipment","type":"text","width":260},{"key":"vendor","header":"Vendor","type":"text","width":160},{"key":"qty","header":"Quantity","type":"number","width":90},{"key":"unit","header":"Unit","type":"text","width":90,"valid":{"list":"units"}},{"key":"rate","header":"Unit Rate","type":"rate","width":110},{"key":"total","header":"Total Cost","type":"money","width":120,"computed":"=N({qty})*N({rate})"},{"key":"item","header":"Budget Item","type":"text","width":220,"valid":{"ref":"budget.item"}},{"key":"notes","header":"Notes","type":"text","width":300},{"key":"id","header":"ID","type":"id","width":110}]},"labor":{"sheet":"Labor Log","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"crew","header":"# Labor","type":"number","width":80},{"key":"rate","header":"Rate/Day","type":"money","width":100},{"key":"total","header":"Total","type":"money","width":110,"computed":"=N({crew})*N({rate})"},{"key":"notes","header":"Notes","type":"text","width":320},{"key":"id","header":"ID","type":"id","width":110}]},"payroll":{"sheet":"Payroll","cols":[{"key":"period","header":"Pay Period","type":"date","width":100},{"key":"cost","header":"Direct Cost","type":"money","width":120},{"key":"code","header":"Cost Code","type":"text","width":100,"valid":{"ref":"budget.code"}},{"key":"desc","header":"Description","type":"text","width":200,"computed":"=IF({code}=\"\",\"\",IFERROR(INDEX({budget.item:col},MATCH({code},{budget.code:col},0)),\"\"))"},{"key":"notes","header":"Notes","type":"text","width":300},{"key":"id","header":"ID","type":"id","width":110}]},"notes":{"sheet":"Progress Notes","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"category","header":"Category","type":"text","width":120,"valid":{"list":"noteCategories"}},{"key":"note","header":"Note","type":"text","width":460},{"key":"from","header":"From","type":"text","width":170},{"key":"follow","header":"Follow-up","type":"text","width":90,"valid":{"list":"followStates"}},{"key":"by","header":"By","type":"text","width":110},{"key":"logged","header":"Logged","type":"datetime","width":160},{"key":"id","header":"ID","type":"id","width":110}]},"days":{"sheet":"Non-Work Days","cols":[{"key":"date","header":"Date","type":"date","width":110},{"key":"notes","header":"Notes","type":"text","width":260},{"key":"id","header":"ID","type":"id","width":110}]}},"settings":{"sheet":"Settings","rows":[{"key":"name","label":"Project Name","type":"text","default":"New Project"},{"key":"job","label":"Job No.","type":"text","default":""},{"key":"address","label":"Address","type":"text","default":""},{"key":"start","label":"Project Start","type":"date","default":""},{"key":"contract","label":"Base Contract","type":"money","default":0},{"key":"hours","label":"Hours per Crew-Day","type":"number","default":8},{"key":"rate","label":"Default Rate/Day","type":"money","default":800}]},"summary":{"sheet":"Summary","layout":3,"rows":[{"r":1,"style":"title","cells":{"A":"=IFERROR({settings:Project Name},\"\")"}},{"r":2,"style":"sub","cells":{"A":"=IFERROR({settings:Address},\"\")"}},{"r":4,"style":"head","cells":{"A":"","B":"Estimate","C":"Cost","D":"Balance/ Savings","E":"Notes"}},{"r":5,"style":"bold","fmt":"money","cells":{"A":"OHP","B":"=B13-B11","C":"=C13-C11"}},{"r":6,"fmt":"money","cells":{"A":"Labor","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"Labor\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"Labor\")","D":"=B6-C6"}},{"r":7,"fmt":"money","cells":{"A":"Material","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"Material\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"Material\")","D":"=B7-C7"}},{"r":8,"fmt":"money","cells":{"A":"Equipment","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"Equipment\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"Equipment\")","D":"=B8-C8"}},{"r":9,"fmt":"money","cells":{"A":"General Requirements","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"General\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"General\")","D":"=B9-C9"}},{"r":11,"style":"bold","fmt":"money","cells":{"A":"TOTAL COST","B":"=SUMIFS({budget.estimate:col},{budget.section:col},\"<>Change Orders\")","C":"=SUMIFS({budget.costCalc:col},{budget.section:col},\"<>Change Orders\")","D":"=SUM({budget.balance:col})","E":"Savings / Loss in Buyout and Labor"}},{"r":12,"fmt":"money","cells":{"A":"Change Orders","B":"=SUMIFS({budget.estimate:col},{budget.section:col},\"Change Orders\")","C":"=SUMIFS({budget.costCalc:col},{budget.section:col},\"Change Orders\")"}},{"r":13,"style":"bold","fmt":"money","cells":{"A":"Total Contract Estimate","B":"=N(IFERROR({settings:Base Contract},0))+B12","C":"=SUM({budget.costCalc:col})"}},{"r":14,"style":"bold","fmt":"pct","cells":{"A":"Percent OHP","B":"=IF(B11=0,0,B5/B13)","C":"=IF(C13=0,0,C5/C13)"}},{"r":16,"fmt":"date","cells":{"A":"Project Start","B":"=IFERROR({settings:Project Start},\"\")"}},{"r":17,"fmt":"days","cells":{"A":"Project Current Duration","B":"=IF(B16=\"\",\"\",IFERROR(NETWORKDAYS.INTL(B16,TODAY(),1,{days.date:range}),\"\"))","C":"workdays, excl. weekends and the Non-Work Days tab"}},{"r":19,"style":"head","cells":{"A":"Crew labor (Labor Log tab)","B":"Labor estimate","C":"Crew log","D":"Left"}},{"r":20,"fmt":"money","cells":{"A":"Crew log at the daily rate","B":"=B6","C":"=SUM({labor.total:col})","D":"=B20-C20"}},{"r":21,"fmt":"hours","cells":{"A":"Total Hours","B":"=SUM({labor.crew:col})*N(IFERROR({settings:Hours per Crew-Day},8))"}},{"r":23,"style":"head","cells":{"A":"Equipment (Equipment tab)","B":"Total"}},{"r":24,"fmt":"money","cells":{"A":"All equipment logged","B":"=SUM({equipment.total:col})"}},{"r":25,"fmt":"count","cells":{"A":"Rentals still on rent","B":"=COUNTIFS({equipment.unit:col},\"Day\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")+COUNTIFS({equipment.unit:col},\"Week\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")+COUNTIFS({equipment.unit:col},\"4 Weeks\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")+COUNTIFS({equipment.unit:col},\"Month\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")","C":"Day, week or month rentals with no off-rent date"}},{"r":27,"style":"head","cells":{"A":"Progress notes (Progress Notes tab)","B":"Count"}},{"r":28,"fmt":"count","cells":{"A":"Open follow-ups","B":"=COUNTIF({notes.follow:col},\"Open\")","C":"Notes marked Follow-up: Open"}},{"r":30,"style":"note","cells":{"A":"This tab is calculated from the other tabs. Enter data in the app or on the data tabs - don't type over these formulas."}}]},"units":["Hour","Day","Week","4 Weeks","Month","Each","Lump Sum"],"rentalUnits":["Day","Week","4 Weeks","Month"],"statuses":["Active","On Hold","Closed"],"master":{"tables":{"projects":{"sheet":"Projects","cols":[{"key":"job","header":"Job No.","type":"text","width":90},{"key":"name","header":"Project","type":"text","width":280},{"key":"status","header":"Status","type":"text","width":90,"valid":{"list":"statuses"}},{"key":"link","header":"Sheet","type":"text","width":70,"computed":"=IF({id}=\"\",\"\",HYPERLINK(\"https://docs.google.com/spreadsheets/d/\"&{id}&\"/edit\",\"Open\"))"},{"key":"contract","header":"Contract","type":"money","width":120,"snap":"Total Contract Estimate!B"},{"key":"estCost","header":"Estimated Cost","type":"money","width":120,"snap":"TOTAL COST!B"},{"key":"cost","header":"Cost to Date","type":"money","width":120,"snap":"TOTAL COST!C"},{"key":"ohp","header":"Est. OHP","type":"money","width":120,"snap":"OHP!B"},{"key":"ohpPct","header":"OHP %","type":"pct","width":80,"snap":"Percent OHP!B"},{"key":"laborLeft","header":"Crew Labor Left","type":"money","width":120,"snap":"Crew log at the daily rate!D"},{"key":"onRent","header":"On Rent","type":"count","width":80,"snap":"Rentals still on rent!B"},{"key":"openFollow","header":"Open Follow-ups","type":"count","width":110,"snap":"Open follow-ups!B"},{"key":"updated","header":"Numbers As Of","type":"datetime","width":150},{"key":"notes","header":"Notes","type":"text","width":260},{"key":"id","header":"ID","type":"id","width":340}]}}},"noteCategories":["Progress","Client request","Change","Material","Issue","Meeting","Other"],"followStates":["Open","Done"]};
 var SEED = null;
 
 var PREVIEW = CONFIG.mode === 'preview';
 var TABLES = Object.keys(SCHEMA.tables);
-var PFX = { budget: 'bud', materials: 'mat', equipment: 'eqp', labor: 'lab', systems: 'sys', payroll: 'pay', days: 'day' };
+var PFX = { budget: 'bud', materials: 'mat', equipment: 'eqp', labor: 'lab', payroll: 'pay', notes: 'note', days: 'day' };
 // pt.cache.v1 held the one-job cache before projects; it is moved to pt.c2._ on first start.
 var KEYS = { conn: 'pt.conn.v1', cacheV1: 'pt.cache.v1', cache: 'pt.c2.', outbox: 'pt.outbox.v2', server: 'pt.server.v2',
-  preview: 'pt.preview.v2', pvList: 'pt.preview.projects.v1', pvData: 'pt.preview.p.', ui: 'pt.ui.v1' };
+  preview: 'pt.preview.v2', pvList: 'pt.preview.projects.v1', pvData: 'pt.preview.p.', ui: 'pt.ui.v1', me: 'pt.me.v1' };
 var SINGLE = '_';   // the project ID used for a one-job sheet
 var STATUS = SCHEMA.statuses || ['Active', 'On Hold', 'Closed'];
 var TABS = [
@@ -519,6 +547,7 @@ var TABS = [
   { id: 'materials', label: 'Materials', icon: '<path d="M3 7.5 12 3l9 4.5-9 4.5z"/><path d="M3 7.5v9L12 21l9-4.5v-9"/><path d="M12 12v9"/>' },
   { id: 'equipment', label: 'Equipment', icon: '<path d="M6 21V4.5"/><path d="M6 4.5h14"/><path d="M6 9l4.5-4.5"/><path d="M16.5 4.5V11"/><path d="M16.5 11a2 2 0 1 1-2 2"/><path d="M3 21h7"/>' },
   { id: 'labor', label: 'Labor', icon: '<path d="M3 18h18"/><path d="M5 18v-2a7 7 0 0 1 14 0v2"/><path d="M10 9V5.5h4V9"/>' },
+  { id: 'notes', label: 'Notes', icon: '<path d="M3 21h8"/><path d="M15 4.5l4.5 4.5L9 19.5H4.5V15z"/><path d="M12.5 7l4.5 4.5"/>' },
   { id: 'setup', label: 'Settings', icon: '<path d="M4 7h9M17 7h3M4 12h3M11 12h9M4 17h11M19 17h1"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="17" r="2"/>' }
 ];
 
@@ -629,6 +658,7 @@ function esc(s) {
   });
 }
 function plural(n, one, many) { return n === 1 ? one : (many || one + 's'); }
+function clip(t, n) { t = String(t || '').replace(/\s+/g, ' ').trim(); return t.length > n ? t.slice(0, n - 1).replace(/\s+\S*$/, '') + '...' : t; }
 
 /* =========================================================== dates */
 function pad(n) { return (n < 10 ? '0' : '') + n; }
@@ -761,7 +791,7 @@ function model() {
 }
 function compute(d) {
   var m = {};
-  var matBy = {}, matCount = {}, payBy = {}, sysUsed = {};
+  var matBy = {}, matCount = {}, payBy = {};
   m.materials = d.materials.map(function (r, i) { return { r: r, i: i, total: val(r.qty) * val(r.rate) }; });
   m.materials.forEach(function (x) { var k = keyOf(x.r.item); if (k) { matBy[k] = (matBy[k] || 0) + x.total; matCount[k] = (matCount[k] || 0) + 1; } });
   var td = today(), eqBy = {}, eqCount = {};
@@ -777,7 +807,6 @@ function compute(d) {
   m.onRent = m.equipment.filter(function (x) { return x.onRent && !x.future; }).sort(function (a, b) { return (a.r.date || '').localeCompare(b.r.date || ''); });
   d.payroll.forEach(function (p) { var k = keyOf(p.code); if (k) payBy[k] = (payBy[k] || 0) + val(p.cost); });
   m.labor = d.labor.map(function (r, i) { return { r: r, i: i, total: val(r.crew) * val(r.rate) }; });
-  m.labor.forEach(function (x) { var k = keyOf(x.r.system); if (k) sysUsed[k] = (sysUsed[k] || 0) + x.total; });
 
   m.lines = d.budget.map(function (r, i) {
     var L = { r: r, i: i, src: srcKey(r), est: val(r.estimate) };
@@ -818,14 +847,10 @@ function compute(d) {
   s.pctOhp = s.totalEst === 0 || s.contract === 0 ? 0 : s.ohpEst / s.contract;   // C41
   s.pctOhpCost = s.allCost === 0 ? 0 : s.ohpCost / s.allCost;                      // D41
 
-  m.systems = d.systems.map(function (r) {
-    var k = keyOf(r.system), used = k ? (sysUsed[k] || 0) : 0, amt = val(r.amount);
-    var crew = d.labor.reduce(function (a, l) { return a + (k && keyOf(l.system) === k ? val(l.crew) : 0); }, 0);
-    return { r: r, amount: amt, used: used, bal: amt - used, crew: crew };
-  });
-  m.sysBudget = m.systems.reduce(function (a, x) { return a + x.amount; }, 0);
-  m.sysUsed = m.systems.reduce(function (a, x) { return a + x.used; }, 0);
-  m.sysBal = m.sysBudget - m.sysUsed;
+  // Crew log at the daily rate against the Labor estimate on the Budget page (Summary row 20).
+  m.laborBudget = s.laborEst;
+  m.crewCost = m.labor.reduce(function (a, x) { return a + x.total; }, 0);
+  m.laborLeft = m.laborBudget - m.crewCost;
   m.hoursPerDay = settingNum(d, 'hours', 8);
   m.crewDays = d.labor.reduce(function (a, l) { return a + val(l.crew); }, 0);
   m.hours = m.crewDays * m.hoursPerDay;
@@ -837,27 +862,29 @@ function compute(d) {
   m.payLines = m.lines.filter(function (L) { return L.src === 'payroll'; });
   m.payTracked = m.payLines.reduce(function (a, L) { return a + L.cost; }, 0);
   m.runway = runway(m, d, hol);
+  m.notes = d.notes.map(function (r, i) { return { r: r, i: i }; }).sort(function (a, b) {
+    return (b.r.date || '').localeCompare(a.r.date || '') || (b.r.logged || '').localeCompare(a.r.logged || '') || b.i - a.i;
+  });
+  m.openFollow = m.notes.filter(function (x) { return keyOf(x.r.follow) === 'open'; });
   m.attention = attention(m, d);
   return m;
 }
 
 function runway(m, d, hol) {
-  var known = {};
-  d.systems.forEach(function (r) { if (keyOf(r.system)) known[keyOf(r.system)] = true; });
   var byDate = {};
   m.labor.forEach(function (x) {
-    if (!x.r.date || !(val(x.r.crew) > 0) || !known[keyOf(x.r.system)]) return;
+    if (!x.r.date || !(val(x.r.crew) > 0)) return;
     var b = byDate[x.r.date] = byDate[x.r.date] || { crew: 0, cost: 0 };
     b.crew += val(x.r.crew); b.cost += x.total;
   });
   var dates = Object.keys(byDate).filter(function (k) { return byDate[k].cost > 0; }).sort();
-  if (!dates.length || !m.systems.length) return null;
+  if (!dates.length || !(m.laborBudget > 0)) return null;
   var recent = dates.slice(-5);
   var cost = 0, crew = 0;
   recent.forEach(function (k) { cost += byDate[k].cost; crew += byDate[k].crew; });
-  var out = { n: recent.length, avgCost: cost / recent.length, avgCrew: crew / recent.length, last: dates[dates.length - 1], left: m.sysBal };
-  if (m.sysBal <= 0) { out.over = -m.sysBal; return out; }
-  out.days = m.sysBal / out.avgCost;
+  var out = { n: recent.length, avgCost: cost / recent.length, avgCrew: crew / recent.length, last: dates[dates.length - 1], left: m.laborLeft };
+  if (m.laborLeft <= 0) { out.over = -m.laborLeft; return out; }
+  out.days = m.laborLeft / out.avgCost;
   out.date = nthWorkdayAfter(out.last, Math.max(1, Math.ceil(out.days - 1e-9)), hol);
   return out;
 }
@@ -873,29 +900,29 @@ function attention(m, d) {
         d: money(L.bal) + ' left of ' + money(L.est) + '.' });
     }
   });
-  m.systems.forEach(function (x) {
-    if (x.bal < -0.005) out.push({ sev: 'critical', tab: 'labor', t: (x.r.system || 'Unnamed system') + ' crew days are ' + money(-x.bal) + ' over its labor budget',
-      d: money(x.used) + ' logged against ' + money(x.amount) + ' (' + qty(x.crew) + ' crew-days).' });
-  });
   var rw = m.runway;
-  if (rw && m.sysBudget > 0) {
-    var used = m.sysUsed / m.sysBudget;
+  if (rw && m.laborBudget > 0) {
+    var used = m.crewCost / m.laborBudget;
     if (rw.over) {
-      out.push({ sev: 'critical', tab: 'labor', t: 'Crew log is ' + money(rw.over) + ' over the labor budget',
-        d: money(m.sysUsed) + ' logged against ' + money(m.sysBudget) + '. Payroll to date is ' + money(m.payTracked) + '.' });
+      out.push({ sev: 'critical', tab: 'labor', t: 'Crew log is ' + money(rw.over) + ' over the labor estimate',
+        d: money(m.crewCost) + ' logged at the crew-day rate against ' + money(m.laborBudget) + '. Payroll to date is ' + money(m.payTracked) + '.' });
     } else if (used >= 0.8) {
-      out.push({ sev: 'warning', tab: 'labor', t: 'Crew log has used ' + pct(used) + ' of the labor budget',
-        d: money(m.sysBal) + ' left. At the recent pace (' + money(rw.avgCost) + ' a day) it runs out on ' + fmtDay(rw.date) +
-          '. Payroll to date is ' + money(m.payTracked) + ' (' + pct(m.sum.laborEst ? m.payTracked / m.sum.laborEst : 0) + ' of the labor estimate).' });
+      out.push({ sev: 'warning', tab: 'labor', t: 'Crew log has used ' + pct(used) + ' of the labor estimate',
+        d: money(m.laborLeft) + ' left. At the recent pace (' + money(rw.avgCost) + ' a day) it runs out on ' + fmtDay(rw.date) +
+          '. Payroll to date is ' + money(m.payTracked) + ' (' + pct(m.payTracked / m.laborBudget) + ' of the labor estimate).' });
     }
   }
-  var matNames = {}, eqNames = {}, payCodes = {}, sysNames = {}, orig = {};
+  if (m.openFollow.length) {
+    var oldest = m.openFollow[m.openFollow.length - 1].r;
+    out.push({ sev: 'info', tab: 'notes', t: m.openFollow.length + ' ' + plural(m.openFollow.length, 'follow-up') + ' open in progress notes',
+      d: 'Oldest, ' + (fmtShort(oldest.date) || 'no date') + ': ' + clip(oldest.note, 110) });
+  }
+  var matNames = {}, eqNames = {}, payCodes = {}, orig = {};
   m.lines.forEach(function (L) {
     if (L.src === 'material' && keyOf(L.r.item)) { matNames[keyOf(L.r.item)] = (matNames[keyOf(L.r.item)] || 0) + 1; orig['m' + keyOf(L.r.item)] = orig['m' + keyOf(L.r.item)] || L.r.item; }
     if (L.src === 'equipment' && keyOf(L.r.item)) { eqNames[keyOf(L.r.item)] = (eqNames[keyOf(L.r.item)] || 0) + 1; orig['e' + keyOf(L.r.item)] = orig['e' + keyOf(L.r.item)] || L.r.item; }
     if (L.src === 'payroll' && keyOf(L.r.code)) { payCodes[keyOf(L.r.code)] = (payCodes[keyOf(L.r.code)] || 0) + 1; orig['p' + keyOf(L.r.code)] = orig['p' + keyOf(L.r.code)] || L.r.code; }
   });
-  d.systems.forEach(function (r) { if (keyOf(r.system)) sysNames[keyOf(r.system)] = true; });
   var um = m.materials.filter(function (x) { return !matNames[keyOf(x.r.item)]; });
   if (um.length) out.push({ sev: 'info', tab: 'materials', t: um.length + ' ' + plural(um.length, 'purchase') + ' not linked to a budget line',
     d: money(um.reduce(function (a, x) { return a + x.total; }, 0)) + ' that no line counts. Pick a budget item for ' + plural(um.length, 'it', 'them') + '.' });
@@ -910,9 +937,6 @@ function attention(m, d) {
   var up = d.payroll.filter(function (p) { return !payCodes[keyOf(p.code)]; });
   if (up.length) out.push({ sev: 'info', tab: 'labor', t: up.length + ' payroll ' + plural(up.length, 'entry', 'entries') + ' with a cost code no budget line uses',
     d: money(up.reduce(function (a, p) { return a + val(p.cost); }, 0)) + ' is left out of the labor cost.' });
-  var ul = m.labor.filter(function (x) { return val(x.r.crew) > 0 && !sysNames[keyOf(x.r.system)]; });
-  if (ul.length) out.push({ sev: 'info', tab: 'labor', t: ul.length + ' crew ' + plural(ul.length, 'entry', 'entries') + ' without a labor budget system',
-    d: money(ul.reduce(function (a, x) { return a + x.total; }, 0)) + ' is left out of the system balances.' });
   Object.keys(matNames).forEach(function (k) { if (matNames[k] > 1) out.push({ sev: 'warning', tab: 'budget', t: matNames[k] + ' material-log lines share the name "' + orig['m' + k] + '"', d: 'Each of them counts the same purchases.' }); });
   Object.keys(eqNames).forEach(function (k) { if (eqNames[k] > 1) out.push({ sev: 'warning', tab: 'budget', t: eqNames[k] + ' equipment-log lines share the name "' + orig['e' + k] + '"', d: 'Each of them counts the same equipment.' }); });
   Object.keys(payCodes).forEach(function (k) { if (payCodes[k] > 1) out.push({ sev: 'warning', tab: 'budget', t: payCodes[k] + ' payroll lines share cost code ' + orig['p' + k], d: 'Each of them counts the same payroll.' }); });
@@ -934,13 +958,13 @@ var state = {
   data: null,
   pid: '',                // open project: SINGLE for a one-job sheet, '' while the project list is showing
   conn: null,             // { url, key, project }  project is set when the key opens one project only
-  server: { mode: PREVIEW ? 'master' : '', access: 'all', name: '', sheetUrl: '', version: '' },
+  server: { mode: PREVIEW ? 'master' : '', access: 'all', name: '', sheetUrl: '', version: '', home: '' },
   projects: [],           // the project list: { id, job, name, status, notes, url, snap, updated }
   projectsAt: 0,
   outbox: [],             // changes waiting for the sheet, each tagged with its project
   meta: blankMeta(),
   sync: { state: PREVIEW ? 'preview' : 'idle', msg: '' },
-  ui: Object.assign({ tab: 'overview', laborView: 'crew', matFilter: '', matSearch: '', eqFilter: '', eqSearch: '', pSearch: '', chartTable: false,
+  ui: Object.assign({ tab: 'overview', laborView: 'crew', matFilter: '', matSearch: '', eqFilter: '', eqSearch: '', pSearch: '', noteFilter: '', noteSearch: '', chartTable: false,
     project: '', lastProject: '', showClosed: false }, store.get(KEYS.ui) || {})
 };
 function saveUi() { store.set(KEYS.ui, { tab: state.ui.tab, laborView: state.ui.laborView, project: state.ui.project, lastProject: state.ui.lastProject }); }
@@ -951,7 +975,7 @@ function atList() { return isMaster() && !state.pid; }
 function findProject(id) { for (var i = 0; i < state.projects.length; i++) if (state.projects[i].id === id) return state.projects[i]; return null; }
 function pendingFor(pid) { return state.outbox.filter(function (o) { return (o.project || SINGLE) === pid; }); }
 function projectLabel(e) { return e ? (e.job ? e.job + ' ' : '') + (e.name || 'Untitled project') : ''; }
-var SNAP_KEYS = ['contract', 'estCost', 'cost', 'ohp', 'ohpPct', 'laborLeft', 'onRent'];
+var SNAP_KEYS = ['contract', 'estCost', 'cost', 'ohp', 'ohpPct', 'laborLeft', 'onRent', 'openFollow'];
 function normEntry(e) {
   var snap = {};
   SNAP_KEYS.forEach(function (k) { var v = e.snap && e.snap[k]; snap[k] = typeof v === 'number' && isFinite(v) ? v : null; });
@@ -1033,6 +1057,19 @@ function gotServer(res) {
   else if (!state.server.mode) state.server.mode = 'single';
   if (res.access) state.server.access = res.access;
   if (res.version) state.server.version = res.version;
+  if (res.mode === 'master' && typeof res.home === 'string') {
+    state.server.home = res.home;
+    if (res.home) adoptHome(res.home);
+  }
+}
+/** The project list was turned on in this job's own script: what this device kept as "the job" now belongs to its project ID. */
+function adoptHome(id) {
+  var moved = false;
+  state.outbox.forEach(function (o) { if ((o.project || SINGLE) === SINGLE) { o.project = id; moved = true; } });
+  if (moved) saveOutbox();
+  var c = store.get(KEYS.cache + SINGLE);
+  if (c) { if (!store.get(KEYS.cache + id)) store.set(KEYS.cache + id, c); store.del(KEYS.cache + SINGLE); }
+  if (state.pid === SINGLE) { state.pid = id; state.ui.project = id; state.ui.lastProject = id; saveUi(); }
 }
 
 function setSync(s, msg) { state.sync = { state: s, msg: msg || '' }; renderSync(); }
@@ -1063,6 +1100,7 @@ function load(opts) {
     if (!opts.quiet) setSync('loading');
     return call('load', pp(pid)).then(function (res) {
       gotServer(res);
+      if (pid === SINGLE && res.home && state.pid === res.home) pid = res.home;
       if (res.project) upsertProject(res.project);
       var fresh = freshFrom(res, pid), meta = metaFrom(res);
       if (state.pid !== pid) {
@@ -1159,8 +1197,9 @@ function flush() {
 function reloadAfter() {
   var pid = state.pid;
   return call('load', pp(pid)).then(function (res) {
-    if (state.pid !== pid) return;
     gotServer(res);
+    if (pid === SINGLE && res.home && state.pid === res.home) pid = res.home;
+    if (state.pid !== pid) return;
     if (res.project) upsertProject(res.project);
     state.data = freshFrom(res, pid); state.meta = metaFrom(res);
     bump(); saveCache(); render();
@@ -1243,7 +1282,8 @@ function render() {
   if (list) { main.innerHTML = viewProjects(); return; }
   if (!PREVIEW && !state.ready) { main.innerHTML = viewLoading(); return; }
   var v = state.ui.tab;
-  main.innerHTML = v === 'budget' ? viewBudget() : v === 'materials' ? viewMaterials() : v === 'equipment' ? viewEquipment() : v === 'labor' ? viewLabor() : v === 'setup' ? viewSetup() : viewOverview();
+  main.innerHTML = v === 'budget' ? viewBudget() : v === 'materials' ? viewMaterials() : v === 'equipment' ? viewEquipment() : v === 'labor' ? viewLabor() :
+    v === 'notes' ? viewNotes() : v === 'setup' ? viewSetup() : viewOverview();
   if (v === 'overview' || v === 'labor') drawCharts();
   if (v === 'setup') $$('#projectForm input[data-num]').forEach(liveNum);
 }
@@ -1344,8 +1384,8 @@ function cardNums(e) {
 }
 function numsOf(d, at) {
   var m = compute(d), s = m.sum;
-  return { contract: s.contract, estCost: s.totalEst, cost: s.totalCost, ohp: s.ohpEst, ohpPct: s.pctOhp, laborLeft: m.sysBal,
-    onRent: m.equipment.filter(function (x) { return x.onRent; }).length, at: at, local: true };
+  return { contract: s.contract, estCost: s.totalEst, cost: s.totalCost, ohp: s.ohpEst, ohpPct: s.pctOhp, laborLeft: m.laborLeft,
+    onRent: m.equipment.filter(function (x) { return x.onRent; }).length, openFollow: m.openFollow.length, at: at, local: true };
 }
 function byJob(a, b) {
   if (a.job && b.job && a.job !== b.job) return b.job.localeCompare(a.job, 'en', { numeric: true });
@@ -1395,11 +1435,12 @@ function viewProjects() {
 }
 function portfolioCard(list) {
   var open = list.filter(function (e) { return e.status !== 'Closed'; });
-  var t = { contract: 0, cost: 0, est: 0, ohp: 0, labor: 0, rent: 0, known: 0 };
+  var t = { contract: 0, cost: 0, est: 0, ohp: 0, labor: 0, rent: 0, follow: 0, known: 0 };
   open.forEach(function (e) {
     var n = cardNums(e);
     if (n.contract === null || n.contract === undefined) return;
     t.known++; t.contract += n.contract; t.cost += n.cost || 0; t.est += n.estCost || 0; t.ohp += n.ohp || 0; t.labor += n.laborLeft || 0; t.rent += n.onRent || 0;
+    t.follow += n.openFollow || 0;
   });
   var missing = open.length - t.known;
   return '<section class="card" aria-labelledby="pfLbl"><div class="card-head"><div><h2 id="pfLbl">Open projects</h2><p>' +
@@ -1408,8 +1449,9 @@ function portfolioCard(list) {
     stat('Contract value', money(t.contract), 'Base contracts plus change orders') +
     stat('Cost to date', money(t.cost), t.est ? pct(t.cost / t.est) + ' of ' + money(t.est) + ' estimated' : '') +
     stat('Estimated OHP', '<span class="' + moneyCls(t.ohp) + '">' + money(t.ohp) + '</span>', t.contract ? pct(t.ohp / t.contract, 2) + ' of the contract value' : '') +
-    stat('Crew labor left', '<span class="' + moneyCls(t.labor) + '">' + money(t.labor) + '</span>', 'Labor budgets less the crew log') +
+    stat('Crew labor left', '<span class="' + moneyCls(t.labor) + '">' + money(t.labor) + '</span>', 'Labor estimates less the crew log') +
     stat('Rentals on rent', String(t.rent), t.rent ? 'No off-rent date yet' : 'None out') +
+    stat('Follow-ups open', String(t.follow), 'In progress notes') +
     '</div></section>';
 }
 function projectCard(e) {
@@ -1434,6 +1476,7 @@ function projectCard(e) {
   }
   var foot = [];
   if (n.onRent) foot.push(n.onRent + ' ' + plural(n.onRent, 'rental') + ' on rent');
+  if (n.openFollow) foot.push('<span class="w">' + n.openFollow + ' ' + plural(n.openFollow, 'follow-up') + ' open</span>');
   if (waiting) foot.push('<span class="w">' + waiting + ' ' + plural(waiting, 'change') + ' waiting to save</span>');
   if (!PREVIEW && n.at && known) foot.push('Updated ' + esc(timeAgo(n.at)));
   if (foot.length) h += '<span class="foot">' + foot.map(function (x) { return '<span>' + x + '</span>'; }).join('') + '</span>';
@@ -1493,7 +1536,7 @@ function viewOverview() {
     (att.length ? '<ul class="alist">' + att.slice(0, 8).map(alertItem).join('') + '</ul>' : '<p class="empty-ok">Every line is within its estimate and every entry is linked to a budget line.</p>') +
     '</section>';
 
-  return '<div class="stack">' + hero + '<div class="grid2">' + summary + attHtml + '</div>' + laborCard(true) + '</div>';
+  return '<div class="stack">' + hero + '<div class="grid2">' + summary + attHtml + '</div>' + notesCard() + laborCard(true) + '</div>';
 }
 function alertItem(a) {
   var icon = a.sev === 'critical' ? '!' : a.sev === 'warning' ? '!' : 'i';
@@ -1524,20 +1567,20 @@ function mrow(o) {
 
 function laborCard(compactView) {
   var m = model(), d = state.data, rw = m.runway;
-  var used = m.sysBudget ? m.sysUsed / m.sysBudget : 0;
+  var used = m.laborBudget ? m.crewCost / m.laborBudget : 0;
   var stats = '<div class="stats">' +
-    stat('Crew log', money(m.sysUsed), m.sysBudget ? pct(used) + ' of ' + money(m.sysBudget) : 'No labor budget yet') +
-    stat('Left in labor budget', '<span class="' + moneyCls(m.sysBal) + '">' + money(m.sysBal) + '</span>',
-      rw ? (rw.over ? 'Over at the recent pace' : 'Runs out ' + fmtDay(rw.date) + ' at the recent pace') : 'Log crew days to see the pace') +
+    stat('Crew log', money(m.crewCost), m.laborBudget ? pct(used) + ' of the ' + money(m.laborBudget) + ' labor estimate' : 'No Labor lines on the Budget page yet') +
+    stat('Labor estimate left', '<span class="' + moneyCls(m.laborLeft) + '">' + money(m.laborLeft) + '</span>',
+      rw ? (rw.over ? 'Over at the crew-day rate' : 'Runs out ' + fmtDay(rw.date) + ' at the recent pace') : 'Log crew days to see the pace') +
     stat('Payroll to date', money(m.payTracked), m.sum.laborEst ? pct(m.payTracked / m.sum.laborEst) + ' of the labor estimate' : '') +
     stat('Crew-days', qty(m.crewDays), qty(m.hours) + ' hr at ' + qty(m.hoursPerDay) + ' hr a day') +
     '</div>';
   var hasSeries = m.labor.some(function (x) { return x.total > 0; }) || d.payroll.length;
-  return '<section class="card"><div class="card-head"><div><h2>Labor budget burn</h2><p>Crew log at the daily rate, against the labor budget by system. Payroll shows actual direct cost.</p></div>' +
+  return '<section class="card"><div class="card-head"><div><h2>Labor burn</h2><p>Crew log at the daily rate, against the Labor estimate on the Budget page. Payroll shows actual direct cost.</p></div>' +
     (compactView ? '<button type="button" class="btn sm" data-action="tab" data-tab="labor">Open labor</button>' : '') + '</div>' +
     stats +
-    (hasSeries ? '<div class="legend" style="margin-top:16px"><span><i style="background:var(--accent)"></i>Crew log (cumulative)</span><span><i style="background:var(--context)"></i>Payroll (cumulative)</span><span><i style="background:var(--ink-2);height:1px"></i>Labor budget</span></div>' +
-      '<div class="chart" id="burnChart" tabindex="0" aria-label="Labor budget burn chart. Use the arrow keys to read values."></div>' +
+    (hasSeries ? '<div class="legend" style="margin-top:16px"><span><i style="background:var(--accent)"></i>Crew log (cumulative)</span><span><i style="background:var(--context)"></i>Payroll (cumulative)</span><span><i style="background:var(--ink-2);height:1px"></i>Labor estimate</span></div>' +
+      '<div class="chart" id="burnChart" tabindex="0" aria-label="Labor burn chart. Use the arrow keys to read values."></div>' +
       '<div style="margin-top:8px"><button type="button" class="btn ghost sm" data-action="chart-table" aria-expanded="' + (state.ui.chartTable ? 'true' : 'false') + '">' + (state.ui.chartTable ? 'Hide table' : 'Show as table') + '</button></div>' +
       (state.ui.chartTable ? burnTable() : '') : '<p class="empty">No crew days or payroll yet.</p>') +
     '</section>';
@@ -1701,16 +1744,6 @@ function viewEquipment() {
 /* ----- labor ----- */
 function viewLabor() {
   var m = model(), d = state.data, ui = state.ui, h = '<div class="stack">';
-  h += '<section class="card"><div class="card-head"><div><h2>Labor budget by system</h2><p>Crew days at the daily rate count against these amounts.</p></div>' +
-    '<button type="button" class="btn sm" data-action="new-system"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add system</button></div><div class="tiles">';
-  m.systems.forEach(function (x) {
-    h += '<button type="button" class="tile" data-action="edit" data-table="systems" data-id="' + esc(x.r.id) + '"><span class="t">' + esc(x.r.system || 'Unnamed system') + '</span>' +
-      meterHtml(x.amount, x.used) + '<span class="row"><span>Used</span><b>' + money(x.used) + '</b></span><span class="row"><span>Budget</span><span>' + money(x.amount) + '</span></span>' +
-      '<span class="row"><span>Balance</span><span class="' + moneyCls(x.bal) + '">' + money(x.bal) + '</span></span>' +
-      '<span class="row"><span>Crew-days</span><span>' + qty(x.crew) + '</span></span></button>';
-  });
-  if (!m.systems.length) h += '<p class="empty">No systems yet. Add one for each part of the labor budget, for example <b>Panel Labor</b>.</p>';
-  h += '</div></section>';
   h += laborCard(false);
   h += '<section class="card"><div class="toolbar"><div class="seg" role="group" aria-label="Labor records">' +
     '<button type="button" data-action="labor-view" data-view="crew" aria-pressed="' + (ui.laborView !== 'payroll') + '">Crew log</button>' +
@@ -1726,18 +1759,16 @@ function crewList(m, d) {
   var groups = {}, order = [];
   m.labor.forEach(function (x) { var k = x.r.date || ''; if (!groups[k]) { groups[k] = []; order.push(k); } groups[k].push(x); });
   order.sort(function (a, b) { return b.localeCompare(a); });
-  var known = {}; d.systems.forEach(function (r) { known[keyOf(r.system)] = true; });
   var LIMIT = 10, hiddenDays = state.ui.crewAll ? 0 : Math.max(0, order.length - LIMIT);
   if (hiddenDays) order = order.slice(0, LIMIT);
   return order.map(function (k) {
     var g = groups[k], crew = g.reduce(function (a, x) { return a + val(x.r.crew); }, 0), cost = g.reduce(function (a, x) { return a + x.total; }, 0);
-    return '<div class="lgroup"><div class="lgroup-head"><span>' + esc(k ? fmtDay(k) : 'No date') + '</span><span class="r">' +
-      (crew ? '<span>' + qty(crew) + ' crew</span><span>' + money(cost) + '</span>' : '<span class="muted">No crew</span>') + '</span></div>' +
+    return '<div class="lgroup"><div class="lgroup-head"><span>' + esc(k ? fmtDay(k) : 'No date') + '</span> <span class="r">' +
+      (crew ? '<span>' + qty(crew) + ' crew</span> <span>' + money(cost) + '</span>' : '<span class="muted">No crew</span>') + '</span></div>' +
       g.map(function (x) {
-        var r = x.r, c = val(r.crew), noteOnly = !(c > 0) && !r.system;
-        var title = noteOnly ? (r.notes || 'Note') : (r.system || 'No system');
-        var s = noteOnly ? '' : (c > 0 ? '<span>' + qty(c) + ' ' + plural(c, 'worker') + ' at ' + money(val(r.rate)) + ' a day</span>' : '<span>No crew counted</span>') +
-          (r.system && !known[keyOf(r.system)] ? '<span class="chip bad">Not in the labor budget</span>' : '');
+        var r = x.r, c = val(r.crew), noteOnly = !(c > 0);
+        var title = noteOnly ? (r.notes || 'Note') : qty(c) + ' ' + plural(c, 'worker');
+        var s = noteOnly ? '' : '<span>at ' + money(val(r.rate)) + ' a day</span>';
         return '<button type="button" class="lrow nodate crew' + (noteOnly ? ' noteonly' : '') + '" data-action="edit" data-table="labor" data-id="' + esc(r.id) + '">' +
           '<span class="m"><span class="t">' + esc(title) + '</span>' + (s ? '<span class="s">' + s + '</span>' : '') + (!noteOnly && r.notes ? '<span class="n">' + esc(r.notes) + '</span>' : '') + '</span>' +
           '<span class="a ' + moneyCls(x.total) + '">' + (noteOnly ? '' : money(x.total)) + '</span></button>';
@@ -1769,19 +1800,152 @@ function payrollList(m, d) {
   return h;
 }
 
+/* ----- progress notes ----- */
+var CAT_CLASS = { 'progress': 'c-progress', 'client request': 'c-client', 'change': 'c-change', 'material': 'c-material', 'issue': 'c-issue', 'meeting': 'c-meeting' };
+function catChip(c) { return '<span class="ncat ' + (CAT_CLASS[keyOf(c)] || 'c-other') + '">' + esc(c || 'Note') + '</span>'; }
+function fmtWhen(iso) {
+  var t = Date.parse(iso || '');
+  if (!isFinite(t)) return '';
+  var d = new Date(t);
+  return MON[d.getMonth()] + ' ' + d.getDate() + ', ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+}
+function noteRow(x, withDate) {
+  var r = x.r, open = keyOf(r.follow) === 'open', done = keyOf(r.follow) === 'done';
+  var meta = [];
+  if (r.by) meta.push('By ' + esc(r.by));
+  if (r.logged) meta.push('logged ' + esc(fmtWhen(r.logged)));
+  return '<div class="nrow' + (open ? ' open' : '') + '">' +
+    '<button type="button" class="nmain" data-action="edit" data-table="notes" data-id="' + esc(r.id) + '">' +
+    '<span class="ntop">' + (withDate ? '<span class="ndate">' + esc(fmtShort(r.date) || 'No date') + '</span> ' : '') + catChip(r.category) + ' ' +
+    (r.from ? '<span class="nfrom">From ' + esc(r.from) + '</span> ' : '') +
+    (open ? '<span class="pill warn">Follow-up open</span>' : done ? '<span class="pill good">Followed up</span>' : '') + '</span> ' +
+    '<span class="ntext">' + esc(r.note || '') + '</span> ' +
+    (meta.length ? '<span class="nmeta">' + meta.join(' &middot; ') + '</span>' : '') + '</button>' +
+    (open ? '<div class="nact"><button type="button" class="btn sm" data-action="note-done" data-id="' + esc(r.id) + '">Mark done</button></div>' : '') +
+    '</div>';
+}
+function viewNotes() {
+  var m = model(), ui = state.ui, f = ui.noteFilter || '', q = keyOf(ui.noteSearch);
+  var counts = {};
+  m.notes.forEach(function (x) { var k = keyOf(x.r.category) || 'other'; counts[k] = (counts[k] || 0) + 1; });
+  var rows = m.notes.filter(function (x) {
+    if (f === '__open' && keyOf(x.r.follow) !== 'open') return false;
+    if (f && f !== '__open' && keyOf(x.r.category) !== keyOf(f)) return false;
+    if (q && [x.r.note, x.r.from, x.r.by, x.r.category].map(keyOf).join(' ').indexOf(q) < 0) return false;
+    return true;
+  });
+  var chip = function (val2, label, n) {
+    return '<button type="button" class="fchip" data-action="note-filter" data-f="' + esc(val2) + '" aria-pressed="' + (f === val2 ? 'true' : 'false') + '"' + (n === 0 && f !== val2 ? ' disabled' : '') + '>' +
+      esc(label) + '<span class="n">' + n + '</span></button>';
+  };
+  var h = '<div class="stack"><section class="card"><div class="card-head"><div><h2>Progress notes</h2>' +
+    '<p>What happened on the job, what changed, what the client asked for, and what needs a follow-up. Newest first.</p></div>' +
+    '<button type="button" class="btn primary" data-action="new-note"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add note</button></div>';
+  if (m.notes.length) {
+    h += '<div class="toolbar"><div class="grow"><input class="search" id="noteSearch" type="search" placeholder="Search notes, names" value="' + esc(ui.noteSearch) + '" aria-label="Search notes"></div></div>' +
+      '<div class="fchips" role="group" aria-label="Show">' + chip('', 'All', m.notes.length) + chip('__open', 'Follow-ups open', m.openFollow.length) +
+      SCHEMA.noteCategories.map(function (c) { return chip(c, c, counts[keyOf(c)] || 0); }).join('') + '</div>';
+  }
+  if (!m.notes.length) {
+    h += '<p class="empty">No notes yet. Use <b>Add note</b> for progress on site, changes, client requests, material questions, issues and meetings. ' +
+      'Each note is dated and kept in the <b>Progress Notes</b> tab of the job\'s Google Sheet.</p>';
+  } else if (!rows.length) {
+    h += '<p class="empty">No notes match.</p>';
+  } else {
+    var LIMIT = 40, shown = state.ui.notesAll ? rows : rows.slice(0, LIMIT), groups = [], byDate = {};
+    shown.forEach(function (x) { var k = x.r.date || ''; if (!byDate[k]) { byDate[k] = []; groups.push(k); } byDate[k].push(x); });
+    h += groups.map(function (k) {
+      return '<div class="lgroup"><div class="lgroup-head"><span>' + esc(k ? fmtDay(k) + ', ' + k.slice(0, 4) : 'No date') + '</span> <span class="r"><span>' +
+        byDate[k].length + ' ' + plural(byDate[k].length, 'note') + '</span></span></div>' + byDate[k].map(function (x) { return noteRow(x, false); }).join('') + '</div>';
+    }).join('');
+    if (rows.length > LIMIT) {
+      h += '<div class="more"><button type="button" class="btn sm" data-action="notes-all">' +
+        (state.ui.notesAll ? 'Show the latest ' + LIMIT + ' only' : 'Show ' + (rows.length - LIMIT) + ' earlier ' + plural(rows.length - LIMIT, 'note')) + '</button></div>';
+    }
+    h += '<div class="list-foot"><span>' + rows.length + ' ' + plural(rows.length, 'note') + (f || q ? ' shown of ' + m.notes.length : '') + '</span>' +
+      '<span>' + m.openFollow.length + ' ' + plural(m.openFollow.length, 'follow-up') + ' open</span></div>';
+  }
+  return h + '</section></div>';
+}
+function notesCard() {
+  var m = model();
+  if (!m.notes.length) return '';
+  return '<section class="card"><div class="card-head"><div><h2>Latest notes</h2><p>' + m.notes.length + ' ' + plural(m.notes.length, 'note') +
+    (m.openFollow.length ? ', ' + m.openFollow.length + ' ' + plural(m.openFollow.length, 'follow-up') + ' open' : '') + '</p></div>' +
+    '<div class="btnrow"><button type="button" class="btn sm" data-action="new-note">Add note</button><button type="button" class="btn sm" data-action="tab" data-tab="notes">Open notes</button></div></div>' +
+    m.notes.slice(0, 3).map(function (x) { return noteRow(x, true); }).join('') + '</section>';
+}
+var NOTE_CATS = SCHEMA.noteCategories || ['Progress', 'Client request', 'Change', 'Material', 'Issue', 'Meeting', 'Other'];
+function formNote(rec) {
+  var isNew = !rec, me = store.get(KEYS.me) || '';
+  var cat = state.ui.noteFilter && state.ui.noteFilter !== '__open' ? state.ui.noteFilter : 'Progress';
+  var r = rec || { date: today(), category: cat, note: '', from: '', follow: '', by: me };
+  var froms = {};
+  state.data.notes.forEach(function (x) { if (x.from) froms[x.from] = true; });
+  var body = fieldHtml({ name: 'date', label: 'Date', type: 'date', value: r.date }) +
+    fieldHtml({ name: 'category', label: 'Category', type: 'select', value: r.category, options: withCurrent(NOTE_CATS, r.category) }) +
+    '<div class="field full" data-field="note"><label for="f_note">Note</label><textarea id="f_note" name="note" rows="5" placeholder="e.g. GC asked to change the coping color to Dark Bronze on the north elevation. Revised submittal needed.">' + esc(r.note) + '</textarea><div class="hint" id="f_note_h"></div></div>' +
+    fieldHtml({ name: 'from', label: 'From (who asked or reported it)', value: r.from, list: Object.keys(froms).sort(), placeholder: 'e.g. GC - J. Smith' }) +
+    fieldHtml({ name: 'by', label: 'Logged by', value: r.by, placeholder: 'Your name', help: isNew ? 'Remembered on this device.' : '' }) +
+    (isNew ? '<div class="field full"><label class="toggle"><input type="checkbox" id="f_needs" name="needs"> Needs a follow-up</label></div>' :
+      fieldHtml({ name: 'follow', label: 'Follow-up', type: 'select', value: r.follow, options: [{ value: '', label: 'None' }, { value: 'Open', label: 'Open' }, { value: 'Done', label: 'Done' }] })) +
+    (!isNew && r.logged ? '<div class="form-note full">Logged ' + esc(fmtWhen(r.logged)) + (r.by ? ' by ' + esc(r.by) : '') + '.</div>' : '');
+  openModal({
+    title: isNew ? 'Add note' : 'Edit note', submit: isNew ? 'Add note' : 'Save note', body: body, rec: rec,
+    onSubmit: function (f) {
+      var v = formValues(f);
+      if (!v.date) return 'Pick the date.';
+      if (!v.note) return 'Write the note.';
+      if (v.by) store.set(KEYS.me, v.by);
+      if (isNew) {
+        commit([add('notes', { id: uid('notes'), date: v.date, category: v.category, note: v.note, from: v.from, follow: v.needs ? 'Open' : '',
+          by: v.by, logged: new Date().toISOString() })], 'Note added');
+        return;
+      }
+      var patch = changed(rec, v, ['date', 'category', 'note', 'from', 'follow', 'by']);
+      if (Object.keys(patch).length) commit([upd('notes', rec.id, patch)], 'Note saved');
+    },
+    onDelete: isNew ? null : function () { commit([del('notes', rec.id)], 'Note deleted'); }, deleteLabel: 'Delete note'
+  });
+}
+
 /* ----- settings ----- */
+function projectsCard() {
+  if (!fullAccess()) return '';
+  if (isMaster()) {
+    return '<section class="card" id="projectsCard"><div class="card-head"><div><h2>Projects</h2><p>Add another job to the app, or go to the list of all jobs.</p></div></div>' +
+      '<div class="btnrow"><button type="button" class="btn primary" data-action="new-project"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New project</button>' +
+      (PREVIEW ? '' : '<button type="button" class="btn" data-action="add-sheet">Add an existing sheet</button>') +
+      '<button type="button" class="btn" data-action="projects">All projects</button></div></section>';
+  }
+  var ready = state.server.version && verCmp(state.server.version, '2.1.0') >= 0;
+  return '<section class="card" id="projectsCard"><div class="card-head"><div><h2>Track more jobs</h2><p>This app is connected to one job\'s own Google Sheet. ' +
+    'Turn on the project list to add other jobs.</p></div></div>' +
+    (ready ?
+      '<ul class="steps" style="margin:0 0 16px">' +
+      '<li>The script makes a Google Sheet named <b>Project Tracker - Projects</b> that lists your jobs. This job becomes the first one.</li>' +
+      '<li>Then <b>New project</b> and <b>Add an existing sheet</b> appear here, and <b>All projects</b> at the top of every page.</li>' +
+      '<li>Every phone keeps working with the same link and key. Keep this job\'s Google Sheet: it holds the script.</li></ul>' +
+      '<div class="btnrow"><button type="button" class="btn primary" data-action="enable-projects">Turn on the project list</button></div>' :
+      '<p style="margin:0 0 8px;color:var(--ink-2)">First update the script in this job\'s Google Sheet' + (state.server.version ? ' (it is version ' + esc(state.server.version) + ')' : '') + ':</p>' +
+      '<ol class="steps" style="margin:0"><li>Open the job\'s Google Sheet, then <b>Extensions &gt; Apps Script</b>. Replace all the code with the new <b>Code.gs</b> and save.</li>' +
+      '<li><b>Deploy &gt; Manage deployments</b>, the pencil icon, <b>Version: New version</b>, <b>Deploy</b>. The link stays the same.</li>' +
+      '<li>Reload this page and come back here: the <b>Turn on the project list</b> button appears.</li></ol>') +
+    '</section>';
+}
 function viewSetup() {
   var d = state.data, s = d.settings, m = model(), h = '<div class="stack">';
+  h += projectsCard();
   h += '<section class="card"><div class="card-head"><div><h2>Project</h2><p>Name, address, contract and the defaults for new crew days.</p></div></div>' +
     '<form id="projectForm" class="fields" novalidate>' +
-    fieldHtml({ name: 'name', label: 'Project name', value: s.name, full: true }) +
-    fieldHtml({ name: 'job', label: 'Job No.', value: s.job, placeholder: 'e.g. 26-0412' }) +
+    fieldHtml({ prefix: 'p_', name: 'name', label: 'Project name', value: s.name, full: true }) +
+    fieldHtml({ prefix: 'p_', name: 'job', label: 'Job No.', value: s.job, placeholder: 'e.g. 26-0412' }) +
     '<div class="field"></div>' +
-    fieldHtml({ name: 'address', label: 'Address', value: s.address, full: true }) +
-    fieldHtml({ name: 'start', label: 'Job start', type: 'date', value: s.start }) +
-    fieldHtml({ name: 'contract', label: 'Base contract', type: 'money', value: s.contract, help: 'Change orders are added on top.' }) +
-    fieldHtml({ name: 'rate', label: 'Default rate per crew-day', type: 'money', value: s.rate }) +
-    fieldHtml({ name: 'hours', label: 'Hours per crew-day', type: 'number', value: s.hours }) +
+    fieldHtml({ prefix: 'p_', name: 'address', label: 'Address', value: s.address, full: true }) +
+    fieldHtml({ prefix: 'p_', name: 'start', label: 'Job start', type: 'date', value: s.start }) +
+    fieldHtml({ prefix: 'p_', name: 'contract', label: 'Base contract', type: 'money', value: s.contract, help: 'Change orders are added on top.' }) +
+    fieldHtml({ prefix: 'p_', name: 'rate', label: 'Default rate per crew-day', type: 'money', value: s.rate }) +
+    fieldHtml({ prefix: 'p_', name: 'hours', label: 'Hours per crew-day', type: 'number', value: s.hours }) +
     '<div class="form-actions" style="position:static;grid-column:1/-1;border:0;padding:0;margin:0"><span class="form-err" id="projectErr"></span><div class="r"><button type="submit" class="btn primary">Save project</button></div></div>' +
     '</form></section>';
 
@@ -1800,21 +1964,23 @@ function viewSetup() {
 }
 function listCard() {
   var e = findProject(state.pid) || normEntry({ id: state.pid });
-  var waiting = pendingFor(state.pid).length;
+  var waiting = pendingFor(state.pid).length, isHub = !PREVIEW && !!state.server.home && state.server.home === state.pid;
   return '<section class="card" id="listCard"><div class="card-head"><div><h2>On the project list</h2><p>Status and notes on the Projects ' + (PREVIEW ? 'screen' : 'sheet') +
     '. Closed projects move to the bottom of the list and out of the totals.</p></div></div>' +
     '<form id="listForm" class="fields" novalidate>' +
-    fieldHtml({ name: 'status', label: 'Status', type: 'select', value: e.status, options: STATUS.map(function (x) { return { value: x, label: statusLabel(x) }; }) }) +
+    fieldHtml({ prefix: 'p_', name: 'status', label: 'Status', type: 'select', value: e.status, options: STATUS.map(function (x) { return { value: x, label: statusLabel(x) }; }) }) +
     '<div class="field"></div>' +
-    fieldHtml({ name: 'pnotes', label: 'Notes on the list', type: 'textarea', value: e.notes, full: true, placeholder: 'e.g. Punch list open, retainage billed' }) +
+    fieldHtml({ prefix: 'p_', name: 'pnotes', label: 'Notes on the list', type: 'textarea', value: e.notes, full: true, placeholder: 'e.g. Punch list open, retainage billed' }) +
     '<div class="form-actions" style="position:static;grid-column:1/-1;border:0;padding:0;margin:0"><span class="form-err" id="listErr"></span><div class="r"><button type="submit" class="btn primary">Save to the list</button></div></div>' +
     '</form>' +
     '<div class="btnrow" style="margin-top:16px">' +
     (PREVIEW ? '' : (e.url ? '<a class="btn" href="' + esc(e.url) + '" target="_blank" rel="noopener">Open this project\'s Google Sheet</a>' : '') +
       '<button type="button" class="btn" data-action="project-link">Link for this project only</button>') +
-    '<button type="button" class="btn danger" data-action="remove-project" data-waiting="' + waiting + '">Remove from the list</button></div>' +
+    (isHub ? '' : '<button type="button" class="btn danger" data-action="remove-project" data-waiting="' + waiting + '">Remove from the list</button>') + '</div>' +
     '<p class="hint" style="margin:10px 0 0;font-size:13px;color:var(--ink-3)">' + (PREVIEW ? 'Removing a project here deletes its data from this browser.' :
-      'The project-only link opens this project and nothing else: use it for a foreman or a subcontractor. Removing a project takes it off the list; its Google Sheet stays in Drive.') + '</p></section>';
+      'The project-only link opens this project and nothing else: use it for a foreman or a subcontractor. ' +
+      (isHub ? 'This job\'s Google Sheet holds the app\'s script, so it stays on the list: when the job ends, set its status to Closed and keep the sheet.' :
+        'Removing a project takes it off the list; its Google Sheet stays in Drive.')) + '</p></section>';
 }
 function previewCard() {
   var list = atList();
@@ -1878,10 +2044,8 @@ function viewConnect() {
 /* =========================================================== burn chart */
 function burnSeries() {
   var m = model(), d = state.data;
-  var known = {};
-  d.systems.forEach(function (r) { if (keyOf(r.system)) known[keyOf(r.system)] = true; });
   var daily = {};
-  m.labor.forEach(function (x) { if (x.r.date && known[keyOf(x.r.system)] && x.total) daily[x.r.date] = (daily[x.r.date] || 0) + x.total; });
+  m.labor.forEach(function (x) { if (x.r.date && x.total) daily[x.r.date] = (daily[x.r.date] || 0) + x.total; });
   var payCodes = {};
   m.payLines.forEach(function (L) { if (keyOf(L.r.code)) payCodes[keyOf(L.r.code)] = true; });
   var pdaily = {};
@@ -1891,13 +2055,13 @@ function burnSeries() {
   cd.forEach(function (k) { c += daily[k]; crew.push({ date: k, day: daily[k], cum: c }); });
   var pay = [], p = 0;
   pd.forEach(function (k) { p += pdaily[k]; pay.push({ date: k, cum: p }); });
-  return { crew: crew, pay: pay, budget: m.sysBudget };
+  return { crew: crew, pay: pay, budget: m.laborBudget };
 }
 function payAt(pay, date) { var v = 0; pay.forEach(function (x) { if (x.date <= date) v = x.cum; }); return v; }
 function burnTable() {
   var s = burnSeries();
   if (!s.crew.length) return '';
-  return '<div class="tablewrap"><table class="data"><thead><tr><th>Date</th><th>Crew log that day</th><th>Crew log to date</th><th>Payroll to date</th><th>Budget left</th></tr></thead><tbody>' +
+  return '<div class="tablewrap"><table class="data"><thead><tr><th>Date</th><th>Crew log that day</th><th>Crew log to date</th><th>Payroll to date</th><th>Estimate left</th></tr></thead><tbody>' +
     s.crew.slice().reverse().map(function (x) {
       return '<tr><td>' + esc(fmtDay(x.date)) + '</td><td>' + money(x.day) + '</td><td>' + money(x.cum) + '</td><td>' + money(payAt(s.pay, x.date)) + '</td><td class="' + moneyCls(s.budget - x.cum) + '">' + money(s.budget - x.cum) + '</td></tr>';
     }).join('') + '</tbody></table></div>';
@@ -1936,7 +2100,7 @@ function drawCharts() {
   }
   if (s.budget > 0) {
     g += '<line class="budget" x1="' + ml + '" x2="' + (ml + pw) + '" y1="' + Y(s.budget).toFixed(1) + '" y2="' + Y(s.budget).toFixed(1) + '"/>' +
-      '<text class="lab" x="' + (ml + 6) + '" y="' + (Y(s.budget) - 7).toFixed(1) + '">Labor budget ' + money(s.budget).replace('.00', '') + '</text>';
+      '<text class="lab" x="' + (ml + 6) + '" y="' + (Y(s.budget) - 7).toFixed(1) + '">Labor estimate ' + money(s.budget).replace('.00', '') + '</text>';
   }
   if (s.crew.length) {
     var pts = [[X(d0), Y(0)]].concat(s.crew.map(function (x) { return [X(x.date), Y(x.cum)]; }));
@@ -1963,7 +2127,7 @@ function drawCharts() {
     if (mr > 60) endLabels += labelAt(X(d1) + 10, ly, 'Payroll', money(lp.cum).replace(/\.\d\d$/, ''), '');
   }
   host.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Crew log ' + (s.crew.length ? money(s.crew[s.crew.length - 1].cum) : '$0') + ' and payroll ' +
-    (s.pay.length ? money(s.pay[s.pay.length - 1].cum) : '$0') + ' against a labor budget of ' + money(s.budget) + '">' + g + endLabels +
+    (s.pay.length ? money(s.pay[s.pay.length - 1].cum) : '$0') + ' against a labor estimate of ' + money(s.budget) + '">' + g + endLabels +
     '<line class="xhair" id="xhair" x1="0" x2="0" y1="' + mt + '" y2="' + (mt + ph) + '" visibility="hidden"/>' +
     '<circle class="dot-crew" id="hcrew" r="4.5" visibility="hidden"/><circle class="dot-pay" id="hpay" r="4.5" visibility="hidden"/>' +
     '<rect x="' + ml + '" y="0" width="' + pw + '" height="' + (mt + ph) + '" fill="transparent" id="hit"/></svg><div class="tip" id="tip" hidden></div>';
@@ -2007,7 +2171,7 @@ function showPoint(i) {
   hp.setAttribute('cx', p.x); hp.setAttribute('cy', p.py); hp.setAttribute('visibility', 'visible');
   tip.textContent = '';
   var h = document.createElement('div'); h.className = 'h'; h.textContent = fmtDay(p.date); tip.appendChild(h);
-  [['var(--accent)', money(p.cum), 'Crew log to date'], ['var(--context)', money(p.pay), 'Payroll to date'], ['transparent', money(chartState.budget - p.cum), 'Labor budget left']].forEach(function (row) {
+  [['var(--accent)', money(p.cum), 'Crew log to date'], ['var(--context)', money(p.pay), 'Payroll to date'], ['transparent', money(chartState.budget - p.cum), 'Labor estimate left']].forEach(function (row) {
     var r = document.createElement('div'); r.className = 'r';
     var i2 = document.createElement('i'); i2.style.background = row[0]; r.appendChild(i2);
     var sp = document.createElement('span'); sp.textContent = row[2]; r.appendChild(sp);
@@ -2025,7 +2189,8 @@ function showPoint(i) {
 /* =========================================================== forms */
 var form = { spec: null, opener: null };
 function fieldHtml(f) {
-  var id = 'f_' + f.name, v = f.value === undefined || f.value === null ? '' : f.value;
+  // Forms on a page use their own prefix so a dialog opened over them never shares an input ID.
+  var id = (f.prefix || 'f_') + f.name, v = f.value === undefined || f.value === null ? '' : f.value;
   var cls = 'field' + (f.full ? ' full' : '');
   var h = '<div class="' + cls + '" data-field="' + esc(f.name) + '"><label for="' + id + '">' + esc(f.label) + '</label>';
   if (f.type === 'select') {
@@ -2372,46 +2537,35 @@ function formEquipment(rec) {
 
 /* ----- crew day forms ----- */
 function formCrewDay() {
-  var d = state.data, m = model();
+  var d = state.data;
   var rateDflt = isBlank(d.settings.rate) ? 800 : d.settings.rate;
-  var rows = m.systems.map(function (x, i) {
-    return '<div class="cr"><label for="f_c' + i + '">' + esc(x.r.system || 'Unnamed system') + '<span class="bud">' + money(x.bal) + ' left of ' + money(x.amount) + '</span></label>' +
-      '<div class="inp"><input id="f_c' + i + '" name="c' + i + '" type="text" data-num="number" inputmode="decimal" placeholder="0" aria-label="Crew count for ' + esc(x.r.system) + '"></div></div>';
-  }).join('');
   var body = fieldHtml({ name: 'date', label: 'Date', type: 'date', value: today() }) +
-    fieldHtml({ name: 'rate', label: 'Rate per crew-day', type: 'money', value: rateDflt }) +
-    '<div class="crewgrid"><span class="label" style="font-weight:600;font-size:13.5px;color:var(--ink-2)">Crew on site by system</span>' + (rows || '<p class="muted">Add a labor budget system first, or save a note-only day.</p>') + '</div>' +
+    fieldHtml({ name: 'crew', label: 'Crew on site', type: 'number', value: '', placeholder: 'Number of workers' }) +
+    fieldHtml({ name: 'rate', label: 'Rate per crew-day', type: 'money', value: rateDflt, help: 'Two rates on one day? Save one, then log the other.' }) +
     '<div class="form-total"><span>Day total</span><b id="crewTotal">$0.00</b></div>' +
-    fieldHtml({ name: 'notes', label: 'Notes', type: 'textarea', value: '', full: true, placeholder: 'Works on site; No work, rain' });
+    fieldHtml({ name: 'notes', label: 'Notes', type: 'textarea', value: '', full: true, placeholder: 'Works on site, north elevation panels; or No work, rain' });
   openModal({
     title: 'Log crew day', submit: 'Save day', body: body,
     onMount: function (f) {
       function sync() {
-        var r = parseNumField($('#f_rate', f).value), tot = 0;
-        $$('.crewgrid input', f).forEach(function (el) { var p = parseNumField(el.value); tot += (p.ok ? p.num : 0) * (r.ok ? r.num : 0); });
-        $('#crewTotal', f).textContent = money(tot);
+        var c = parseNumField($('#f_crew', f).value), r = parseNumField($('#f_rate', f).value);
+        $('#crewTotal', f).textContent = money((c.ok ? c.num : 0) * (r.ok ? r.num : 0));
       }
-      $$('input', f).forEach(function (el) { el.addEventListener('input', sync); });
+      ['#f_crew', '#f_rate'].forEach(function (x) { $(x, f).addEventListener('input', sync); });
       sync();
     },
     onSubmit: function (f) {
       var v = formValues(f);
       if (v._errors.length) return v._errors[0];
       if (!v.date) return 'Pick the date.';
-      var ops = [];
-      m.systems.forEach(function (x, i) {
-        if (val(v['c' + i]) > 0) ops.push(add('labor', { id: uid('labor'), date: v.date, crew: v['c' + i], rate: v.rate, system: x.r.system, notes: v.notes }));
-      });
-      if (!ops.length && v.notes) ops.push(add('labor', { id: uid('labor'), date: v.date, crew: '', rate: '', system: '', notes: v.notes }));
-      if (!ops.length) return 'Enter the crew count for at least one system, or a note for a day with no work.';
-      commit(ops, ops.length > 1 ? ops.length + ' crew entries added' : 'Crew day added');
+      if (!(val(v.crew) > 0) && !v.notes) return 'Enter the crew on site, or a note for a day with no work.';
+      var row = { id: uid('labor'), date: v.date, crew: val(v.crew) > 0 ? v.crew : '', rate: val(v.crew) > 0 ? v.rate : '', notes: v.notes };
+      commit([add('labor', row)], val(v.crew) > 0 ? 'Crew day added' : 'Note added to the crew log');
     }
   });
 }
 function formCrewEntry(rec) {
-  var sys = state.data.systems.map(function (s) { return s.system; }).filter(Boolean);
   var body = fieldHtml({ name: 'date', label: 'Date', type: 'date', value: rec.date }) +
-    fieldHtml({ name: 'system', label: 'System', type: 'select', value: rec.system, options: [{ value: '', label: 'None (note only)' }].concat(withCurrent(sys, rec.system).map(function (s) { return { value: s, label: s }; })) }) +
     fieldHtml({ name: 'crew', label: 'Number of workers', type: 'number', value: rec.crew }) +
     fieldHtml({ name: 'rate', label: 'Rate per crew-day', type: 'money', value: rec.rate }) +
     '<div class="form-total"><span>Entry total</span><b id="crewTotal">$0.00</b></div>' +
@@ -2420,41 +2574,17 @@ function formCrewEntry(rec) {
     title: 'Edit crew entry', submit: 'Save entry', body: body, rec: rec,
     onMount: function (f) {
       function sync() { var c = parseNumField($('#f_crew', f).value), r = parseNumField($('#f_rate', f).value); $('#crewTotal', f).textContent = money((c.ok ? c.num : 0) * (r.ok ? r.num : 0)); }
-      ['#f_crew', '#f_rate'].forEach(function (s) { $(s, f).addEventListener('input', sync); });
+      ['#f_crew', '#f_rate'].forEach(function (x) { $(x, f).addEventListener('input', sync); });
       sync();
     },
     onSubmit: function (f) {
       var v = formValues(f);
       if (v._errors.length) return v._errors[0];
       if (!v.date) return 'Pick the date.';
-      var patch = changed(rec, v, ['date', 'crew', 'rate', 'system', 'notes']);
+      var patch = changed(rec, v, ['date', 'crew', 'rate', 'notes']);
       if (Object.keys(patch).length) commit([upd('labor', rec.id, patch)], 'Crew entry saved');
     },
     onDelete: function () { commit([del('labor', rec.id)], 'Crew entry deleted'); }, deleteLabel: 'Delete entry'
-  });
-}
-function formSystem(rec) {
-  var isNew = !rec, r = rec || { system: '', amount: '' };
-  var linked = isNew ? 0 : state.data.labor.filter(function (x) { return keyOf(x.system) === keyOf(r.system); }).length;
-  var body = fieldHtml({ name: 'system', label: 'System', value: r.system, full: true, placeholder: 'e.g. Panel Labor' }) +
-    fieldHtml({ name: 'amount', label: 'Labor budget', type: 'money', value: r.amount, full: true, help: 'At the full crew-day rate, the same basis as the crew log.' }) +
-    (linked ? '<div class="form-note">' + linked + ' crew ' + plural(linked, 'entry is', 'entries are') + ' logged to this system. Renaming it moves them too.</div>' : '');
-  openModal({
-    title: isNew ? 'Add labor budget system' : 'Edit labor budget system', submit: isNew ? 'Add system' : 'Save system', body: body, rec: rec,
-    onSubmit: function (f) {
-      var v = formValues(f);
-      if (v._errors.length) return v._errors[0];
-      if (!v.system) return 'Name the system.';
-      if (isNew) { commit([add('systems', { id: uid('systems'), system: v.system, amount: v.amount })], 'System added'); return; }
-      var patch = changed(rec, v, ['system', 'amount']);
-      if (!Object.keys(patch).length) return null;
-      var ops = [upd('systems', rec.id, patch)];
-      if (patch.system !== undefined && rec.system && !state.data.systems.some(function (x) { return x.id !== rec.id && keyOf(x.system) === keyOf(rec.system); })) {
-        state.data.labor.filter(function (x) { return keyOf(x.system) === keyOf(rec.system); }).forEach(function (x) { ops.push(upd('labor', x.id, { system: v.system })); });
-      }
-      commit(ops, 'System saved');
-    },
-    onDelete: isNew ? null : function () { commit([del('systems', rec.id)], 'System deleted'); }, deleteLabel: 'Delete system'
   });
 }
 function formPayroll(rec) {
@@ -2504,7 +2634,7 @@ function openEdit(t, id) {
   else if (t === 'materials') formMaterial(rec);
   else if (t === 'equipment') formEquipment(rec);
   else if (t === 'labor') formCrewEntry(rec);
-  else if (t === 'systems') formSystem(rec);
+  else if (t === 'notes') formNote(rec);
   else if (t === 'payroll') formPayroll(rec);
   else if (t === 'days') formDay(rec);
 }
@@ -2527,8 +2657,7 @@ function formNewProject() {
     fieldHtml({ name: 'copyFrom', label: 'Copy budget lines from', type: 'select', value: last ? last.id : '', options: sourceOptions(), full: true }) +
     '<div class="checks" id="copyChecks">' +
     '<label class="toggle"><input type="checkbox" name="cpGen" checked> General requirements lines</label>' +
-    '<label class="toggle"><input type="checkbox" name="cpScope" checked> Scope lines</label>' +
-    '<label class="toggle"><input type="checkbox" name="cpSys" checked> Labor budget systems</label></div>' +
+    '<label class="toggle"><input type="checkbox" name="cpScope" checked> Scope lines</label></div>' +
     '<div class="form-note" id="copyNote">Copies each line\'s name, cost code, type and cost source, and the crew-day rate and hours. Estimates, costs, notes and change orders start empty.</div>' +
     (PREVIEW ? '' : '<div class="form-note">The app makes a new Google Sheet with every tab, in the My Drive of the account that runs the script. Move it into the job folder whenever you like: the link keeps working.</div>');
   openModal({
@@ -2541,8 +2670,8 @@ function formNewProject() {
         if (!id) return;
         var c = PREVIEW ? { data: pv.data(id) } : readCache(id), txt = base;
         if (c) {   // this device has a copy: say what will come across
-          var d = normData(c.data), lines = d.budget.filter(function (r) { return keyOf(r.section) !== 'change orders'; }).length, sys = d.systems.length;
-          txt = lines || sys ? 'That project has ' + lines + ' budget ' + plural(lines, 'line') + ' (not counting change orders) and ' + sys + ' labor ' + plural(sys, 'system') + '. ' + base :
+          var d = normData(c.data), lines = d.budget.filter(function (r) { return keyOf(r.section) !== 'change orders'; }).length;
+          txt = lines ? 'That project has ' + lines + ' budget ' + plural(lines, 'line') + ' (not counting change orders). ' + base :
             'That project has no budget lines yet, so there is nothing to copy.';
         }
         note.textContent = txt;
@@ -2558,7 +2687,7 @@ function formNewProject() {
     }
   });
 }
-/** Settings, budget lines and labor systems for a new project, copied from another one. */
+/** Budget lines for a new project, copied from another one. */
 function copyOps(src, v) {
   var sections = [];
   if (v.cpGen) sections.push('general requirements');
@@ -2569,7 +2698,6 @@ function copyOps(src, v) {
     ops.push(add('budget', { id: uid('budget'), section: L.r.section, code: L.r.code, item: L.r.item, type: L.r.type, estimate: '',
       source: L.r.source, cost: '', notes: '', sort: L.r.sort }));
   });
-  if (v.cpSys) src.systems.forEach(function (r) { if (r.system) ops.push(add('systems', { id: uid('systems'), system: r.system, amount: '' })); });
   return ops;
 }
 function projectData(id) {
@@ -2599,7 +2727,7 @@ function createProjectFlow(v) {
       if (ops.length) commit(ops, null); else { if (PREVIEW) pv.save(e.id, data); else saveCache(); render(); }
       setHash('overview'); window.scrollTo(0, 0);
       if (!PREVIEW) load({ quiet: true }).catch(noop);
-      toast('"' + v.name + '" created' + (ops.length ? ' with ' + ops.length + ' budget ' + plural(ops.length, 'line') + ' and systems to fill in' : ''), 4200);
+      toast('"' + v.name + '" created' + (ops.length ? ' with ' + ops.length + ' budget ' + plural(ops.length, 'line') + ' to fill in' : ''), 4200);
     };
     if (PREVIEW) {
       var id = 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
@@ -2690,6 +2818,24 @@ function removeProject() {
     toast('"' + e.name + '" is off the list. Its Google Sheet is still in Drive.', 5000);
   }, function (x) { toast((x && x.message) || 'Could not remove it. Check the connection and try again.', 5000); });
 }
+function enableProjects(btn) {
+  btn.disabled = true;
+  btn.textContent = 'Making the project list. This can take a minute.';
+  queueNet(function () { return call('enableProjects', {}, { timeout: 150000 }); }).then(function (res) {
+    gotServer(res);
+    state.server.name = res.name || state.server.name;
+    state.server.sheetUrl = res.sheetUrl || '';
+    state.projects = (res.projects || []).map(normEntry);
+    state.projectsAt = Date.now();
+    saveServer();
+    showProjects();
+    toast('The project list is on. Add jobs with New project or Add an existing sheet.', 5200);
+  }, function (err) {
+    btn.disabled = false;
+    btn.textContent = 'Turn on the project list';
+    toast((err && err.message) || 'Could not turn on the project list. Check the connection and try again.', 6000);
+  });
+}
 function refreshAll() {
   var list = state.projects.filter(function (e) { return e.status !== 'Closed'; });
   if (!list.length || state.refreshing) return;
@@ -2727,6 +2873,7 @@ function enterProject(pid, data) {
   state.pid = pid;
   if (isMaster()) { state.ui.project = pid; state.ui.lastProject = pid; }
   state.ui.matFilter = ''; state.ui.matSearch = ''; state.ui.eqFilter = ''; state.ui.eqSearch = ''; state.ui.crewAll = false;
+  state.ui.noteFilter = ''; state.ui.noteSearch = ''; state.ui.notesAll = false;
   if (data) { state.data = data; state.meta = blankMeta(); state.ready = true; }
   else if (PREVIEW) { state.data = pv.data(pid); state.ready = true; }
   else {
@@ -2758,6 +2905,7 @@ function showProjects() {
 function pickProject() {
   if (state.conn && state.conn.project) return state.conn.project;
   if (state.ui.lastProject && findProject(state.ui.lastProject)) return state.ui.lastProject;
+  if (state.server.home && (findProject(state.server.home) || !state.projectsAt)) return state.server.home;
   var e = state.projects.filter(function (x) { return x.status !== 'Closed'; }).sort(byJob)[0] || state.projects[0];
   return e ? e.id : '';
 }
@@ -2796,6 +2944,7 @@ document.addEventListener('click', function (e) {
   else if (a === 'open-project') openProject(el.dataset.id);
   else if (a === 'new-project') formNewProject();
   else if (a === 'add-sheet') formAddSheet();
+  else if (a === 'enable-projects') enableProjects(el);
   else if (a === 'refresh-all') refreshAll();
   else if (a === 'project-link') projectLinkDialog(false);
   else if (a === 'renew-link') arm(el, 'Tap again to replace the link', function () { closeModal(); projectLinkDialog(true); });
@@ -2824,7 +2973,7 @@ document.addEventListener('click', function (e) {
   else if (a === 'new-equipment') formEquipment(null);
   else if (a === 'new-crew') formCrewDay();
   else if (a === 'new-payroll') formPayroll(null);
-  else if (a === 'new-system') formSystem(null);
+  else if (a === 'new-note') formNote(null);
   else if (a === 'new-day') formDay(null);
   else if (a === 'move-line') moveLine(+el.dataset.dir);
   else if (a === 'mat-filter') { state.ui.matFilter = state.ui.matFilter === el.dataset.item ? '' : el.dataset.item; render(); }
@@ -2838,6 +2987,12 @@ document.addEventListener('click', function (e) {
   else if (a === 'labor-view') { state.ui.laborView = el.dataset.view; saveUi(); render(); }
   else if (a === 'chart-table') { state.ui.chartTable = !state.ui.chartTable; render(); }
   else if (a === 'crew-all') { state.ui.crewAll = !state.ui.crewAll; render(); }
+  else if (a === 'notes-all') { state.ui.notesAll = !state.ui.notesAll; render(); }
+  else if (a === 'note-filter') { state.ui.noteFilter = state.ui.noteFilter === el.dataset.f ? '' : el.dataset.f; state.ui.notesAll = false; render(); }
+  else if (a === 'note-done') {
+    var nr = findRec('notes', el.dataset.id);
+    if (nr) commit([upd('notes', nr.id, { follow: 'Done' })], 'Follow-up marked done');
+  }
   else if (a === 'calc') {
     var inp = document.getElementById(el.dataset.for);
     var on = inp.getAttribute('inputmode') !== 'text';
@@ -2872,7 +3027,7 @@ document.addEventListener('click', function (e) {
   else if (a === 'disconnect') {
     arm(el, state.outbox.length ? 'Tap again, ' + state.outbox.length + ' changes will be lost' : 'Tap again to disconnect', function () {
       resetLocal(); store.del(KEYS.conn);
-      state.conn = null; state.pid = ''; state.data = emptyData(); state.server = { mode: '', access: 'all', name: '', sheetUrl: '', version: '' }; bump();
+      state.conn = null; state.pid = ''; state.data = emptyData(); state.server = { mode: '', access: 'all', name: '', sheetUrl: '', version: '', home: '' }; bump();
       setSync('idle'); render(); toast('This device is disconnected');
     });
   }
@@ -2913,7 +3068,7 @@ document.addEventListener('submit', function (e) {
 });
 document.addEventListener('input', function (e) {
   var sid = e.target.id;
-  if (sid === 'matSearch' || sid === 'eqSearch' || sid === 'pSearch') {
+  if (sid === 'matSearch' || sid === 'eqSearch' || sid === 'pSearch' || sid === 'noteSearch') {
     state.ui[sid] = e.target.value;
     var pos = e.target.selectionStart;
     render();
@@ -2978,7 +3133,8 @@ function connect(f) {
   call('ping').then(function (p) {
     pinged = true;
     resetLocal();
-    state.server = { mode: p.mode === 'master' ? 'master' : 'single', access: p.access === 'project' ? 'project' : 'all', name: p.name || '', sheetUrl: '', version: p.version || '' };
+    state.server = { mode: p.mode === 'master' ? 'master' : 'single', access: p.access === 'project' ? 'project' : 'all', name: p.name || '', sheetUrl: '',
+      version: p.version || '', home: p.home || '' };
     if (state.server.access === 'project' && p.project) state.conn.project = p.project.id; else delete state.conn.project;
     store.set(KEYS.conn, state.conn);
     saveServer();
@@ -3028,7 +3184,7 @@ function restoreLocal() {
   store.del(KEYS.cacheV1);
   var srv = store.get(KEYS.server);
   if (srv && srv.url === c.url) {
-    state.server = Object.assign({ mode: '', access: 'all', name: '', sheetUrl: '', version: '' }, srv.server || {});
+    state.server = Object.assign({ mode: '', access: 'all', name: '', sheetUrl: '', version: '', home: '' }, srv.server || {});
     state.projects = (srv.projects || []).map(normEntry);
     state.projectsAt = srv.at || 0;
   }
@@ -3076,9 +3232,14 @@ function startConnected() {
     load({ quiet: state.ready }).then(function () { flush(); }, noop);
   } else {
     state.pid = ''; state.data = emptyData(); state.ready = true; bump();
+    var wantTab = startTab;
     setHash('projects');
     render();
     if (state.outbox.length) flush();
+    if (wantTab && fullAccess() && !state.projectsAt) {   // a link to a page: open the job once the list is known
+      loadProjects({ quiet: true }).then(function () { var p2 = pickProject(); if (p2 && atList()) openProject(p2, wantTab); }, noop);
+      return null;
+    }
   }
   if (isMaster()) loadProjects({ quiet: true }).catch(noop);
   return null;
