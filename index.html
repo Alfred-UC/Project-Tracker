@@ -336,6 +336,9 @@ button.tile:hover { border-color: var(--ink-3); }
 .tile .t { font-weight: 700; overflow-wrap: anywhere; }
 .tile .row { display: flex; justify-content: space-between; gap: 10px; font-size: 13.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .tile .row b { color: var(--ink); font-weight: 700; }
+.ctiles { margin-top: 14px; }
+.cnote { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; justify-content: space-between; margin-top: 14px; padding: 10px 12px;
+  border-radius: 8px; background: var(--warn-soft); font-size: 13.5px; }
 
 /* ---------- progress notes ---------- */
 .fchips { display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0 4px; }
@@ -576,7 +579,7 @@ img { max-width: 100%; }
 (function () {
 'use strict';
 var CONFIG = {"mode":"sheet","title":"Project Tracker"};
-var SCHEMA = {"app":"project-tracker","version":"2.2.0","sections":["General Requirements","Scope","Change Orders"],"types":["Labor","Material","Equipment","General"],"sources":["Manual","Material Log","Equipment Log","Payroll"],"tables":{"budget":{"sheet":"Budget","cols":[{"key":"section","header":"Section","type":"text","width":160,"valid":{"list":"sections"}},{"key":"code","header":"Cost Code","type":"text","width":90},{"key":"item","header":"Item","type":"text","width":290},{"key":"type","header":"Type","type":"text","width":80,"valid":{"list":"types"}},{"key":"estimate","header":"Estimate","type":"money","width":120},{"key":"source","header":"Cost Source","type":"text","width":110,"valid":{"list":"sources"}},{"key":"cost","header":"Manual Cost","type":"money","width":120},{"key":"costCalc","header":"Cost","type":"money","width":120,"computed":"=IF({source}=\"Material Log\",IF({item}=\"\",0,SUMIF({materials.item:col},{item},{materials.total:col})),IF({source}=\"Equipment Log\",IF({item}=\"\",0,SUMIF({equipment.item:col},{item},{equipment.total:col})),IF({source}=\"Payroll\",IF({code}=\"\",0,SUMIF({payroll.code:col},{code},{payroll.cost:col})),N({cost}))))"},{"key":"balance","header":"Balance","type":"money","width":120,"computed":"=N({estimate})-N({costCalc})"},{"key":"notes","header":"Notes","type":"text","width":380},{"key":"sort","header":"Sort","type":"number","width":60},{"key":"id","header":"ID","type":"id","width":110}]},"materials":{"sheet":"Materials","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"desc","header":"Description","type":"text","width":320},{"key":"qty","header":"Quantity","type":"number","width":90},{"key":"uom","header":"UoM","type":"text","width":70},{"key":"rate","header":"Unit Rate","type":"rate","width":110},{"key":"total","header":"Total Cost","type":"money","width":120,"computed":"=N({qty})*N({rate})"},{"key":"item","header":"Budget Item","type":"text","width":270,"valid":{"ref":"budget.item"}},{"key":"notes","header":"Notes","type":"text","width":300},{"key":"id","header":"ID","type":"id","width":110}]},"equipment":{"sheet":"Equipment","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"offDate","header":"Off-Rent Date","type":"date","width":110},{"key":"desc","header":"Equipment","type":"text","width":260},{"key":"vendor","header":"Vendor","type":"text","width":160},{"key":"qty","header":"Quantity","type":"number","width":90},{"key":"unit","header":"Unit","type":"text","width":90,"valid":{"list":"units"}},{"key":"rate","header":"Unit Rate","type":"rate","width":110},{"key":"total","header":"Total Cost","type":"money","width":120,"computed":"=N({qty})*N({rate})"},{"key":"item","header":"Budget Item","type":"text","width":220,"valid":{"ref":"budget.item"}},{"key":"notes","header":"Notes","type":"text","width":300},{"key":"id","header":"ID","type":"id","width":110}]},"labor":{"sheet":"Labor Log","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"crew","header":"# Labor","type":"number","width":80},{"key":"rate","header":"Rate/Day","type":"money","width":100},{"key":"total","header":"Total","type":"money","width":110,"computed":"=N({crew})*N({rate})"},{"key":"notes","header":"Notes","type":"text","width":320},{"key":"id","header":"ID","type":"id","width":110}]},"payroll":{"sheet":"Payroll","cols":[{"key":"period","header":"Pay Period","type":"date","width":100},{"key":"cost","header":"Direct Cost","type":"money","width":120},{"key":"code","header":"Cost Code","type":"text","width":100,"valid":{"ref":"budget.code"}},{"key":"desc","header":"Description","type":"text","width":200,"computed":"=IF({code}=\"\",\"\",IFERROR(INDEX({budget.item:col},MATCH({code},{budget.code:col},0)),\"\"))"},{"key":"notes","header":"Notes","type":"text","width":300},{"key":"id","header":"ID","type":"id","width":110}]},"notes":{"sheet":"Progress Notes","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"category","header":"Category","type":"text","width":120,"valid":{"list":"noteCategories"}},{"key":"note","header":"Note","type":"text","width":460},{"key":"from","header":"From","type":"text","width":170},{"key":"follow","header":"Follow-up","type":"text","width":90,"valid":{"list":"followStates"}},{"key":"by","header":"By","type":"text","width":110},{"key":"logged","header":"Logged","type":"datetime","width":160},{"key":"id","header":"ID","type":"id","width":110}]},"days":{"sheet":"Non-Work Days","cols":[{"key":"date","header":"Date","type":"date","width":110},{"key":"notes","header":"Notes","type":"text","width":260},{"key":"id","header":"ID","type":"id","width":110}]}},"settings":{"sheet":"Settings","rows":[{"key":"name","label":"Project Name","type":"text","default":"New Project"},{"key":"job","label":"Job No.","type":"text","default":""},{"key":"company","label":"Company","type":"text","default":"","valid":{"list":"companies"}},{"key":"address","label":"Address","type":"text","default":""},{"key":"start","label":"Project Start","type":"date","default":""},{"key":"contract","label":"Base Contract","type":"money","default":0},{"key":"hours","label":"Hours per Crew-Day","type":"number","default":8},{"key":"rate","label":"Default Rate/Day","type":"money","default":800}]},"summary":{"sheet":"Summary","layout":3,"rows":[{"r":1,"style":"title","cells":{"A":"=IFERROR({settings:Project Name},\"\")"}},{"r":2,"style":"sub","cells":{"A":"=IFERROR({settings:Address},\"\")"}},{"r":4,"style":"head","cells":{"A":"","B":"Estimate","C":"Cost","D":"Balance/ Savings","E":"Notes"}},{"r":5,"style":"bold","fmt":"money","cells":{"A":"OHP","B":"=B13-B11","C":"=C13-C11"}},{"r":6,"fmt":"money","cells":{"A":"Labor","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"Labor\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"Labor\")","D":"=B6-C6"}},{"r":7,"fmt":"money","cells":{"A":"Material","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"Material\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"Material\")","D":"=B7-C7"}},{"r":8,"fmt":"money","cells":{"A":"Equipment","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"Equipment\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"Equipment\")","D":"=B8-C8"}},{"r":9,"fmt":"money","cells":{"A":"General Requirements","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"General\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"General\")","D":"=B9-C9"}},{"r":11,"style":"bold","fmt":"money","cells":{"A":"TOTAL COST","B":"=SUMIFS({budget.estimate:col},{budget.section:col},\"<>Change Orders\")","C":"=SUMIFS({budget.costCalc:col},{budget.section:col},\"<>Change Orders\")","D":"=SUM({budget.balance:col})","E":"Savings / Loss in Buyout and Labor"}},{"r":12,"fmt":"money","cells":{"A":"Change Orders","B":"=SUMIFS({budget.estimate:col},{budget.section:col},\"Change Orders\")","C":"=SUMIFS({budget.costCalc:col},{budget.section:col},\"Change Orders\")"}},{"r":13,"style":"bold","fmt":"money","cells":{"A":"Total Contract Estimate","B":"=N(IFERROR({settings:Base Contract},0))+B12","C":"=SUM({budget.costCalc:col})"}},{"r":14,"style":"bold","fmt":"pct","cells":{"A":"Percent OHP","B":"=IF(B11=0,0,B5/B13)","C":"=IF(C13=0,0,C5/C13)"}},{"r":16,"fmt":"date","cells":{"A":"Project Start","B":"=IFERROR({settings:Project Start},\"\")"}},{"r":17,"fmt":"days","cells":{"A":"Project Current Duration","B":"=IF(B16=\"\",\"\",IFERROR(NETWORKDAYS.INTL(B16,TODAY(),1,{days.date:range}),\"\"))","C":"workdays, excl. weekends and the Non-Work Days tab"}},{"r":19,"style":"head","cells":{"A":"Crew labor (Labor Log tab)","B":"Labor estimate","C":"Crew log","D":"Left"}},{"r":20,"fmt":"money","cells":{"A":"Crew log at the daily rate","B":"=B6","C":"=SUM({labor.total:col})","D":"=B20-C20"}},{"r":21,"fmt":"hours","cells":{"A":"Total Hours","B":"=SUM({labor.crew:col})*N(IFERROR({settings:Hours per Crew-Day},8))"}},{"r":23,"style":"head","cells":{"A":"Equipment (Equipment tab)","B":"Total"}},{"r":24,"fmt":"money","cells":{"A":"All equipment logged","B":"=SUM({equipment.total:col})"}},{"r":25,"fmt":"count","cells":{"A":"Rentals still on rent","B":"=COUNTIFS({equipment.unit:col},\"Day\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")+COUNTIFS({equipment.unit:col},\"Week\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")+COUNTIFS({equipment.unit:col},\"4 Weeks\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")+COUNTIFS({equipment.unit:col},\"Month\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")","C":"Day, week or month rentals with no off-rent date"}},{"r":27,"style":"head","cells":{"A":"Progress notes (Progress Notes tab)","B":"Count"}},{"r":28,"fmt":"count","cells":{"A":"Open follow-ups","B":"=COUNTIF({notes.follow:col},\"Open\")","C":"Notes marked Follow-up: Open"}},{"r":30,"style":"note","cells":{"A":"This tab is calculated from the other tabs. Enter data in the app or on the data tabs - don't type over these formulas."}}]},"units":["Hour","Day","Week","4 Weeks","Month","Each","Lump Sum"],"rentalUnits":["Day","Week","4 Weeks","Month"],"statuses":["Active","On Hold","Closed"],"master":{"tables":{"projects":{"sheet":"Projects","cols":[{"key":"job","header":"Job No.","type":"text","width":90},{"key":"name","header":"Project","type":"text","width":280},{"key":"company","header":"Company","type":"text","width":200},{"key":"status","header":"Status","type":"text","width":90,"valid":{"list":"statuses"}},{"key":"link","header":"Sheet","type":"text","width":70,"computed":"=IF({id}=\"\",\"\",HYPERLINK(\"https://docs.google.com/spreadsheets/d/\"&{id}&\"/edit\",\"Open\"))"},{"key":"contract","header":"Contract","type":"money","width":120,"snap":"Total Contract Estimate!B"},{"key":"estCost","header":"Estimated Cost","type":"money","width":120,"snap":"TOTAL COST!B"},{"key":"cost","header":"Cost to Date","type":"money","width":120,"snap":"TOTAL COST!C"},{"key":"ohp","header":"Est. OHP","type":"money","width":120,"snap":"OHP!B"},{"key":"ohpPct","header":"OHP %","type":"pct","width":80,"snap":"Percent OHP!B"},{"key":"laborLeft","header":"Crew Labor Left","type":"money","width":120,"snap":"Crew log at the daily rate!D"},{"key":"onRent","header":"On Rent","type":"count","width":80,"snap":"Rentals still on rent!B"},{"key":"openFollow","header":"Open Follow-ups","type":"count","width":110,"snap":"Open follow-ups!B"},{"key":"updated","header":"Numbers As Of","type":"datetime","width":150},{"key":"notes","header":"Notes","type":"text","width":260},{"key":"id","header":"ID","type":"id","width":340}]}}},"noteCategories":["Progress","Client request","Change","Material","Issue","Meeting","Other"],"followStates":["Open","Done"],"companies":[{"key":"asf","name":"Architectural System Fabricators","short":"ASF","aliases":["Architectural System Fabricators LLC","Architectural Systems Fabricators"]},{"key":"uc","name":"Ultimate Construction","short":"UC","aliases":["Ultimate Construction LLC","Ultimate Construction, LLC"]}]};
+var SCHEMA = {"app":"project-tracker","version":"2.3.0","sections":["General Requirements","Scope","Change Orders"],"types":["Labor","Material","Equipment","General"],"sources":["Manual","Material Log","Equipment Log","Payroll"],"tables":{"budget":{"sheet":"Budget","cols":[{"key":"section","header":"Section","type":"text","width":160,"valid":{"list":"sections"}},{"key":"code","header":"Cost Code","type":"text","width":90},{"key":"item","header":"Item","type":"text","width":290},{"key":"type","header":"Type","type":"text","width":80,"valid":{"list":"types"}},{"key":"estimate","header":"Estimate","type":"money","width":120},{"key":"source","header":"Cost Source","type":"text","width":110,"valid":{"list":"sources"}},{"key":"cost","header":"Manual Cost","type":"money","width":120},{"key":"costCalc","header":"Cost","type":"money","width":120,"computed":"=IF({source}=\"Material Log\",IF({item}=\"\",0,SUMIF({materials.item:col},{item},{materials.total:col})),IF({source}=\"Equipment Log\",IF({item}=\"\",0,SUMIF({equipment.item:col},{item},{equipment.total:col})),IF({source}=\"Payroll\",IF({code}=\"\",0,SUMIF({payroll.code:col},{code},{payroll.cost:col})),N({cost}))))"},{"key":"balance","header":"Balance","type":"money","width":120,"computed":"=N({estimate})-N({costCalc})"},{"key":"notes","header":"Notes","type":"text","width":380},{"key":"sort","header":"Sort","type":"number","width":60},{"key":"id","header":"ID","type":"id","width":110}]},"materials":{"sheet":"Materials","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"desc","header":"Description","type":"text","width":320},{"key":"qty","header":"Quantity","type":"number","width":90},{"key":"uom","header":"UoM","type":"text","width":70},{"key":"rate","header":"Unit Rate","type":"rate","width":110},{"key":"total","header":"Total Cost","type":"money","width":120,"computed":"=N({qty})*N({rate})"},{"key":"item","header":"Budget Item","type":"text","width":270,"valid":{"ref":"budget.item"}},{"key":"notes","header":"Notes","type":"text","width":300},{"key":"id","header":"ID","type":"id","width":110}]},"equipment":{"sheet":"Equipment","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"offDate","header":"Off-Rent Date","type":"date","width":110},{"key":"desc","header":"Equipment","type":"text","width":260},{"key":"vendor","header":"Vendor","type":"text","width":160},{"key":"qty","header":"Quantity","type":"number","width":90},{"key":"unit","header":"Unit","type":"text","width":90,"valid":{"list":"units"}},{"key":"rate","header":"Unit Rate","type":"rate","width":110},{"key":"total","header":"Total Cost","type":"money","width":120,"computed":"=N({qty})*N({rate})"},{"key":"item","header":"Budget Item","type":"text","width":220,"valid":{"ref":"budget.item"}},{"key":"notes","header":"Notes","type":"text","width":300},{"key":"id","header":"ID","type":"id","width":110}]},"labor":{"sheet":"Labor Log","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"code","header":"Cost Code","type":"text","width":100,"valid":{"ref":"budget.code"}},{"key":"crew","header":"# Labor","type":"number","width":80},{"key":"rate","header":"Rate/Day","type":"money","width":100},{"key":"total","header":"Total","type":"money","width":110,"computed":"=N({crew})*N({rate})"},{"key":"notes","header":"Notes","type":"text","width":320},{"key":"id","header":"ID","type":"id","width":110}]},"payroll":{"sheet":"Payroll","cols":[{"key":"period","header":"Pay Period","type":"date","width":100},{"key":"cost","header":"Direct Cost","type":"money","width":120},{"key":"code","header":"Cost Code","type":"text","width":100,"valid":{"ref":"budget.code"}},{"key":"desc","header":"Description","type":"text","width":200,"computed":"=IF({code}=\"\",\"\",IFERROR(INDEX({budget.item:col},MATCH({code},{budget.code:col},0)),\"\"))"},{"key":"notes","header":"Notes","type":"text","width":300},{"key":"id","header":"ID","type":"id","width":110}]},"notes":{"sheet":"Progress Notes","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"category","header":"Category","type":"text","width":120,"valid":{"list":"noteCategories"}},{"key":"note","header":"Note","type":"text","width":460},{"key":"from","header":"From","type":"text","width":170},{"key":"follow","header":"Follow-up","type":"text","width":90,"valid":{"list":"followStates"}},{"key":"by","header":"By","type":"text","width":110},{"key":"logged","header":"Logged","type":"datetime","width":160},{"key":"id","header":"ID","type":"id","width":110}]},"days":{"sheet":"Non-Work Days","cols":[{"key":"date","header":"Date","type":"date","width":110},{"key":"notes","header":"Notes","type":"text","width":260},{"key":"id","header":"ID","type":"id","width":110}]}},"settings":{"sheet":"Settings","rows":[{"key":"name","label":"Project Name","type":"text","default":"New Project"},{"key":"job","label":"Job No.","type":"text","default":""},{"key":"company","label":"Company","type":"text","default":"","valid":{"list":"companies"}},{"key":"address","label":"Address","type":"text","default":""},{"key":"start","label":"Project Start","type":"date","default":""},{"key":"contract","label":"Base Contract","type":"money","default":0},{"key":"hours","label":"Hours per Crew-Day","type":"number","default":8},{"key":"rate","label":"Default Rate/Day","type":"money","default":800}]},"summary":{"sheet":"Summary","layout":3,"rows":[{"r":1,"style":"title","cells":{"A":"=IFERROR({settings:Project Name},\"\")"}},{"r":2,"style":"sub","cells":{"A":"=IFERROR({settings:Address},\"\")"}},{"r":4,"style":"head","cells":{"A":"","B":"Estimate","C":"Cost","D":"Balance/ Savings","E":"Notes"}},{"r":5,"style":"bold","fmt":"money","cells":{"A":"OHP","B":"=B13-B11","C":"=C13-C11"}},{"r":6,"fmt":"money","cells":{"A":"Labor","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"Labor\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"Labor\")","D":"=B6-C6"}},{"r":7,"fmt":"money","cells":{"A":"Material","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"Material\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"Material\")","D":"=B7-C7"}},{"r":8,"fmt":"money","cells":{"A":"Equipment","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"Equipment\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"Equipment\")","D":"=B8-C8"}},{"r":9,"fmt":"money","cells":{"A":"General Requirements","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"General\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"General\")","D":"=B9-C9"}},{"r":11,"style":"bold","fmt":"money","cells":{"A":"TOTAL COST","B":"=SUMIFS({budget.estimate:col},{budget.section:col},\"<>Change Orders\")","C":"=SUMIFS({budget.costCalc:col},{budget.section:col},\"<>Change Orders\")","D":"=SUM({budget.balance:col})","E":"Savings / Loss in Buyout and Labor"}},{"r":12,"fmt":"money","cells":{"A":"Change Orders","B":"=SUMIFS({budget.estimate:col},{budget.section:col},\"Change Orders\")","C":"=SUMIFS({budget.costCalc:col},{budget.section:col},\"Change Orders\")"}},{"r":13,"style":"bold","fmt":"money","cells":{"A":"Total Contract Estimate","B":"=N(IFERROR({settings:Base Contract},0))+B12","C":"=SUM({budget.costCalc:col})"}},{"r":14,"style":"bold","fmt":"pct","cells":{"A":"Percent OHP","B":"=IF(B11=0,0,B5/B13)","C":"=IF(C13=0,0,C5/C13)"}},{"r":16,"fmt":"date","cells":{"A":"Project Start","B":"=IFERROR({settings:Project Start},\"\")"}},{"r":17,"fmt":"days","cells":{"A":"Project Current Duration","B":"=IF(B16=\"\",\"\",IFERROR(NETWORKDAYS.INTL(B16,TODAY(),1,{days.date:range}),\"\"))","C":"workdays, excl. weekends and the Non-Work Days tab"}},{"r":19,"style":"head","cells":{"A":"Crew labor (Labor Log tab)","B":"Labor estimate","C":"Crew log","D":"Left"}},{"r":20,"fmt":"money","cells":{"A":"Crew log at the daily rate","B":"=B6","C":"=SUM({labor.total:col})","D":"=B20-C20"}},{"r":21,"fmt":"hours","cells":{"A":"Total Hours","B":"=SUM({labor.crew:col})*N(IFERROR({settings:Hours per Crew-Day},8))"}},{"r":23,"style":"head","cells":{"A":"Equipment (Equipment tab)","B":"Total"}},{"r":24,"fmt":"money","cells":{"A":"All equipment logged","B":"=SUM({equipment.total:col})"}},{"r":25,"fmt":"count","cells":{"A":"Rentals still on rent","B":"=COUNTIFS({equipment.unit:col},\"Day\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")+COUNTIFS({equipment.unit:col},\"Week\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")+COUNTIFS({equipment.unit:col},\"4 Weeks\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")+COUNTIFS({equipment.unit:col},\"Month\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")","C":"Day, week or month rentals with no off-rent date"}},{"r":27,"style":"head","cells":{"A":"Progress notes (Progress Notes tab)","B":"Count"}},{"r":28,"fmt":"count","cells":{"A":"Open follow-ups","B":"=COUNTIF({notes.follow:col},\"Open\")","C":"Notes marked Follow-up: Open"}},{"r":30,"style":"note","cells":{"A":"This tab is calculated from the other tabs. Enter data in the app or on the data tabs - don't type over these formulas."}}]},"units":["Hour","Day","Week","4 Weeks","Month","Each","Lump Sum"],"rentalUnits":["Day","Week","4 Weeks","Month"],"statuses":["Active","On Hold","Closed"],"master":{"tables":{"projects":{"sheet":"Projects","cols":[{"key":"job","header":"Job No.","type":"text","width":90},{"key":"name","header":"Project","type":"text","width":280},{"key":"company","header":"Company","type":"text","width":200},{"key":"status","header":"Status","type":"text","width":90,"valid":{"list":"statuses"}},{"key":"link","header":"Sheet","type":"text","width":70,"computed":"=IF({id}=\"\",\"\",HYPERLINK(\"https://docs.google.com/spreadsheets/d/\"&{id}&\"/edit\",\"Open\"))"},{"key":"contract","header":"Contract","type":"money","width":120,"snap":"Total Contract Estimate!B"},{"key":"estCost","header":"Estimated Cost","type":"money","width":120,"snap":"TOTAL COST!B"},{"key":"cost","header":"Cost to Date","type":"money","width":120,"snap":"TOTAL COST!C"},{"key":"ohp","header":"Est. OHP","type":"money","width":120,"snap":"OHP!B"},{"key":"ohpPct","header":"OHP %","type":"pct","width":80,"snap":"Percent OHP!B"},{"key":"laborLeft","header":"Crew Labor Left","type":"money","width":120,"snap":"Crew log at the daily rate!D"},{"key":"onRent","header":"On Rent","type":"count","width":80,"snap":"Rentals still on rent!B"},{"key":"openFollow","header":"Open Follow-ups","type":"count","width":110,"snap":"Open follow-ups!B"},{"key":"updated","header":"Numbers As Of","type":"datetime","width":150},{"key":"notes","header":"Notes","type":"text","width":260},{"key":"id","header":"ID","type":"id","width":340}]}}},"noteCategories":["Progress","Client request","Change","Material","Issue","Meeting","Other"],"followStates":["Open","Done"],"companies":[{"key":"asf","name":"Architectural System Fabricators","short":"ASF","aliases":["Architectural System Fabricators LLC","Architectural Systems Fabricators"]},{"key":"uc","name":"Ultimate Construction","short":"UC","aliases":["Ultimate Construction LLC","Ultimate Construction, LLC"]}]};
 var SEED = null;
 
 var PREVIEW = CONFIG.mode === 'preview';
@@ -901,6 +904,34 @@ function compute(d) {
   m.crewDays = d.labor.reduce(function (a, l) { return a + val(l.crew); }, 0);
   m.hours = m.crewDays * m.hoursPerDay;
 
+  // Crew log by cost code, against the Labor lines that carry the code (payroll uses the same codes).
+  var codes = m.codes = { list: [], by: {}, none: { n: 0, total: 0, days: 0, first: '', last: '' } };
+  function codeRow(k, code) {
+    if (!codes.by[k]) { codes.by[k] = { k: k, code: code, items: [], est: 0, crew: 0, days: 0, n: 0, pay: payBy[k] || 0, onBudget: false }; codes.list.push(codes.by[k]); }
+    return codes.by[k];
+  }
+  m.lines.forEach(function (L) {
+    var k = keyOf(L.r.code);
+    if (L.type !== 'labor' || !k) return;
+    var c = codeRow(k, String(L.r.code).trim());
+    c.onBudget = true; c.est += L.est;
+    if (L.r.item && c.items.indexOf(L.r.item) < 0) c.items.push(L.r.item);
+  });
+  m.labor.forEach(function (x) {
+    if (!(val(x.r.crew) > 0)) return;
+    var k = keyOf(x.r.code);
+    if (!k) {
+      var nn = codes.none;
+      nn.n++; nn.total += x.total; nn.days += val(x.r.crew);
+      if (x.r.date && (!nn.first || x.r.date < nn.first)) nn.first = x.r.date;
+      if (x.r.date && x.r.date > nn.last) nn.last = x.r.date;
+      return;
+    }
+    var c = codeRow(k, String(x.r.code).trim());
+    c.crew += x.total; c.days += val(x.r.crew); c.n++;
+  });
+  m.laborCodes = codes.list.filter(function (c) { return c.onBudget; });
+
   var hol = holidaySet(d);
   m.hol = hol;
   m.today = today();
@@ -958,6 +989,11 @@ function attention(m, d) {
           '. Payroll to date is ' + money(m.payTracked) + ' (' + pct(m.payTracked / m.laborBudget) + ' of the labor estimate).' });
     }
   }
+  var none = m.codes.none;
+  if (none.n && m.laborCodes.length) {
+    out.push({ sev: 'info', tab: 'labor', t: none.n + ' crew log ' + plural(none.n, 'entry has', 'entries have') + ' no cost code',
+      d: money(none.total) + ' of the crew log is not charged to a cost code. Assign one on the Labor page.' });
+  }
   if (m.openFollow.length) {
     var oldest = m.openFollow[m.openFollow.length - 1].r;
     out.push({ sev: 'info', tab: 'notes', t: m.openFollow.length + ' ' + plural(m.openFollow.length, 'follow-up') + ' open in progress notes',
@@ -1011,7 +1047,7 @@ var state = {
   meta: blankMeta(),
   sync: { state: PREVIEW ? 'preview' : 'idle', msg: '' },
   ui: Object.assign({ tab: 'overview', laborView: 'crew', matFilter: '', matSearch: '', eqFilter: '', eqSearch: '', pSearch: '', noteFilter: '', noteSearch: '', chartTable: false,
-    project: '', lastProject: '', showClosed: false }, store.get(KEYS.ui) || {}, { coFilter: null })
+    project: '', lastProject: '', showClosed: false }, store.get(KEYS.ui) || {}, { coFilter: null, crewCode: '' })
 };
 function saveUi() { store.set(KEYS.ui, { tab: state.ui.tab, laborView: state.ui.laborView, project: state.ui.project, lastProject: state.ui.lastProject }); }
 function bump() { version++; }
@@ -1896,26 +1932,63 @@ function viewLabor() {
   h += '</section></div>';
   return h;
 }
+/** Crew log by cost code: one tile per Labor code (tap to filter), and one for crew days with no code.
+    No per-code budget bar: the crew-day rate is all-in, while a budget may keep benefits on their own code,
+    so a code-by-code comparison would read over on one code and empty on the other. Labor burn compares the totals. */
+function crewCodeTiles(m) {
+  var cs = m.codes, f = state.ui.crewCode;
+  if (!cs.list.length) return '';
+  var tile = function (k, title, rows) {
+    return '<button type="button" class="tile" data-action="crew-code" data-code="' + esc(k) + '" aria-pressed="' + (f === k ? 'true' : 'false') + '">' +
+      '<span class="t">' + esc(title) + '</span>' + rows + '</button>';
+  };
+  var h = '';
+  if (cs.none.n && m.laborCodes.length && !scriptOlder('2.3.0')) {
+    h += '<div class="cnote"><span><b>' + cs.none.n + ' crew log ' + plural(cs.none.n, 'entry has', 'entries have') + ' no cost code</b> (' + money(cs.none.total) + ').</span>' +
+      '<button type="button" class="btn sm" data-action="assign-codes">Assign a cost code</button></div>';
+  }
+  h += '<div class="tiles ctiles">';
+  cs.list.forEach(function (c) {
+    h += tile(c.k, c.onBudget ? c.items.join(', ') || 'Labor' : 'Cost code ' + c.code,
+      '<span class="row"><span class="cond">' + esc(c.code) + '</span><b>' + money(c.crew) + '</b></span>' +
+      '<span class="row"><span>Crew-days</span><span>' + qty(c.days) + '</span></span>' +
+      (c.onBudget ? '' : '<span class="row"><span class="chip bad">Not on a Labor line</span></span>'));
+  });
+  if (cs.none.n) {
+    h += tile('-', 'No cost code', '<span class="row"><span>Not assigned</span><b>' + money(cs.none.total) + '</b></span>' +
+      '<span class="row"><span>Crew-days</span><span>' + qty(cs.none.days) + '</span></span>');
+  }
+  return h + '</div>';
+}
 function crewList(m, d) {
   if (!m.labor.length) return '<p class="empty">No crew days yet. Use <b>Log crew day</b> each day the crew works.</p>';
+  var f = state.ui.crewCode;
+  if (f && (f === '-' ? !m.codes.none.n : !m.codes.by[f])) f = state.ui.crewCode = '';   // that code is gone
+  var tiles = crewCodeTiles(m);
+  var rows = !f ? m.labor : m.labor.filter(function (x) { return val(x.r.crew) > 0 && (f === '-' ? !keyOf(x.r.code) : keyOf(x.r.code) === f); });
   var groups = {}, order = [];
-  m.labor.forEach(function (x) { var k = x.r.date || ''; if (!groups[k]) { groups[k] = []; order.push(k); } groups[k].push(x); });
+  rows.forEach(function (x) { var k = x.r.date || ''; if (!groups[k]) { groups[k] = []; order.push(k); } groups[k].push(x); });
   order.sort(function (a, b) { return b.localeCompare(a); });
   var LIMIT = 10, hiddenDays = state.ui.crewAll ? 0 : Math.max(0, order.length - LIMIT);
   if (hiddenDays) order = order.slice(0, LIMIT);
-  return order.map(function (k) {
+  var coded = m.laborCodes.length > 0;
+  return tiles + order.map(function (k) {
     var g = groups[k], crew = g.reduce(function (a, x) { return a + val(x.r.crew); }, 0), cost = g.reduce(function (a, x) { return a + x.total; }, 0);
     return '<div class="lgroup"><div class="lgroup-head"><span>' + esc(k ? fmtDay(k) : 'No date') + '</span> <span class="r">' +
       (crew ? '<span>' + qty(crew) + ' crew</span> <span>' + money(cost) + '</span>' : '<span class="muted">No crew</span>') + '</span></div>' +
       g.map(function (x) {
         var r = x.r, c = val(r.crew), noteOnly = !(c > 0);
         var title = noteOnly ? (r.notes || 'Note') : qty(c) + ' ' + plural(c, 'worker');
-        var s = noteOnly ? '' : '<span>at ' + money(val(r.rate)) + ' a day</span>';
+        var cc = m.codes.by[keyOf(r.code)];
+        var codeHtml = noteOnly ? '' : cc ? '<span class="cond">' + esc(r.code) + '</span>' + (cc.onBudget ? '<span>' + esc(cc.items.join(', ')) + '</span>' : '<span class="chip bad">Not on a Labor line</span>') :
+          coded ? '<span class="chip">No cost code</span>' : '';
+        var s = noteOnly ? '' : '<span>at ' + money(val(r.rate)) + ' a day</span>' + codeHtml;
         return '<button type="button" class="lrow nodate crew' + (noteOnly ? ' noteonly' : '') + '" data-action="edit" data-table="labor" data-id="' + esc(r.id) + '">' +
           '<span class="m"><span class="t">' + esc(title) + '</span>' + (s ? '<span class="s">' + s + '</span>' : '') + (!noteOnly && r.notes ? '<span class="n">' + esc(r.notes) + '</span>' : '') + '</span>' +
           '<span class="a ' + moneyCls(x.total) + '">' + (noteOnly ? '' : money(x.total)) + '</span></button>';
       }).join('') + '</div>';
-  }).join('') + (hiddenDays ? '<div class="more"><button type="button" class="btn sm" data-action="crew-all">Show ' + hiddenDays + ' earlier ' + plural(hiddenDays, 'day') + '</button></div>' :
+  }).join('') + (!order.length ? '<p class="empty">No crew log entries with this cost code yet.</p>' : '') +
+    (hiddenDays ? '<div class="more"><button type="button" class="btn sm" data-action="crew-all">Show ' + hiddenDays + ' earlier ' + plural(hiddenDays, 'day') + '</button></div>' :
     (state.ui.crewAll && order.length > LIMIT ? '<div class="more"><button type="button" class="btn sm" data-action="crew-all">Show the latest ' + LIMIT + ' days only</button></div>' : ''));
 }
 function payrollList(m, d) {
@@ -2076,10 +2149,15 @@ function projectsCard() {
     '</section>';
 }
 /** The company select. A value typed in the sheet that is not one of the companies stays as it is. */
+/** True when the connected script is older than v: it drops fields it doesn't know about without saying so. */
+function scriptOlder(v) {
+  if (PREVIEW) return false;
+  var ver = state.server.version || state.meta.version;
+  return !!ver && verCmp(ver, v) < 0;
+}
 function companyField(prefix, cur, help) {
   cur = String(cur || '').trim();
-  var co = companyOf(cur), ver = PREVIEW ? '' : state.server.version || state.meta.version;
-  var old = !!ver && verCmp(ver, '2.2.0') < 0;   // older scripts drop the company without saying so
+  var co = companyOf(cur), old = scriptOlder('2.2.0');
   var opts = [{ value: '', label: 'Not set' }].concat(COMPANIES.map(function (c) { return { value: c.name, label: c.name }; }));
   if (cur && !co) opts.push({ value: cur, label: cur });
   return fieldHtml({ prefix: prefix, name: 'company', label: 'Company', type: 'select', value: co ? co.name : cur, options: opts, disabled: old,
@@ -2688,10 +2766,35 @@ function formEquipment(rec) {
 }
 
 /* ----- crew day forms ----- */
+/** The cost code select: the codes on the Budget page's Labor lines. */
+function crewCodeField(cur, full) {
+  var m = model(), old = scriptOlder('2.3.0');
+  cur = String(cur || '').trim();
+  var hit = m.codes.by[keyOf(cur)], onLine = !!(hit && hit.onBudget);
+  var opts = m.laborCodes.map(function (c) { return { value: c.code, label: c.code + ' \u00b7 ' + (c.items.join(', ') || 'Labor') }; });
+  if (cur && !onLine) opts.push({ value: cur, label: cur + ' (not on a Labor line)' });
+  var none = !opts.length;
+  return fieldHtml({ name: 'code', label: 'Cost code', type: 'select', value: onLine ? hit.code : cur, full: full, disabled: old,
+    options: [{ value: '', label: none ? 'No Labor lines with a cost code yet' : 'Choose a cost code' }].concat(opts),
+    help: old ? 'Saving a cost code needs the new script: see the note at the top of the page.' :
+      none ? 'Give the Labor lines on the Budget page their cost codes, then pick one here.' : '' });
+}
+/** A crew day with workers needs a code once the budget's Labor lines have codes (and the script can save it). */
+function needsCode(v) { return val(v.crew) > 0 && !v.code && model().laborCodes.length > 0 && !scriptOlder('2.3.0'); }
+/** The code of the latest crew day that has one (if still on a Labor line), or the budget's only Labor code. */
+function lastCrewCode() {
+  var m = model(), best = null;
+  m.labor.forEach(function (x) { if (keyOf(x.r.code) && (!best || (x.r.date || '') >= (best.r.date || ''))) best = x; });
+  var c = best && m.codes.by[keyOf(best.r.code)];
+  if (c && c.onBudget) return best.r.code;
+  return m.laborCodes.length === 1 ? m.laborCodes[0].code : '';
+}
+var CODE_MSG = 'Choose the cost code this crew day is charged to.';
 function formCrewDay() {
   var d = state.data;
   var rateDflt = isBlank(d.settings.rate) ? 800 : d.settings.rate;
   var body = fieldHtml({ name: 'date', label: 'Date', type: 'date', value: today() }) +
+    crewCodeField(lastCrewCode()) +
     fieldHtml({ name: 'crew', label: 'Crew on site', type: 'number', value: '', placeholder: 'Number of workers' }) +
     fieldHtml({ name: 'rate', label: 'Rate per crew-day', type: 'money', value: rateDflt, help: 'Two rates on one day? Save one, then log the other.' }) +
     '<div class="form-total"><span>Day total</span><b id="crewTotal">$0.00</b></div>' +
@@ -2711,13 +2814,16 @@ function formCrewDay() {
       if (v._errors.length) return v._errors[0];
       if (!v.date) return 'Pick the date.';
       if (!(val(v.crew) > 0) && !v.notes) return 'Enter the crew on site, or a note for a day with no work.';
-      var row = { id: uid('labor'), date: v.date, crew: val(v.crew) > 0 ? v.crew : '', rate: val(v.crew) > 0 ? v.rate : '', notes: v.notes };
+      if (needsCode(v)) return CODE_MSG;
+      var on = val(v.crew) > 0;
+      var row = { id: uid('labor'), date: v.date, code: on ? v.code : '', crew: on ? v.crew : '', rate: on ? v.rate : '', notes: v.notes };
       commit([add('labor', row)], val(v.crew) > 0 ? 'Crew day added' : 'Note added to the crew log');
     }
   });
 }
 function formCrewEntry(rec) {
   var body = fieldHtml({ name: 'date', label: 'Date', type: 'date', value: rec.date }) +
+    crewCodeField(rec.code) +
     fieldHtml({ name: 'crew', label: 'Number of workers', type: 'number', value: rec.crew }) +
     fieldHtml({ name: 'rate', label: 'Rate per crew-day', type: 'money', value: rec.rate }) +
     '<div class="form-total"><span>Entry total</span><b id="crewTotal">$0.00</b></div>' +
@@ -2733,10 +2839,50 @@ function formCrewEntry(rec) {
       var v = formValues(f);
       if (v._errors.length) return v._errors[0];
       if (!v.date) return 'Pick the date.';
-      var patch = changed(rec, v, ['date', 'crew', 'rate', 'notes']);
+      if (needsCode(v)) return CODE_MSG;
+      var patch = changed(rec, v, ['date', 'code', 'crew', 'rate', 'notes']);
       if (Object.keys(patch).length) commit([upd('labor', rec.id, patch)], 'Crew entry saved');
     },
     onDelete: function () { commit([del('labor', rec.id)], 'Crew entry deleted'); }, deleteLabel: 'Delete entry'
+  });
+}
+/** One cost code for the crew log entries that have none, between two dates. */
+function formAssignCodes() {
+  var m = model(), none = m.codes.none;
+  var pick = function (from, to) {
+    return m.labor.filter(function (x) {
+      if (!(val(x.r.crew) > 0) || keyOf(x.r.code)) return false;
+      var dt = x.r.date || '';
+      return (!from || (dt && dt >= from)) && (!to || (dt && dt <= to));
+    });
+  };
+  var body = '<div class="form-note">' + none.n + ' crew log ' + plural(none.n, 'entry has', 'entries have') + ' no cost code, ' + money(none.total) + ' in all' +
+    (none.first ? ', from ' + esc(fmtShort(none.first)) + ' to ' + esc(fmtShort(none.last)) : '') + '. The code goes on the ones dated between From and To. ' +
+    'To change a single entry afterwards, tap it in the list.</div>' +
+    crewCodeField(lastCrewCode(), true) +
+    fieldHtml({ name: 'from', label: 'From', type: 'date', value: none.first }) +
+    fieldHtml({ name: 'to', label: 'To', type: 'date', value: none.last }) +
+    '<div class="form-total"><span id="assignCount"></span><b id="assignTotal"></b></div>';
+  openModal({
+    title: 'Assign a cost code', submit: 'Assign', body: body,
+    onMount: function (f) {
+      function sync() {
+        var rows = pick($('#f_from', f).value, $('#f_to', f).value);
+        $('#assignCount', f).textContent = rows.length + ' ' + plural(rows.length, 'entry', 'entries');
+        $('#assignTotal', f).textContent = money(rows.reduce(function (a, x) { return a + x.total; }, 0));
+      }
+      ['#f_from', '#f_to'].forEach(function (x) { $(x, f).addEventListener('input', sync); $(x, f).addEventListener('change', sync); });
+      sync();
+    },
+    onSubmit: function (f) {
+      var v = formValues(f);
+      if (!v.code) return 'Choose the cost code.';
+      if (v.from && v.to && v.from > v.to) return 'The From date is after the To date.';
+      var rows = pick(v.from, v.to);
+      if (!rows.length) return 'No entries without a cost code between those dates.';
+      commit(rows.map(function (x) { return upd('labor', x.r.id, { code: v.code }); }),
+        'Cost code ' + v.code + ' assigned to ' + rows.length + ' ' + plural(rows.length, 'entry', 'entries'));
+    }
   });
 }
 function formPayroll(rec) {
@@ -3140,6 +3286,8 @@ document.addEventListener('click', function (e) {
   else if (a === 'labor-view') { state.ui.laborView = el.dataset.view; saveUi(); render(); }
   else if (a === 'chart-table') { state.ui.chartTable = !state.ui.chartTable; render(); }
   else if (a === 'crew-all') { state.ui.crewAll = !state.ui.crewAll; render(); }
+  else if (a === 'crew-code') { state.ui.crewCode = state.ui.crewCode === el.dataset.code ? '' : el.dataset.code; render(); }
+  else if (a === 'assign-codes') formAssignCodes();
   else if (a === 'notes-all') { state.ui.notesAll = !state.ui.notesAll; render(); }
   else if (a === 'co-filter') { var ck = el.dataset.co; state.ui.coFilter = ck === '*' || state.ui.coFilter === ck ? null : ck; render(); }
   else if (a === 'note-filter') { state.ui.noteFilter = state.ui.noteFilter === el.dataset.f ? '' : el.dataset.f; state.ui.notesAll = false; render(); }
