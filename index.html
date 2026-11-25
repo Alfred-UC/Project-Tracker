@@ -162,6 +162,38 @@ a.btn { text-decoration: none; }
 .tabs button[aria-current="page"] { color: var(--sign-ink); border-bottom-color: var(--sign-accent); }
 .tabbar { display: none; }
 
+/* ---------- left pane: the job's pages on wide screens ---------- */
+.side { display: none; }
+.side-head { padding: 0 6px 14px; margin-bottom: 10px; border-bottom: 1px solid var(--rule); }
+.side-all { display: inline-flex; align-items: center; gap: 3px; margin: 0 0 12px -6px; padding: 5px 10px 5px 4px; border: 0; border-radius: 7px;
+  background: transparent; color: var(--ink-2); font-size: 13.5px; font-weight: 600; }
+.side-all:hover { background: var(--surface-2); color: var(--ink); }
+.side-all svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.side-job { display: grid; gap: 3px; }
+.side-job .j { font-size: 12px; font-weight: 700; font-stretch: 85%; letter-spacing: .05em; color: var(--ink-3); }
+.side-job .nm { font-size: 15px; font-weight: 700; line-height: 1.28; color: var(--ink); overflow-wrap: anywhere;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.side-nav { display: grid; gap: 2px; }
+.side .si { position: relative; display: flex; align-items: center; gap: 12px; width: 100%; padding: 9px 10px; border: 0; border-radius: 8px;
+  background: transparent; color: var(--ink-2); font-size: 14.5px; font-weight: 600; text-align: left; }
+.side .si svg { flex: none; width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.side .si .l { flex: 1; min-width: 0; }
+.side .si .cnt { font-size: 12px; font-weight: 700; font-stretch: 85%; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.side .si:hover { background: var(--surface-2); color: var(--ink); }
+.side .si[aria-current="page"] { background: var(--brand-soft); color: var(--brand-text); }
+.side .si[aria-current="page"] .cnt { color: var(--brand-text); }
+.side .si[aria-current="page"]::before { content: ""; position: absolute; left: -12px; top: 7px; bottom: 7px; width: 4px; border-radius: 0 3px 3px 0; background: var(--brand); }
+.side-foot { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--rule); }
+@media (min-width: 1200px) {
+  :root { --side-w: 236px; }
+  body.has-side { padding-left: var(--side-w); }
+  body.has-side .side { display: flex; flex-direction: column; position: fixed; z-index: 35; top: 0; bottom: 0; left: 0; width: var(--side-w);
+    padding: 20px 12px 14px; background: var(--surface); border-right: 1px solid var(--rule); overflow-y: auto; }
+  body.has-side .tabs, body.has-side .crumb { display: none; }
+  body.has-side .sign .wrap { padding-bottom: 24px; }
+  body.has-side .toast { left: calc(50% + var(--side-w) / 2); }
+}
+
 /* ---------- layout ---------- */
 .main { padding-block: 22px 64px; outline: none; }
 .stack { display: grid; gap: 18px; }
@@ -200,6 +232,40 @@ a.btn { text-decoration: none; }
 .pill.warn { background: var(--warn-soft); color: var(--warn); }
 .pill.good { background: var(--good-soft); color: var(--good); }
 .pill.mute { background: var(--surface-2); color: var(--ink-2); }
+.pill.next { background: var(--brand-soft); color: var(--brand-text); }
+
+/* ---------- project steps ---------- */
+.psum { display: grid; gap: 10px; margin: 0 0 16px; }
+.psum-fig { color: var(--ink-2); font-size: 15px; }
+.psum-fig b { margin-right: 3px; color: var(--ink); font-size: 26px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.ptrack { display: flex; gap: 4px; }
+.ptrack span { flex: 1 1 0; height: 10px; border-radius: 3px; background: var(--track); }
+.ptrack span.d { background: var(--good); }
+.ptrack span.nx { box-shadow: inset 0 0 0 2px var(--brand-text); }
+.ptrack span.na { background: repeating-linear-gradient(135deg, var(--track) 0 2px, transparent 2px 5px); }
+.psum-next { color: var(--ink-2); font-size: 14.5px; }
+.psum-next b { color: var(--ink); }
+.plist { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+.pstep { display: flex; align-items: center; gap: 10px; padding: 0 2px 0 6px; border-bottom: 1px solid var(--rule); }
+.pstep.is-next { background: var(--surface-2); }
+.pchk { flex: none; display: grid; place-items: center; width: 26px; height: 26px; padding: 0; border: 2px solid var(--ink-3); border-radius: 7px;
+  background: var(--surface); color: transparent; }
+.pchk svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+@media (hover: hover) { .pchk:hover { border-color: var(--good); color: var(--good-soft); } }
+.is-done .pchk { border-color: var(--good); background: var(--good); color: var(--surface); }
+.is-na .pchk { border-style: dashed; color: var(--ink-3); }
+.pbody { flex: 1; min-width: 0; display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 12px 8px 12px 2px;
+  border: 0; border-radius: 6px; background: transparent; text-align: left; }
+@media (hover: hover) { .pbody:hover .pname { text-decoration: underline; text-decoration-color: var(--ink-3); text-underline-offset: 3px; } }
+.pn { color: var(--ink-3); font-size: 13px; font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+.pt { display: grid; gap: 2px; min-width: 0; }
+.pname { color: var(--ink); font-size: 15px; font-weight: 600; overflow-wrap: anywhere; }
+.pnote { color: var(--ink-3); font-size: 13px; overflow-wrap: anywhere; }
+.pjob { color: var(--brand-text); font-size: 12px; font-weight: 700; font-stretch: 85%; letter-spacing: .02em; }
+.ro { padding: 6px 0 2px; font-size: 16px; font-weight: 600; }
+.pwhen { color: var(--ink-2); font-size: 13.5px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.is-done .pname { color: var(--ink-2); }
+.is-na .pname { color: var(--ink-3); text-decoration: line-through; }
 .seg { display: inline-flex; padding: 3px; background: var(--surface-2); border: 1px solid var(--rule); border-radius: 9px; gap: 2px; }
 .seg button { border: 0; background: transparent; padding: 6px 14px; border-radius: 6px; font-weight: 600; font-size: 14px; color: var(--ink-2); }
 .seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0, 0, 0, .12); }
@@ -396,6 +462,11 @@ button.tile:hover { border-color: var(--ink-3); }
 .pcard .co { margin-top: -5px; font-size: 13px; font-weight: 600; font-stretch: 90%; color: var(--ink-2); overflow-wrap: anywhere; }
 .pcard .gc { margin-top: -5px; font-size: 13px; color: var(--ink-2); overflow-wrap: anywhere; }
 .pcard .gc .k { font-stretch: 78%; font-weight: 700; font-size: 12px; letter-spacing: .03em; color: var(--ink-3); margin-right: 6px; }
+.pcard .pst { display: flex; flex-wrap: wrap; align-items: baseline; gap: 1px 8px; font-size: 13px; color: var(--ink-2); }
+.pcard .pst .k { font-stretch: 78%; font-weight: 700; font-size: 12px; letter-spacing: .03em; color: var(--ink-3); }
+.pcard .pst .t { font-weight: 600; color: var(--ink); overflow-wrap: anywhere; }
+.pcard .pst .c { color: var(--ink-3); }
+.pcard .pst.all .t { color: var(--good); }
 .cdot { display: inline-block; width: 9px; height: 9px; border-radius: 2px; background: var(--co, var(--ink-3)); flex: none; }
 .fchips.cofilter { margin: 0; }
 details.pmore > summary { list-style: none; display: inline-flex; align-items: center; gap: 8px; }
@@ -517,11 +588,11 @@ details summary { cursor: pointer; font-weight: 700; }
   .sign .co .cs { display: inline; }
   .tabs { display: none; }
   .gear:not([hidden]) { display: inline-grid; }
-  .tabbar { display: grid; grid-template-columns: repeat(6, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  .tabbar { display: grid; grid-template-columns: repeat(7, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
     background: var(--surface); border-top: 1px solid var(--rule); padding: 4px max(6px, env(safe-area-inset-right, 0px)) calc(4px + env(safe-area-inset-bottom, 0px)) max(6px, env(safe-area-inset-left, 0px)); }
   .tabbar button { border: 0; background: transparent; display: grid; justify-items: center; gap: 2px; padding: 6px 1px 4px; color: var(--ink-3);
     font-size: 11.5px; font-weight: 600; border-radius: 8px; min-width: 0; }
-  .tabbar button span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-stretch: 92%; }
+  .tabbar button span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-stretch: 78%; }
   .tabbar button svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
   .tabbar button[aria-current="page"] { color: var(--brand-text); }
   .main { padding-block: 16px calc(var(--tabbar-h) + 28px); }
@@ -550,6 +621,7 @@ img { max-width: 100%; }
 </style>
 </head>
 <body>
+<nav class="side" id="side" aria-label="Sections" hidden></nav>
 <header class="sign">
   <div class="wrap">
     <div class="sign-top">
@@ -583,12 +655,12 @@ img { max-width: 100%; }
 (function () {
 'use strict';
 var CONFIG = {"mode":"sheet","title":"Project Tracker"};
-var SCHEMA = {"app":"project-tracker","version":"2.5.0","sections":["General Requirements","Scope","Change Orders"],"types":["Labor","Material","Equipment","General"],"sources":["Manual","Material Log","Equipment Log","Payroll"],"tables":{"budget":{"sheet":"Budget","cols":[{"key":"section","header":"Section","type":"text","width":160,"valid":{"list":"sections"}},{"key":"code","header":"Cost Code","type":"text","width":90},{"key":"item","header":"Item","type":"text","width":290},{"key":"type","header":"Type","type":"text","width":80,"valid":{"list":"types"}},{"key":"estimate","header":"Estimate","type":"money","width":120},{"key":"source","header":"Cost Source","type":"text","width":110,"valid":{"list":"sources"}},{"key":"cost","header":"Manual Cost","type":"money","width":120},{"key":"costCalc","header":"Cost","type":"money","width":120,"computed":"=IF({source}=\"Material Log\",IF({item}=\"\",0,SUMIF({materials.item:col},{item},{materials.total:col})),IF({source}=\"Equipment Log\",IF({item}=\"\",0,SUMIF({equipment.item:col},{item},{equipment.total:col})),IF({source}=\"Payroll\",IF({code}=\"\",0,SUMIF({payroll.code:col},{code},{payroll.cost:col})+SUMIF({labor.code:col},{code},{labor.total:col})),N({cost}))))"},{"key":"balance","header":"Balance","type":"money","width":120,"computed":"=N({estimate})-N({costCalc})"},{"key":"notes","header":"Notes","type":"text","width":380},{"key":"sort","header":"Sort","type":"number","width":60},{"key":"id","header":"ID","type":"id","width":110}]},"materials":{"sheet":"Materials","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"desc","header":"Description","type":"text","width":320},{"key":"qty","header":"Quantity","type":"number","width":90},{"key":"uom","header":"UoM","type":"text","width":70},{"key":"rate","header":"Unit Rate","type":"rate","width":110},{"key":"total","header":"Total Cost","type":"money","width":120,"computed":"=N({qty})*N({rate})"},{"key":"item","header":"Budget Item","type":"text","width":270,"valid":{"ref":"budget.item"}},{"key":"notes","header":"Notes","type":"text","width":300},{"key":"id","header":"ID","type":"id","width":110}]},"equipment":{"sheet":"Equipment","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"offDate","header":"Off-Rent Date","type":"date","width":110},{"key":"desc","header":"Equipment","type":"text","width":260},{"key":"vendor","header":"Vendor","type":"text","width":160},{"key":"qty","header":"Quantity","type":"number","width":90},{"key":"unit","header":"Unit","type":"text","width":90,"valid":{"list":"units"}},{"key":"rate","header":"Unit Rate","type":"rate","width":110},{"key":"total","header":"Total Cost","type":"money","width":120,"computed":"=N({qty})*N({rate})"},{"key":"item","header":"Budget Item","type":"text","width":220,"valid":{"ref":"budget.item"}},{"key":"notes","header":"Notes","type":"text","width":300},{"key":"id","header":"ID","type":"id","width":110}]},"labor":{"sheet":"Labor Log","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"code","header":"Cost Code","type":"text","width":100,"valid":{"ref":"budget.code"}},{"key":"crew","header":"# Labor","type":"number","width":80},{"key":"hours","header":"Hours","type":"number","width":70},{"key":"hrate","header":"Rate/Hr","type":"money","width":90},{"key":"rate","header":"Rate/Day","type":"money","width":100,"legacy":true},{"key":"total","header":"Total","type":"money","width":110,"computed":"=N({crew})*IF(N({hrate})>0,N({hours})*N({hrate}),N({rate}))"},{"key":"notes","header":"Notes","type":"text","width":320},{"key":"id","header":"ID","type":"id","width":110}]},"payroll":{"sheet":"Payroll","cols":[{"key":"period","header":"Pay Period","type":"date","width":100},{"key":"cost","header":"Direct Cost","type":"money","width":120},{"key":"code","header":"Cost Code","type":"text","width":100,"valid":{"ref":"budget.code"}},{"key":"desc","header":"Description","type":"text","width":200,"computed":"=IF({code}=\"\",\"\",IFERROR(INDEX({budget.item:col},MATCH({code},{budget.code:col},0)),\"\"))"},{"key":"notes","header":"Notes","type":"text","width":300},{"key":"id","header":"ID","type":"id","width":110}]},"notes":{"sheet":"Progress Notes","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"category","header":"Category","type":"text","width":120,"valid":{"list":"noteCategories"}},{"key":"note","header":"Note","type":"text","width":460},{"key":"from","header":"From","type":"text","width":170},{"key":"follow","header":"Follow-up","type":"text","width":90,"valid":{"list":"followStates"}},{"key":"by","header":"By","type":"text","width":110},{"key":"logged","header":"Logged","type":"datetime","width":160},{"key":"id","header":"ID","type":"id","width":110}]},"days":{"sheet":"Non-Work Days","cols":[{"key":"date","header":"Date","type":"date","width":110},{"key":"notes","header":"Notes","type":"text","width":260},{"key":"id","header":"ID","type":"id","width":110}]}},"settings":{"sheet":"Settings","rows":[{"key":"name","label":"Project Name","type":"text","default":"New Project"},{"key":"job","label":"Job No.","type":"text","default":""},{"key":"company","label":"Company","type":"text","default":"","valid":{"list":"companies"}},{"key":"gc","label":"General Contractor","type":"text","default":""},{"key":"address","label":"Address","type":"text","default":""},{"key":"start","label":"Project Start","type":"date","default":""},{"key":"end","label":"Job End","type":"date","default":""},{"key":"contract","label":"Base Contract","type":"money","default":0},{"key":"hours","label":"Hours per Crew-Day","type":"number","default":8},{"key":"hrate","label":"Default Rate/Hr","type":"money","default":""}]},"summary":{"sheet":"Summary","layout":3,"rows":[{"r":1,"style":"title","cells":{"A":"=IFERROR({settings:Project Name},\"\")"}},{"r":2,"style":"sub","cells":{"A":"=IFERROR({settings:Address},\"\")"}},{"r":4,"style":"head","cells":{"A":"","B":"Estimate","C":"Cost","D":"Balance/ Savings","E":"Notes"}},{"r":5,"style":"bold","fmt":"money","cells":{"A":"OHP","B":"=B13-B11","C":"=C13-C11"}},{"r":6,"fmt":"money","cells":{"A":"Labor","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"Labor\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"Labor\")","D":"=B6-C6"}},{"r":7,"fmt":"money","cells":{"A":"Material","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"Material\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"Material\")","D":"=B7-C7"}},{"r":8,"fmt":"money","cells":{"A":"Equipment","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"Equipment\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"Equipment\")","D":"=B8-C8"}},{"r":9,"fmt":"money","cells":{"A":"General Requirements","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"General\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"General\")","D":"=B9-C9"}},{"r":11,"style":"bold","fmt":"money","cells":{"A":"TOTAL COST","B":"=SUMIFS({budget.estimate:col},{budget.section:col},\"<>Change Orders\")","C":"=SUMIFS({budget.costCalc:col},{budget.section:col},\"<>Change Orders\")","D":"=SUM({budget.balance:col})","E":"Savings / Loss in Buyout and Labor"}},{"r":12,"fmt":"money","cells":{"A":"Change Orders","B":"=SUMIFS({budget.estimate:col},{budget.section:col},\"Change Orders\")","C":"=SUMIFS({budget.costCalc:col},{budget.section:col},\"Change Orders\")"}},{"r":13,"style":"bold","fmt":"money","cells":{"A":"Total Contract Estimate","B":"=N(IFERROR({settings:Base Contract},0))+B12","C":"=SUM({budget.costCalc:col})"}},{"r":14,"style":"bold","fmt":"pct","cells":{"A":"Percent OHP","B":"=IF(B11=0,0,B5/B13)","C":"=IF(C13=0,0,C5/C13)"}},{"r":16,"fmt":"date","cells":{"A":"Project Start","B":"=IFERROR({settings:Project Start},\"\")"}},{"r":17,"fmt":"date","cells":{"A":"Job End","B":"=IFERROR(IF({settings:Job End}=\"\",\"\",{settings:Job End}),\"\")","C":"Blank while the job is running"}},{"r":18,"fmt":"days","cells":{"A":"Project Current Duration","B":"=IF(B16=\"\",\"\",IFERROR(NETWORKDAYS.INTL(B16,IF(B17=\"\",TODAY(),B17),1,{days.date:range}),\"\"))","C":"workdays, excl. weekends and the Non-Work Days tab, to the job end or today"}},{"r":20,"style":"head","cells":{"A":"Labor entered (Payroll and Labor Log tabs)","B":"Amount","C":"Counted in a Labor line with the same cost code"}},{"r":21,"fmt":"money","cells":{"A":"Payroll","B":"=SUM({payroll.cost:col})","C":"Direct cost by pay period, from accounting"}},{"r":22,"fmt":"money","cells":{"A":"Crew log","B":"=SUM({labor.total:col})","C":"Workers x hours x rate per hour"}},{"r":23,"fmt":"hours","cells":{"A":"Crew log hours","B":"=SUMPRODUCT({labor.crew:range},{labor.hours:range})+SUMIFS({labor.crew:range},{labor.hours:range},\"\")*N(IFERROR({settings:Hours per Crew-Day},8))","C":"Workers x hours; older day-rate entries at the Hours per Crew-Day setting"}},{"r":25,"style":"head","cells":{"A":"Equipment (Equipment tab)","B":"Total"}},{"r":26,"fmt":"money","cells":{"A":"All equipment logged","B":"=SUM({equipment.total:col})"}},{"r":27,"fmt":"count","cells":{"A":"Rentals still on rent","B":"=COUNTIFS({equipment.unit:col},\"Day\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")+COUNTIFS({equipment.unit:col},\"Week\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")+COUNTIFS({equipment.unit:col},\"4 Weeks\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")+COUNTIFS({equipment.unit:col},\"Month\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")","C":"Day, week or month rentals with no off-rent date"}},{"r":29,"style":"head","cells":{"A":"Progress notes (Progress Notes tab)","B":"Count"}},{"r":30,"fmt":"count","cells":{"A":"Open follow-ups","B":"=COUNTIF({notes.follow:col},\"Open\")","C":"Notes marked Follow-up: Open"}},{"r":32,"style":"note","cells":{"A":"This tab is calculated from the other tabs. Enter data in the app or on the data tabs - don't type over these formulas."}}]},"units":["Hour","Day","Week","4 Weeks","Month","Each","Lump Sum"],"rentalUnits":["Day","Week","4 Weeks","Month"],"statuses":["Active","On Hold","Closed"],"master":{"tables":{"projects":{"sheet":"Projects","cols":[{"key":"job","header":"Job No.","type":"text","width":90},{"key":"name","header":"Project","type":"text","width":280},{"key":"company","header":"Company","type":"text","width":200},{"key":"gc","header":"General Contractor","type":"text","width":200},{"key":"status","header":"Status","type":"text","width":90,"valid":{"list":"statuses"}},{"key":"link","header":"Sheet","type":"text","width":70,"computed":"=IF({id}=\"\",\"\",HYPERLINK(\"https://docs.google.com/spreadsheets/d/\"&{id}&\"/edit\",\"Open\"))"},{"key":"contract","header":"Contract","type":"money","width":120,"snap":"Total Contract Estimate!B"},{"key":"estCost","header":"Estimated Cost","type":"money","width":120,"snap":"TOTAL COST!B"},{"key":"cost","header":"Cost to Date","type":"money","width":120,"snap":"TOTAL COST!C"},{"key":"ohp","header":"Est. OHP","type":"money","width":120,"snap":"OHP!B"},{"key":"ohpPct","header":"OHP %","type":"pct","width":80,"snap":"Percent OHP!B"},{"key":"laborLeft","header":"Labor Left","type":"money","width":120,"snap":"Labor!D","aliases":["Crew Labor Left"]},{"key":"onRent","header":"On Rent","type":"count","width":80,"snap":"Rentals still on rent!B"},{"key":"openFollow","header":"Open Follow-ups","type":"count","width":110,"snap":"Open follow-ups!B"},{"key":"updated","header":"Numbers As Of","type":"datetime","width":150},{"key":"notes","header":"Notes","type":"text","width":260},{"key":"id","header":"ID","type":"id","width":340}]}}},"noteCategories":["Progress","Client request","Change","Material","Issue","Meeting","Other"],"followStates":["Open","Done"],"companies":[{"key":"asf","name":"Architectural System Fabricators","short":"ASF","aliases":["Architectural System Fabricators LLC","Architectural Systems Fabricators"]},{"key":"uc","name":"Ultimate Construction","short":"UC","aliases":["Ultimate Construction LLC","Ultimate Construction, LLC"]}]};
+var SCHEMA = {"app":"project-tracker","version":"2.7.1","sections":["General Requirements","Scope","Change Orders"],"types":["Labor","Material","Equipment","General"],"sources":["Manual","Material Log","Equipment Log","Payroll"],"tables":{"budget":{"sheet":"Budget","cols":[{"key":"section","header":"Section","type":"text","width":160,"valid":{"list":"sections"}},{"key":"code","header":"Cost Code","type":"text","width":90},{"key":"item","header":"Item","type":"text","width":290},{"key":"type","header":"Type","type":"text","width":80,"valid":{"list":"types"}},{"key":"estimate","header":"Estimate","type":"money","width":120},{"key":"source","header":"Cost Source","type":"text","width":110,"valid":{"list":"sources"}},{"key":"cost","header":"Manual Cost","type":"money","width":120},{"key":"costCalc","header":"Cost","type":"money","width":120,"computed":"=IF({source}=\"Material Log\",IF({item}=\"\",0,SUMIF({materials.item:col},{item},{materials.total:col})),IF({source}=\"Equipment Log\",IF({item}=\"\",0,SUMIF({equipment.item:col},{item},{equipment.total:col})),IF({source}=\"Payroll\",IF({code}=\"\",0,SUMIF({payroll.code:col},{code},{payroll.cost:col})+SUMIF({labor.code:col},{code},{labor.total:col})),N({cost}))))"},{"key":"balance","header":"Balance","type":"money","width":120,"computed":"=N({estimate})-N({costCalc})"},{"key":"notes","header":"Notes","type":"text","width":380},{"key":"sort","header":"Sort","type":"number","width":60},{"key":"id","header":"ID","type":"id","width":110}]},"materials":{"sheet":"Materials","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"desc","header":"Description","type":"text","width":320},{"key":"qty","header":"Quantity","type":"number","width":90},{"key":"uom","header":"UoM","type":"text","width":70},{"key":"rate","header":"Unit Rate","type":"rate","width":110},{"key":"total","header":"Total Cost","type":"money","width":120,"computed":"=N({qty})*N({rate})"},{"key":"item","header":"Budget Item","type":"text","width":270,"valid":{"ref":"budget.item"}},{"key":"notes","header":"Notes","type":"text","width":300},{"key":"id","header":"ID","type":"id","width":110}]},"equipment":{"sheet":"Equipment","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"offDate","header":"Off-Rent Date","type":"date","width":110},{"key":"desc","header":"Equipment","type":"text","width":260},{"key":"vendor","header":"Vendor","type":"text","width":160},{"key":"qty","header":"Quantity","type":"number","width":90},{"key":"unit","header":"Unit","type":"text","width":90,"valid":{"list":"units"}},{"key":"rate","header":"Unit Rate","type":"rate","width":110},{"key":"total","header":"Total Cost","type":"money","width":120,"computed":"=N({qty})*N({rate})"},{"key":"item","header":"Budget Item","type":"text","width":220,"valid":{"ref":"budget.item"}},{"key":"notes","header":"Notes","type":"text","width":300},{"key":"id","header":"ID","type":"id","width":110}]},"labor":{"sheet":"Labor Log","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"code","header":"Cost Code","type":"text","width":100,"valid":{"ref":"budget.code"}},{"key":"crew","header":"# Labor","type":"number","width":80},{"key":"hours","header":"Hours","type":"number","width":70},{"key":"hrate","header":"Rate/Hr","type":"money","width":90},{"key":"rate","header":"Rate/Day","type":"money","width":100,"legacy":true},{"key":"total","header":"Total","type":"money","width":110,"computed":"=N({crew})*IF(N({hrate})>0,N({hours})*N({hrate}),N({rate}))"},{"key":"notes","header":"Notes","type":"text","width":320},{"key":"id","header":"ID","type":"id","width":110}]},"payroll":{"sheet":"Payroll","cols":[{"key":"period","header":"Pay Period","type":"date","width":100},{"key":"cost","header":"Direct Cost","type":"money","width":120},{"key":"code","header":"Cost Code","type":"text","width":100,"valid":{"ref":"budget.code"}},{"key":"desc","header":"Description","type":"text","width":200,"computed":"=IF({code}=\"\",\"\",IFERROR(INDEX({budget.item:col},MATCH({code},{budget.code:col},0)),\"\"))"},{"key":"notes","header":"Notes","type":"text","width":300},{"key":"id","header":"ID","type":"id","width":110}]},"notes":{"sheet":"Progress Notes","cols":[{"key":"date","header":"Date","type":"date","width":100},{"key":"category","header":"Category","type":"text","width":120,"valid":{"list":"noteCategories"}},{"key":"note","header":"Note","type":"text","width":460},{"key":"from","header":"From","type":"text","width":170},{"key":"follow","header":"Follow-up","type":"text","width":90,"valid":{"list":"followStates"}},{"key":"by","header":"By","type":"text","width":110},{"key":"logged","header":"Logged","type":"datetime","width":160},{"key":"id","header":"ID","type":"id","width":110}]},"steps":{"sheet":"Project Steps","seed":"stepDefaults","cols":[{"key":"step","header":"Step","type":"text","width":260},{"key":"status","header":"Status","type":"text","width":110,"valid":{"list":"stepStates"}},{"key":"date","header":"Done On","type":"date","width":100},{"key":"notes","header":"Notes","type":"text","width":380},{"key":"sort","header":"Sort","type":"number","width":60},{"key":"id","header":"ID","type":"id","width":110}]},"days":{"sheet":"Non-Work Days","cols":[{"key":"date","header":"Date","type":"date","width":110},{"key":"notes","header":"Notes","type":"text","width":260},{"key":"id","header":"ID","type":"id","width":110}]}},"settings":{"sheet":"Settings","rows":[{"key":"name","label":"Project Name","type":"text","default":"New Project"},{"key":"job","label":"Job No.","type":"text","default":""},{"key":"company","label":"Company","type":"text","default":"","valid":{"list":"companies"}},{"key":"gc","label":"General Contractor","type":"text","default":""},{"key":"address","label":"Address","type":"text","default":""},{"key":"start","label":"Project Start","type":"date","default":""},{"key":"end","label":"Job End","type":"date","default":""},{"key":"contract","label":"Base Contract","type":"money","default":0},{"key":"hours","label":"Hours per Crew-Day","type":"number","default":8},{"key":"hrate","label":"Default Rate/Hr","type":"money","default":""}]},"summary":{"sheet":"Summary","layout":3,"rows":[{"r":1,"style":"title","cells":{"A":"=IFERROR({settings:Project Name},\"\")"}},{"r":2,"style":"sub","cells":{"A":"=IFERROR({settings:Address},\"\")"}},{"r":4,"style":"head","cells":{"A":"","B":"Estimate","C":"Cost","D":"Balance/ Savings","E":"Notes"}},{"r":5,"style":"bold","fmt":"money","cells":{"A":"OHP","B":"=B13-B11","C":"=C13-C11"}},{"r":6,"fmt":"money","cells":{"A":"Labor","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"Labor\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"Labor\")","D":"=B6-C6"}},{"r":7,"fmt":"money","cells":{"A":"Material","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"Material\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"Material\")","D":"=B7-C7"}},{"r":8,"fmt":"money","cells":{"A":"Equipment","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"Equipment\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"Equipment\")","D":"=B8-C8"}},{"r":9,"fmt":"money","cells":{"A":"General Requirements","B":"=SUMIFS({budget.estimate:col},{budget.type:col},\"General\")","C":"=SUMIFS({budget.costCalc:col},{budget.type:col},\"General\")","D":"=B9-C9"}},{"r":11,"style":"bold","fmt":"money","cells":{"A":"TOTAL COST","B":"=SUMIFS({budget.estimate:col},{budget.section:col},\"<>Change Orders\")","C":"=SUMIFS({budget.costCalc:col},{budget.section:col},\"<>Change Orders\")","D":"=SUM({budget.balance:col})","E":"Savings / Loss in Buyout and Labor"}},{"r":12,"fmt":"money","cells":{"A":"Change Orders","B":"=SUMIFS({budget.estimate:col},{budget.section:col},\"Change Orders\")","C":"=SUMIFS({budget.costCalc:col},{budget.section:col},\"Change Orders\")"}},{"r":13,"style":"bold","fmt":"money","cells":{"A":"Total Contract Estimate","B":"=N(IFERROR({settings:Base Contract},0))+B12","C":"=SUM({budget.costCalc:col})"}},{"r":14,"style":"bold","fmt":"pct","cells":{"A":"Percent OHP","B":"=IF(B11=0,0,B5/B13)","C":"=IF(C13=0,0,C5/C13)"}},{"r":16,"fmt":"date","cells":{"A":"Project Start","B":"=IFERROR({settings:Project Start},\"\")"}},{"r":17,"fmt":"date","cells":{"A":"Job End","B":"=IFERROR(IF({settings:Job End}=\"\",\"\",{settings:Job End}),\"\")","C":"Blank while the job is running"}},{"r":18,"fmt":"days","cells":{"A":"Project Current Duration","B":"=IF(B16=\"\",\"\",IFERROR(NETWORKDAYS.INTL(B16,IF(B17=\"\",TODAY(),B17),1,{days.date:range}),\"\"))","C":"workdays, excl. weekends and the Non-Work Days tab, to the job end or today"}},{"r":20,"style":"head","cells":{"A":"Labor entered (Payroll and Labor Log tabs)","B":"Amount","C":"Counted in a Labor line with the same cost code"}},{"r":21,"fmt":"money","cells":{"A":"Payroll","B":"=SUM({payroll.cost:col})","C":"Direct cost by pay period, from accounting"}},{"r":22,"fmt":"money","cells":{"A":"Crew log","B":"=SUM({labor.total:col})","C":"Workers x hours x rate per hour"}},{"r":23,"fmt":"hours","cells":{"A":"Crew log hours","B":"=SUMPRODUCT({labor.crew:range},{labor.hours:range})+SUMIFS({labor.crew:range},{labor.hours:range},\"\")*N(IFERROR({settings:Hours per Crew-Day},8))","C":"Workers x hours; older day-rate entries at the Hours per Crew-Day setting"}},{"r":25,"style":"head","cells":{"A":"Equipment (Equipment tab)","B":"Total"}},{"r":26,"fmt":"money","cells":{"A":"All equipment logged","B":"=SUM({equipment.total:col})"}},{"r":27,"fmt":"count","cells":{"A":"Rentals still on rent","B":"=COUNTIFS({equipment.unit:col},\"Day\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")+COUNTIFS({equipment.unit:col},\"Week\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")+COUNTIFS({equipment.unit:col},\"4 Weeks\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")+COUNTIFS({equipment.unit:col},\"Month\",{equipment.offDate:col},\"\",{equipment.date:col},\"<>\")","C":"Day, week or month rentals with no off-rent date"}},{"r":29,"style":"head","cells":{"A":"Progress notes (Progress Notes tab)","B":"Count"}},{"r":30,"fmt":"count","cells":{"A":"Open follow-ups","B":"=COUNTIF({notes.follow:col},\"Open\")","C":"Notes marked Follow-up: Open"}},{"r":32,"style":"note","cells":{"A":"This tab is calculated from the other tabs. Enter data in the app or on the data tabs - don't type over these formulas."}}]},"units":["Hour","Day","Week","4 Weeks","Month","Each","Lump Sum"],"rentalUnits":["Day","Week","4 Weeks","Month"],"statuses":["Active","On Hold","Closed"],"master":{"tables":{"projects":{"sheet":"Projects","cols":[{"key":"job","header":"Job No.","type":"text","width":90},{"key":"name","header":"Project","type":"text","width":280},{"key":"company","header":"Company","type":"text","width":200},{"key":"gc","header":"General Contractor","type":"text","width":200},{"key":"status","header":"Status","type":"text","width":90,"valid":{"list":"statuses"}},{"key":"stepNext","header":"Next Step","type":"text","width":200,"snap":"steps:next"},{"key":"stepsDone","header":"Steps Done","type":"text","width":90,"snap":"steps:done"},{"key":"link","header":"Sheet","type":"text","width":70,"computed":"=IF({id}=\"\",\"\",HYPERLINK(\"https://docs.google.com/spreadsheets/d/\"&{id}&\"/edit\",\"Open\"))"},{"key":"contract","header":"Contract","type":"money","width":120,"snap":"Total Contract Estimate!B"},{"key":"estCost","header":"Estimated Cost","type":"money","width":120,"snap":"TOTAL COST!B"},{"key":"cost","header":"Cost to Date","type":"money","width":120,"snap":"TOTAL COST!C"},{"key":"ohp","header":"Est. OHP","type":"money","width":120,"snap":"OHP!B"},{"key":"ohpPct","header":"OHP %","type":"pct","width":80,"snap":"Percent OHP!B"},{"key":"laborLeft","header":"Labor Left","type":"money","width":120,"snap":"Labor!D","aliases":["Crew Labor Left"]},{"key":"onRent","header":"On Rent","type":"count","width":80,"snap":"Rentals still on rent!B"},{"key":"openFollow","header":"Open Follow-ups","type":"count","width":110,"snap":"Open follow-ups!B"},{"key":"updated","header":"Numbers As Of","type":"datetime","width":150},{"key":"notes","header":"Notes","type":"text","width":260},{"key":"id","header":"ID","type":"id","width":340}]}}},"noteCategories":["Progress","Client request","Change","Material","Issue","Meeting","Other"],"followStates":["Open","Done"],"stepStates":["Done","Not needed"],"stepDefaults":[{"id":"std-contract","step":"Contract signed"},{"id":"std-insurance","step":"Insurance"},{"id":"std-bond","step":"Bond"},{"id":"std-buyout","step":"Buyout","aliases":["Buyout / shipping pricing"]},{"id":"std-compmap","step":"Comparative map","aliases":["Comparative map complete"]},{"id":"std-submittals","step":"Submittals"},{"id":"std-shopdrawings","step":"Shop drawings"},{"id":"std-material","step":"Material procurement"},{"id":"std-fasteners","step":"Fasteners / caulking procurement"},{"id":"std-construction","step":"Construction"},{"id":"std-cleanup","step":"Cleanup"},{"id":"std-closeout","step":"Closeout"}],"companies":[{"key":"asf","name":"Architectural System Fabricators","short":"ASF","aliases":["Architectural System Fabricators LLC","Architectural Systems Fabricators"]},{"key":"uc","name":"Ultimate Construction","short":"UC","aliases":["Ultimate Construction LLC","Ultimate Construction, LLC"]}]};
 var SEED = null;
 
 var PREVIEW = CONFIG.mode === 'preview';
 var TABLES = Object.keys(SCHEMA.tables);
-var PFX = { budget: 'bud', materials: 'mat', equipment: 'eqp', labor: 'lab', payroll: 'pay', notes: 'note', days: 'day' };
+var PFX = { budget: 'bud', materials: 'mat', equipment: 'eqp', labor: 'lab', payroll: 'pay', notes: 'note', steps: 'stp', days: 'day' };
 // pt.cache.v1 held the one-job cache before projects; it is moved to pt.c2._ on first start.
 var KEYS = { conn: 'pt.conn.v1', cacheV1: 'pt.cache.v1', cache: 'pt.c2.', outbox: 'pt.outbox.v2', server: 'pt.server.v2',
   preview: 'pt.preview.v2', pvList: 'pt.preview.projects.v1', pvData: 'pt.preview.p.', ui: 'pt.ui.v1', me: 'pt.me.v1' };
@@ -601,6 +673,7 @@ var TABS = [
   { id: 'equipment', label: 'Equipment', icon: '<path d="M6 21V4.5"/><path d="M6 4.5h14"/><path d="M6 9l4.5-4.5"/><path d="M16.5 4.5V11"/><path d="M16.5 11a2 2 0 1 1-2 2"/><path d="M3 21h7"/>' },
   { id: 'labor', label: 'Labor', icon: '<path d="M3 18h18"/><path d="M5 18v-2a7 7 0 0 1 14 0v2"/><path d="M10 9V5.5h4V9"/>' },
   { id: 'notes', label: 'Notes', icon: '<path d="M3 21h8"/><path d="M15 4.5l4.5 4.5L9 19.5H4.5V15z"/><path d="M12.5 7l4.5 4.5"/>' },
+  { id: 'steps', label: 'Steps', icon: '<path d="M3.5 6.5l1.8 1.8L8.6 5"/><path d="M11.5 7H20"/><path d="M3.5 12.5l1.8 1.8L8.6 11"/><path d="M11.5 13H20"/><circle cx="6" cy="18.5" r="1.9"/><path d="M11.5 19H20"/>' },
   { id: 'setup', label: 'Settings', icon: '<path d="M4 7h9M17 7h3M4 12h3M11 12h9M4 17h11M19 17h1"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="17" r="2"/>' }
 ];
 
@@ -982,8 +1055,45 @@ function compute(d) {
     return (b.r.date || '').localeCompare(a.r.date || '') || (b.r.logged || '').localeCompare(a.r.logged || '') || b.i - a.i;
   });
   m.openFollow = m.notes.filter(function (x) { return keyOf(x.r.follow) === 'open'; });
+  m.steps = stepsOf(d);
   m.attention = attention(m, d);
   return m;
+}
+/** The default steps: on every job, with fixed IDs. They can't be deleted or renamed, only ticked or marked not needed. */
+var DEFAULT_STEP = {};
+(SCHEMA.stepDefaults || []).forEach(function (s) { DEFAULT_STEP[s.id] = s; });
+/** A step's Status as typed in the app or the sheet: 'done', 'na' (not needed) or '' (to do). Same rules as the script. */
+function stepState(v) {
+  var k = String(v === null || v === undefined ? '' : v).trim().toLowerCase().replace(/[^a-z]/g, '');
+  if (k === 'done' || k === 'complete' || k === 'completed' || k === 'yes' || k === 'true' || k === 'x') return 'done';
+  if (k === 'notneeded' || k === 'na' || k === 'notapplicable') return 'na';
+  return '';
+}
+/** The project steps in their order (Sort, then the sheet's), the count done of those needed, and the next one to do. */
+function stepsOf(d) {
+  var list = d.steps.map(function (r, i) { return { r: r, i: i, s: isBlank(r.sort) ? Infinity : val(r.sort) }; })
+    .sort(function (a, b) { return (a.s - b.s) || (a.i - b.i); });
+  var S = { list: list, done: 0, total: 0, na: 0, next: null };
+  // A default step is known by its ID; one from 2.6 (or an older script) by its name, until the script gives it the ID
+  var byName = {}, have = {};
+  d.steps.forEach(function (r) { if (DEFAULT_STEP[r.id]) have[r.id] = true; });
+  (SCHEMA.stepDefaults || []).forEach(function (s) {
+    if (!have[s.id]) [s.step].concat(s.aliases || []).forEach(function (n) { byName[n.toLowerCase()] = s; });
+  });
+  list.forEach(function (x) {
+    x.std = DEFAULT_STEP[x.r.id] || null;
+    var k = String(x.r.step || '').trim().toLowerCase(), hit = byName[k];
+    if (!x.std && hit) { x.std = hit; Object.keys(byName).forEach(function (n) { if (byName[n] === hit) delete byName[n]; }); }
+  });
+  list.forEach(function (x, k) {
+    // a default step shows the list's name, also before the script has renamed it in the sheet
+    x.n = k + 1; x.name = x.std ? x.std.step : String(x.r.step || '').trim(); x.state = stepState(x.r.status);
+    if (x.state === 'na') { S.na++; return; }
+    if (!x.name) return;
+    S.total++;
+    if (x.state === 'done') S.done++; else if (!S.next) S.next = x;
+  });
+  return S;
 }
 
 /** When the labor estimate runs out at the recent pace of the counted labor cost. Payroll's pace is its last few
@@ -1133,9 +1243,11 @@ function findProject(id) { for (var i = 0; i < state.projects.length; i++) if (s
 function pendingFor(pid) { return state.outbox.filter(function (o) { return (o.project || SINGLE) === pid; }); }
 function projectLabel(e) { return e ? (e.job ? e.job + ' ' : '') + (e.name || 'Untitled project') : ''; }
 var SNAP_KEYS = ['contract', 'estCost', 'cost', 'ohp', 'ohpPct', 'laborLeft', 'onRent', 'openFollow'];
+var SNAP_TEXT = ['stepNext', 'stepsDone'];   // the project steps, as the Projects tab has them
 function normEntry(e) {
   var snap = {};
   SNAP_KEYS.forEach(function (k) { var v = e.snap && e.snap[k]; snap[k] = typeof v === 'number' && isFinite(v) ? v : null; });
+  SNAP_TEXT.forEach(function (k) { var v = e.snap && e.snap[k]; snap[k] = typeof v === 'string' ? v : ''; });
   return { id: String(e.id), job: String(e.job || ''), name: String(e.name || ''), company: String(e.company || '').trim(), gc: String(e.gc || '').trim(),
     status: STATUS.indexOf(e.status) >= 0 ? e.status : 'Active', notes: String(e.notes || ''), url: String(e.url || ''), snap: snap, updated: String(e.updated || '') };
 }
@@ -1206,7 +1318,11 @@ var pv = {
     }
     state.projects = list.map(normEntry);
   },
-  data: function (id) { var d = store.get(KEYS.pvData + id); return normData(d && d.settings ? d : { settings: null, tables: {} }); },
+  data: function (id) {
+    var raw = store.get(KEYS.pvData + id), d = normData(raw && raw.settings ? raw : { settings: null, tables: {} }), e = findProject(id);
+    if (!(e && e.status === 'Closed') && ensureDefaultSteps(d)) store.set(KEYS.pvData + id, d);   // every open job has the default steps
+    return d;
+  },
   save: function (id, d) {
     store.set(KEYS.pvData + id, d);
     var e = findProject(id);
@@ -1445,6 +1561,27 @@ function del(t, id) { return { op: 'delete', table: t, id: id }; }
 var $ = function (s, r) { return (r || document).querySelector(s); };
 var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
+/** The job's pages in the left pane (wide screens): All projects, the job, its pages, Settings at the bottom. */
+function renderSide(on, s, entry) {
+  var el = $('#side');
+  document.body.classList.toggle('has-side', !!on);
+  el.hidden = !on;
+  if (!on) { el.innerHTML = ''; return; }
+  var name = s && s.name ? s.name : entry && entry.name ? entry.name : 'Project';
+  var job = s && s.job ? s.job : entry && entry.job ? entry.job : '';
+  var S = state.data && state.data.steps && state.data.steps.length && !stepsBlocked() ? model().steps : null;
+  var item = function (t) {
+    var cnt = t.id === 'steps' && S && S.total ? '<span class="cnt" title="' + S.done + ' of ' + S.total + ' steps done">' + S.done + '/' + S.total + '</span>' : '';
+    return '<button type="button" class="si" data-action="tab" data-tab="' + t.id + '"' + (state.ui.tab === t.id ? ' aria-current="page"' : '') + '>' +
+      '<svg viewBox="0 0 24 24" aria-hidden="true">' + t.icon + '</svg><span class="l">' + t.label + '</span>' + cnt + '</button>';
+  };
+  var back = isMaster() && fullAccess() && state.pid;
+  el.innerHTML = '<div class="side-head">' +
+    (back ? '<button type="button" class="side-all" data-action="projects"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>All projects</button>' : '') +
+    '<div class="side-job">' + (job ? '<span class="j">' + esc(job) + '</span>' : '') + '<span class="nm" title="' + esc(name) + '">' + esc(name) + '</span></div></div>' +
+    '<div class="side-nav">' + TABS.filter(function (t) { return t.id !== 'setup'; }).map(item).join('') + '</div>' +
+    '<div class="side-foot">' + TABS.filter(function (t) { return t.id === 'setup'; }).map(item).join('') + '</div>';
+}
 function tabButtons(cls) {
   return TABS.filter(function (t) { return cls !== 'bar' || t.id !== 'setup'; }).map(function (t) {
     return '<button type="button" data-action="tab" data-tab="' + t.id + '"' + (state.ui.tab === t.id ? ' aria-current="page"' : '') + '>' +
@@ -1484,6 +1621,7 @@ function render() {
   $('#tabs').innerHTML = tabs ? tabButtons('top') : '';
   $('#tabbar').innerHTML = tabs ? tabButtons('bar') : '';
   $('#tabbar').hidden = !tabs;
+  renderSide(tabs, s, entry);
   $('#gearBtn').hidden = !tabs;
   if (state.ui.tab === 'setup') $('#gearBtn').setAttribute('aria-current', 'page'); else $('#gearBtn').removeAttribute('aria-current');
   renderSync();
@@ -1495,7 +1633,7 @@ function render() {
   if (!PREVIEW && !state.ready) { main.innerHTML = viewLoading(); return; }
   var v = state.ui.tab;
   main.innerHTML = v === 'budget' ? viewBudget() : v === 'materials' ? viewMaterials() : v === 'equipment' ? viewEquipment() : v === 'labor' ? viewLabor() :
-    v === 'notes' ? viewNotes() : v === 'setup' ? viewSetup() : viewOverview();
+    v === 'notes' ? viewNotes() : v === 'steps' ? viewSteps() : v === 'setup' ? viewSetup() : viewOverview();
   if (v === 'overview' || v === 'labor') drawCharts();
   if (v === 'setup') $$('#projectForm input[data-num]').forEach(liveNum);
 }
@@ -1598,13 +1736,14 @@ function cardNums(e) {
     return cardMemo[e.id].v;
   }
   var n = { at: snapAt, local: false };
-  SNAP_KEYS.forEach(function (k) { n[k] = e.snap[k]; });
+  SNAP_KEYS.concat(SNAP_TEXT).forEach(function (k) { n[k] = e.snap[k]; });
   return n;
 }
 function numsOf(d, at) {
   var m = compute(d), s = m.sum;
   return { contract: s.contract, estCost: s.totalEst, cost: s.totalCost, ohp: s.ohpEst, ohpPct: s.pctOhp, laborLeft: m.laborLeft,
-    onRent: m.equipment.filter(function (x) { return x.onRent; }).length, openFollow: m.openFollow.length, at: at, local: true };
+    onRent: m.equipment.filter(function (x) { return x.onRent; }).length, openFollow: m.openFollow.length,
+    stepNext: m.steps.next ? m.steps.next.name : '', stepsDone: m.steps.total ? m.steps.done + ' of ' + m.steps.total : '', at: at, local: true };
 }
 function byJob(a, b) {
   if (a.job && b.job && a.job !== b.job) return b.job.localeCompare(a.job, 'en', { numeric: true });
@@ -1723,7 +1862,7 @@ function projectCard(e) {
   var h = '<button type="button" class="pcard' + (e.status === 'Closed' ? ' closed' : '') + '"' + (co ? ' data-co="' + co.key + '"' : '') + ' data-action="open-project" data-id="' + esc(e.id) + '">' +
     '<span class="top"><span class="job">' + esc(e.job || 'No job number') + '</span>' + pill + '</span>' +
     '<span class="name">' + esc(e.name || 'Untitled project') + '</span>' + (e.company ? '<span class="co">' + esc(co ? co.name : e.company) + '</span>' : '') +
-    (e.gc ? '<span class="gc"><span class="k">GC</span>' + esc(e.gc) + '</span>' : '');
+    (e.gc ? '<span class="gc"><span class="k">GC</span>' + esc(e.gc) + '</span>' : '') + stepLine(n, e.status === 'Closed');
   if (known) {
     var est = n.estCost || 0, cost = n.cost || 0, p = est > 0 ? cost / est : (cost > 0 ? Infinity : 0);
     var cls = p > 1.00001 ? 'over' : p >= 0.9 ? 'warn' : '';
@@ -1744,6 +1883,14 @@ function projectCard(e) {
   return h + '</button>';
 }
 
+/** "Next step  Shop drawings  5 of 11 done" on a project card; nothing before the job has steps. */
+function stepLine(n, closed) {
+  var dn = /^(\d+) of (\d+)$/.exec(n.stepsDone || '');
+  if (!dn) return '';
+  if (n.stepNext && closed) return '';   // a closed job has no next step to show
+  if (n.stepNext) return '<span class="pst"><span class="k">Next step</span><span class="t">' + esc(n.stepNext) + '</span><span class="c">' + dn[1] + ' of ' + dn[2] + ' done</span></span>';
+  return dn[1] === dn[2] ? '<span class="pst all"><span class="k">Steps</span><span class="t">All ' + dn[2] + ' done</span></span>' : '';
+}
 function viewOverview() {
   var m = model(), s = m.sum, d = state.data;
   // Contract bar: the contract (C40) = estimated cost (C38) + OHP (C5); CO costs come out of OHP (D5), as in the tracker.
@@ -1799,7 +1946,7 @@ function viewOverview() {
     (att.length ? '<ul class="alist">' + att.slice(0, 8).map(alertItem).join('') + '</ul>' : '<p class="empty-ok">Every line is within its estimate and every entry is linked to a budget line.</p>') +
     '</section>';
 
-  return '<div class="stack">' + hero + '<div class="grid2">' + summary + attHtml + '</div>' + notesCard() + laborCard(true) + '</div>';
+  return '<div class="stack">' + hero + '<div class="grid2">' + summary + attHtml + '</div>' + stepsCard() + notesCard() + laborCard(true) + '</div>';
 }
 function alertItem(a) {
   var icon = a.sev === 'critical' ? '!' : a.sev === 'warning' ? '!' : 'i';
@@ -2219,6 +2366,136 @@ function formNote(rec) {
     },
     onDelete: isNew ? null : function () { commit([del('notes', rec.id)], 'Note deleted'); }, deleteLabel: 'Delete note'
   });
+}
+
+/* ----- project steps ----- */
+/** Why the steps can't be used yet, if they can't: the script is older, or the sheet has no Project Steps tab. */
+function stepsBlocked() {
+  if (scriptOlder('2.6.0')) return 'script';
+  var miss = state.meta && state.meta.missing || [];
+  return !PREVIEW && miss.indexOf(SCHEMA.tables.steps.sheet) >= 0 ? 'tab' : '';
+}
+function stepsHead(S) {
+  var segs = S.list.filter(function (x) { return x.name || x.state === 'na'; }).map(function (x) {
+    var cls = x.state === 'done' ? 'd' : x.state === 'na' ? 'na' : x === S.next ? 'nx' : '';
+    return '<span class="' + cls + '" title="' + esc(x.n + '. ' + (x.name || 'Step') + ': ' + (x.state === 'done' ? 'done' : x.state === 'na' ? 'not needed' : 'to do')) + '"></span>';
+  }).join('');
+  return '<div class="psum"><div class="psum-fig"><b>' + S.done + '</b> of ' + S.total + ' done' + (S.na ? '<span class="muted">, ' + S.na + ' not needed</span>' : '') + '</div>' +
+    '<div class="ptrack" role="img" aria-label="' + S.done + ' of ' + S.total + ' steps done">' + segs + '</div>' +
+    '<div class="psum-next">' + (S.next ? 'Next: <b>' + esc(S.next.name) + '</b>' : S.total ? '<b>All steps done</b>' : 'No steps to do') + '</div></div>';
+}
+function viewSteps() {
+  var m = model(), S = m.steps, why = stepsBlocked();
+  var h = '<div class="stack"><section class="card"><div class="card-head"><div><h2>Project steps</h2>' +
+    '<p>Tick a step when it\'s done. The default steps are on every job; steps you add are for this job only. Tap a step for its date, notes and order.</p></div>' +
+    (why ? '' : '<button type="button" class="btn" data-action="new-step"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add a step</button>') + '</div>';
+  if (why === 'script') {
+    h += '<div class="cnote"><div><b>The steps need the new script.</b> Paste the new Code.gs into Apps Script and deploy a new version ' +
+      '(see the note at the top of the page). Then this page adds the <b>Project Steps</b> tab to the job\'s sheet.</div></div>';
+  } else if (why === 'tab') {
+    h += '<div class="cnote"><div><b>This job\'s Google Sheet has no Project Steps tab yet.</b> Adding it puts in the usual steps, none of them ticked.</div>' +
+      '<button type="button" class="btn primary sm" data-action="setup-tabs" data-done="Project Steps tab added">Add the Project Steps tab</button></div>';
+  } else if (!S.list.length) {
+    h += '<p class="empty">No steps. Use <b>Add a step</b> to make the list for this job. Steps are kept in the <b>Project Steps</b> tab of the job\'s Google Sheet.</p>';
+  } else {
+    h += stepsHead(S) + '<ol class="plist">' + S.list.map(function (x) {
+      var cls = x.state === 'done' ? ' is-done' : x.state === 'na' ? ' is-na' : x === S.next ? ' is-next' : '';
+      var when = x.state === 'done' ? (x.r.date ? '<span class="pwhen">' + esc(fmtDate(x.r.date)) + '</span>' : '<span class="pwhen muted">No date</span>') :
+        x.state === 'na' ? '<span class="pwhen muted">Not needed</span>' : x === S.next ? '<span class="pill next">Next</span>' : '';
+      var nm = x.name || 'Unnamed step';
+      return '<li class="pstep' + cls + '"><button type="button" class="pchk" role="checkbox" aria-checked="' + (x.state === 'done' ? 'true' : 'false') + '" data-action="step-toggle" data-id="' + esc(x.r.id) + '"' +
+        ' aria-label="' + esc(nm) + '">' + (x.state === 'na' ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 12h10"/></svg>' : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>') + '</button>' +
+        '<button type="button" class="pbody" data-action="edit" data-table="steps" data-id="' + esc(x.r.id) + '">' +
+        '<span class="pn">' + x.n + '</span><span class="pt"><span class="pname">' + esc(nm) + '</span>' + (x.std ? '' : '<span class="pjob">This job only</span>') +
+        (x.r.notes ? '<span class="pnote">' + esc(x.r.notes) + '</span>' : '') + '</span>' + when + '</button></li>';
+    }).join('') + '</ol>';
+  }
+  return h + '</section></div>';
+}
+/** The project steps on the Overview: how many are done and the next one. */
+function stepsCard() {
+  var S = model().steps;
+  if (stepsBlocked() || !S.list.length) return '';
+  return '<section class="card"><div class="card-head"><div><h2>Project steps</h2><p>Where the job stands, from contract to closeout.</p></div>' +
+    '<button type="button" class="btn sm" data-action="tab" data-tab="steps">Open steps</button></div>' + stepsHead(S) + '</section>';
+}
+function formStep(rec) {
+  var isNew = !rec, r = rec || { step: '', status: '', date: '', notes: '' }, st = stepState(r.status);
+  var std = null;
+  if (rec) model().steps.list.forEach(function (x) { if (x.r.id === rec.id) std = x.std; });
+  var body = (std ?
+    '<div class="field full"><span class="label">Step</span><div class="ro">' + esc(std.step) + ' <span class="pill mute">Default step</span></div>' +
+      '<div class="hint">On every job. It keeps its name and can\'t be deleted: if this job doesn\'t have it, set it to Not needed.</div></div>' :
+    fieldHtml({ name: 'step', label: 'Step', value: r.step, full: true, placeholder: 'e.g. Mockup approved', help: 'For this job only.' })) +
+    fieldHtml({ name: 'status', label: 'Status', type: 'select', value: st === 'done' ? 'Done' : st === 'na' ? 'Not needed' : '',
+      options: [{ value: '', label: 'To do' }, { value: 'Done', label: 'Done' }, { value: 'Not needed', label: 'Not needed' }] }) +
+    fieldHtml({ name: 'date', label: 'Done on', type: 'date', value: st === 'done' ? r.date : '', help: 'For a step that\'s done. Today if left blank.' }) +
+    '<div class="field full" data-field="notes"><label for="f_notes">Notes</label><textarea id="f_notes" name="notes" rows="3" placeholder="e.g. Certificate of insurance sent to the GC">' + esc(r.notes) + '</textarea></div>' +
+    (isNew ? '<div class="form-note full">The new step goes at the end of this job\'s list; open it again to move it.</div>' :
+      '<div class="field full"><span class="label">Order</span><div class="btnrow"><button type="button" class="btn sm" data-action="move-step" data-dir="-1">Move up</button>' +
+      '<button type="button" class="btn sm" data-action="move-step" data-dir="1">Move down</button></div></div>');
+  openModal({
+    title: isNew ? 'Add a step' : 'Edit step', submit: isNew ? 'Add step' : 'Save step', body: body, rec: rec,
+    onSubmit: function (f) {
+      var v = formValues(f);
+      if (!std && !v.step) return 'Name the step.';
+      var vals = { step: std ? std.step : v.step, status: v.status, date: v.status === 'Done' ? (v.date || today()) : '', notes: v.notes };
+      if (isNew) {
+        var last = 0;
+        state.data.steps.forEach(function (x) { if (!isBlank(x.sort)) last = Math.max(last, val(x.sort)); });
+        commit([add('steps', Object.assign({ id: uid('steps'), sort: Math.floor(last / 10) * 10 + 10 }, vals))], 'Step added');
+        return;
+      }
+      var patch = changed(rec, vals, std ? ['status', 'date', 'notes'] : ['step', 'status', 'date', 'notes']);
+      if (Object.keys(patch).length) commit([upd('steps', rec.id, patch)], 'Step saved');
+    },
+    onDelete: isNew || std ? null : function () { commit([del('steps', rec.id)], 'Step deleted'); }, deleteLabel: 'Delete step'
+  });
+}
+/** Move the step in the open form up or down. Every step gets Sort 10, 20, 30... in the new order. */
+function moveStep(dir) {
+  var rec = form.spec && form.spec.rec;
+  if (!rec) return;
+  var order = model().steps.list.slice(), i = -1;
+  order.forEach(function (x, k) { if (x.r.id === rec.id) i = k; });
+  var j = i + dir;
+  if (i < 0) return;
+  if (j < 0 || j >= order.length) { toast(dir < 0 ? 'Already the first step' : 'Already the last step'); return; }
+  var t = order[i]; order[i] = order[j]; order[j] = t;
+  var ops = [];
+  order.forEach(function (x, k) { var want = (k + 1) * 10; if (isBlank(x.r.sort) || val(x.r.sort) !== want) ops.push(upd('steps', x.r.id, { sort: want })); });
+  commit(ops, dir < 0 ? 'Moved up' : 'Moved down');
+}
+function defaultSteps() {
+  return (SCHEMA.stepDefaults || []).map(function (s, i) { return { id: s.id, step: s.step, status: '', date: '', notes: '', sort: (i + 1) * 10 }; });
+}
+/** Give a job every default step: a step from 2.6 gets its fixed ID (ticks kept), a missing one is added back. As the script does. */
+function ensureDefaultSteps(d) {
+  var have = {}, changedAny = false;
+  d.steps.forEach(function (r) {
+    var s = DEFAULT_STEP[r.id];
+    if (!s) return;
+    have[r.id] = true;
+    if (r.step !== s.step) { r.step = s.step; changedAny = true; }   // the list renamed it
+  });
+  (SCHEMA.stepDefaults || []).forEach(function (s, k) {
+    if (have[s.id]) return;
+    var names = [s.step].concat(s.aliases || []).map(function (n) { return n.toLowerCase(); });
+    var hit = d.steps.filter(function (r) { return !DEFAULT_STEP[r.id] && names.indexOf(String(r.step || '').trim().toLowerCase()) >= 0; })[0];
+    if (hit) { hit.id = s.id; hit.step = s.step; }
+    else d.steps.push(normRecord('steps', { id: s.id, step: s.step, status: '', date: '', notes: '', sort: (k + 1) * 10 }));
+    changedAny = true;
+  });
+  return changedAny;
+}
+function toggleStep(id) {
+  var r = findRec('steps', id);
+  if (!r) { toast('That step is gone. It may have been deleted on another device.'); return; }
+  var x = model().steps.list.filter(function (y) { return y.r.id === id; })[0], nm = (x && x.name) || 'The step';
+  if (stepState(r.status) === 'done') commit([upd('steps', r.id, { status: '', date: '' })], nm + ': back to do');
+  else commit([upd('steps', r.id, { status: 'Done', date: today() })], nm + ': done ' + fmtShort(today()));
+  var b = $('[data-action="step-toggle"][data-id="' + id + '"]');
+  if (b) b.focus();
 }
 
 /* ----- settings ----- */
@@ -3059,6 +3336,7 @@ function openEdit(t, id) {
   else if (t === 'notes') formNote(rec);
   else if (t === 'payroll') formPayroll(rec);
   else if (t === 'days') formDay(rec);
+  else if (t === 'steps') formStep(rec);
 }
 
 /* ----- projects: new, add an existing sheet, project-only link ----- */
@@ -3144,7 +3422,8 @@ function createProjectFlow(v) {
     if (src) { settings.hours = src.settings.hours; settings.hrate = src.settings.hrate; }
     Object.keys(settings).forEach(function (k) { if (isBlank(settings[k])) delete settings[k]; });
     var ops = src ? copyOps(src, v) : [];
-    var data = normData({ settings: Object.assign({ name: v.name, job: v.job }, settings), tables: {} });
+    // The script gives a new sheet the usual steps; the preview does it here
+    var data = normData({ settings: Object.assign({ name: v.name, job: v.job }, settings), tables: PREVIEW ? { steps: defaultSteps() } : {} });
     var done = function (e) {
       enterProject(e.id, data);
       state.ui.tab = 'overview'; saveUi();
@@ -3406,6 +3685,9 @@ document.addEventListener('click', function (e) {
   else if (a === 'new-payroll') formPayroll(null);
   else if (a === 'new-note') formNote(null);
   else if (a === 'new-day') formDay(null);
+  else if (a === 'new-step') formStep(null);
+  else if (a === 'step-toggle') { if (!el.disabled) toggleStep(el.dataset.id); }
+  else if (a === 'move-step') moveStep(+el.dataset.dir);
   else if (a === 'move-line') moveLine(+el.dataset.dir);
   else if (a === 'mat-filter') { state.ui.matFilter = state.ui.matFilter === el.dataset.item ? '' : el.dataset.item; render(); }
   else if (a === 'eq-filter') { state.ui.eqFilter = state.ui.eqFilter === el.dataset.item ? '' : el.dataset.item; render(); }
